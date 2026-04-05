@@ -15,7 +15,7 @@ export default function Home() {
           <div className="glass-panel flex flex-col items-start justify-between gap-6 rounded-[2rem] p-8 md:flex-row md:items-center">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                Continue exploring
+                Continue exploring -
               </p>
               <h2 className="mt-2 font-arima text-2xl font-bold text-zinc-900 dark:text-white md:text-3xl">
                 Docs, fonts, and icon recipes.
