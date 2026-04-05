@@ -17,8 +17,6 @@ export default function Home() {
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
                 Continue exploring
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-ink-subtle">
-                Continue exploring
               </p>
               <h2 className="mt-2 font-arima text-2xl font-bold text-ink md:text-3xl">
                 Docs, fonts, and icon recipes.
