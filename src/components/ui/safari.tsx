@@ -63,26 +63,19 @@ export function Safari({
         className={cn(
           "relative bg-gradient-to-b from-zinc-50 to-zinc-100 dark:from-zinc-950 dark:to-zinc-900",
           isHero
-            ? "min-h-[320px] sm:min-h-[420px] lg:min-h-[520px] xl:min-h-[580px]"
-            : "min-h-[220px] sm:min-h-[280px]",
+            ? "min-h-[300px] sm:min-h-[400px] lg:min-h-[480px]"
+            : "min-h-[200px] sm:min-h-[240px]",
         )}
       >
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-[#FFFDF7] via-[#FFFDF7]/40 to-transparent dark:from-[#09090B] dark:via-[#09090B]/40",
-            isHero ? "h-32" : "h-24",
+            "pointer-events-none absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-inherit via-inherit/40 to-transparent",
+            isHero ? "h-24" : "h-16",
           )}
           aria-hidden
         />
         <div
-          className={cn(
-            "pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[#FFFDF7] via-[#FFFDF7]/30 to-transparent dark:from-[#09090B] dark:via-[#09090B]/30",
-            isHero ? "h-40" : "h-32",
-          )}
-          aria-hidden
-        />
-        <div
-          className={cn("relative z-0", isHero ? "p-6 sm:p-8 lg:p-10" : "p-4 sm:p-6")}
+          className={cn("relative z-0", isHero ? "p-6 sm:p-8 lg:p-10 pb-2 sm:pb-4" : "p-4 sm:p-6 pb-2")}
         >
           {children}
         </div>

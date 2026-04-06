@@ -48,6 +48,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/icons/logo.png",
+    shortcut: "/icons/logo.png",
+  },
 };
 
 export const viewport: Viewport = {
@@ -64,7 +68,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${arima.variable} min-h-screen antialiased`}>
+      <body className={`${arima.variable} antialiased`}>
         <ThemeProvider>
           <SiteChrome>{children}</SiteChrome>
         </ThemeProvider>

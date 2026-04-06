@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #fffdf7;
-  --color-charcoal: #18181b;
+  --color-cream: #fffff0; /* Ivory */
+  --color-charcoal: #000000; /* Deep black */
   --color-zinc-deep: #09090b;
 
   --color-background: var(--color-cream);
@@ -10,8 +10,9 @@
 
   --shadow-glass: 0 8px 32px rgb(0 0 0 / 0.08);
   --shadow-glass-lg: 0 24px 80px rgb(0 0 0 / 0.12);
+  --blur-glass: 12px; /* Reduced blur */
 
-  --blur-glass: 20px;
+  --rotate-215: 215deg;
 }
 
 @layer utilities {
@@ -21,7 +22,7 @@
 
   /* Landing UI: light mode uses deep black ink; dark mode uses near-white */
   .text-ink {
-    @apply text-zinc-950 dark:text-zinc-50;
+    @apply text-black dark:text-zinc-50;
   }
 
   .text-ink-muted {
@@ -36,11 +37,11 @@
 @layer base {
   :root {
     color-scheme: light;
-    --page-bg: #fffdf7;
-    --text-primary: #18181b;
-    --glass-bg: rgb(255 253 247 / 0.72);
-    --glass-border: rgb(24 24 27 / 0.08);
-    --muted: rgb(24 24 27 / 0.55);
+    --page-bg: #fffff0; /* Ivory */
+    --text-primary: #000000; /* Black */
+    --glass-bg: rgb(255 255 240 / 0.65); /* Ivory glass */
+    --glass-border: rgb(0 0 0 / 0.08);
+    --muted: rgb(0 0 0 / 0.65);
     --accent: #6366f1;
     --accent-soft: rgb(99 102 241 / 0.15);
   }
@@ -63,7 +64,28 @@
   body {
     background-color: var(--page-bg);
     color: var(--text-primary);
+    font-family: var(--font-arima), ui-serif, Georgia, serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .animate-meteor {
+    animation: meteor 5s linear infinite;
+  }
+}
+
+@keyframes meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-500px);
+    opacity: 0;
   }
 }
 

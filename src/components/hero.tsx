@@ -5,6 +5,7 @@ import { ArrowRight, Copy, Terminal } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { Safari } from "@/components/ui/safari";
+import { Meteors } from "@/components/ui/meteors";
 import { cn } from "@/lib/utils";
 
 const INSTALL = "npm install nexaui";
@@ -18,10 +19,13 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const demoOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
-  const demoY = useTransform(scrollYProgress, [0, 0.55], [0, 56]);
-  const demoBlurPx = useTransform(scrollYProgress, [0, 0.45], [0, 8]);
-  const demoFilter = useTransform(demoBlurPx, (b) => `blur(${b}px)`);
+  // Smooth transitions for scroll
+  const demoOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const demoY = useTransform(scrollYProgress, [0, 0.4], [0, 40]);
+  
+  // FIXED: Removed the blur transform to keep Safari sharp while scrolling
+  // If you still want a tiny bit of blur, change [0, 0] to [0, 2]
+  const demoFilter = useTransform(scrollYProgress, [0, 0.45], ["blur(0px)", "blur(0px)"]);
 
   const copyInstall = useCallback(async () => {
     try {
@@ -36,36 +40,46 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden px-4 pb-24 pt-28 md:pb-32 md:pt-36"
+      // FIXED: Changed overflow to visible so meteors don't get cut off
+      className="relative min-h-screen overflow-visible px-4 pb-24 pt-28 md:pb-32 md:pt-36"
     >
+      {/* 1. BACKGROUND GRADIENTS LAYER */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_90%_70%_at_50%_-30%,rgb(99_102_241/0.18),transparent),radial-gradient(ellipse_50%_45%_at_100%_0%,rgb(244_114_182/0.1),transparent)] dark:bg-[radial-gradient(ellipse_90%_70%_at_50%_-30%,rgb(99_102_241/0.26),transparent)]"
       />
+
+      {/* 2. FIXED METEORS: Moved to -z-20 and set to absolute inset-0 */}
+      <div className="pointer-events-none absolute inset-0 -z-20 h-full w-full overflow-hidden">
+        <Meteors number={40} />
+      </div>
+
+      {/* Top Hairline Border */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-zinc-300/70 to-transparent dark:via-white/15"
       />
 
-      <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-14 lg:gap-20">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-14 lg:gap-20">
         <div className="flex w-full flex-col items-center gap-8 text-center">
-          <div className="mx-auto max-w-3xl space-y-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-ink-subtle">
+          <div className="mx-auto max-w-3xl space-y-4 sm:space-y-5">
+            <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.28em] text-ink-subtle">
               NexaUI · App Router kit
             </p>
             <h1
               className={cn(
-                "font-arima text-balance text-4xl font-bold leading-[1.05] text-ink md:text-6xl lg:text-[4.5rem]",
+                "font-arima text-balance text-3xl font-bold leading-[1.1] text-ink sm:text-4xl md:text-6xl lg:text-[4.5rem]",
               )}
             >
               Build glass-native interfaces without the noise.
             </h1>
-            <p className="text-balance text-base text-ink-muted md:text-lg">
+            <p className="text-balance text-sm sm:text-base text-ink-muted md:text-lg">
               A minimalist launchpad: Safari-framed previews, spotlight search,
-              and motion that respects scroll. Cream light, zinc-deep dark.
+              and motion that respects scroll. Ivory light, zinc-deep dark.
             </p>
           </div>
 
+          {/* Install Terminal UI */}
           <div className="flex w-full max-w-2xl flex-col items-center justify-center gap-3 sm:flex-row sm:items-stretch">
             <div className="flex w-full min-w-0 flex-1 items-center gap-2 rounded-2xl border border-zinc-200/90 bg-white/80 px-4 py-3 font-mono text-xs text-ink shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-zinc-950/70 dark:text-zinc-50">
               <Terminal className="h-4 w-4 shrink-0 text-indigo-600 dark:text-indigo-400" aria-hidden />
@@ -93,20 +107,24 @@ export function Hero() {
           </div>
         </div>
 
+        {/* 3. SAFARI PREVIEW: Cleaned up transforms */}
         <motion.div
           style={{
             opacity: demoOpacity,
             y: demoY,
             filter: demoFilter,
           }}
-          className="relative w-full max-w-6xl px-0 sm:max-w-6xl lg:max-w-7xl xl:max-w-[90rem] will-change-[opacity,transform,filter]"
+          className="relative w-full max-w-6xl px-0 sm:max-w-6xl lg:max-w-7xl xl:max-w-[90rem] will-change-[opacity,transform]"
         >
+          {/* Subtle Glow behind Safari */}
           <div
             className="pointer-events-none absolute -inset-8 -z-10 rounded-[2.5rem] bg-gradient-to-br from-indigo-500/12 via-fuchsia-500/8 to-transparent blur-3xl dark:from-indigo-400/18"
             aria-hidden
           />
+          
           <Safari size="hero" url="https://nexaui.dev/preview/dashboard">
             <div className="relative mx-auto w-full max-w-5xl space-y-6">
+              {/* Internal Safari Gradients */}
               <div
                 className="pointer-events-none absolute inset-x-0 top-0 z-20 h-32 bg-gradient-to-b from-[#FFFDF7] via-[#FFFDF7]/60 to-transparent dark:from-[#09090B] dark:via-[#09090B]/60"
                 aria-hidden
@@ -116,15 +134,17 @@ export function Hero() {
                 aria-hidden
               />
 
-              <div className="relative z-10 space-y-5 pt-2">
+              <div className="space-y-5 pt-2">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-ink-subtle">
+                  <p className="text-xs font-semibold uppercase tracking-wider">
                     Live preview
                   </p>
                   <span className="rounded-full bg-indigo-500/15 px-3 py-1 text-[11px] font-semibold text-indigo-800 dark:text-indigo-200">
                     Magic UI · Safari
                   </span>
                 </div>
+                
+                {/* Dashboard Grid */}
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
                   <div className="rounded-2xl border border-zinc-200/80 bg-white/85 p-5 shadow-sm dark:border-white/10 dark:bg-zinc-900/75">
                     <p className="text-sm font-semibold text-ink">Glass panel</p>
@@ -145,6 +165,8 @@ export function Hero() {
                     </p>
                   </div>
                 </div>
+
+                {/* Skeleton Loader */}
                 <div className="rounded-2xl border border-dashed border-zinc-300/80 bg-white/55 p-5 dark:border-white/15 dark:bg-zinc-950/45">
                   <div className="flex items-center gap-4">
                     <div className="h-14 w-14 shrink-0 rounded-2xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 opacity-95 shadow-lg" />
