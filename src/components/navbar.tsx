@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BrandLogo } from "@/components/atoms/brand-logo";
-import { ThemeToggle } from "@/components/molecules/theme-toggle";
+import { BrandLogo } from "@/components/brand-logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useSpotlight } from "@/contexts/spotlight-context";
 import { cn } from "@/lib/utils";
 

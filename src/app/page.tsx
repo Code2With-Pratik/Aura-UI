@@ -1,8 +1,8 @@
-import { AutoScrollShowcase } from "@/components/organisms/auto-scroll-showcase";
-import { BentoGrid } from "@/components/organisms/bento-grid";
-import { Hero } from "@/components/organisms/hero";
-import { Sandbox } from "@/components/organisms/sandbox";
-import { SiteFooter } from "@/components/organisms/site-footer";
+import { AutoScrollShowcase } from "@/components/auto-scroll-showcase";
+import { BentoGrid } from "@/components/bento-grid";
+import { Hero } from "@/components/hero";
+import { Sandbox } from "@/components/sandbox";
+import { SiteFooter } from "@/components/site-footer";
 import Link from "next/link";
 
 export default function Home() {

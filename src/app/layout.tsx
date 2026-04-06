@@ -1,7 +1,8 @@
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider";
+import { SiteChrome } from "@/components/site-chrome";
 import { Arima } from "next/font/google";
 import type { Metadata, Viewport } from "next";
-import "@/styles/globals.css";
+import "./globals.css";
 
 const arima = Arima({
   subsets: ["latin"],
@@ -64,7 +65,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${arima.variable} min-h-screen antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <SiteChrome>{children}</SiteChrome>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 "use client";
 
-import { Navbar } from "@/components/organisms/navbar";
-import { SpotlightSearch } from "@/components/organisms/spotlight-search";
+import { Navbar } from "@/components/navbar";
+import { SpotlightSearch } from "@/components/spotlight-search";
 import { SpotlightProvider } from "@/contexts/spotlight-context";
 import type { ReactNode } from "react";
 
