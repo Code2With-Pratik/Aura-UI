@@ -1,0 +1,429 @@
+@import "tailwindcss";
+
+/* Fumadocs UI — design tokens + component styles for /docs only */
+@import "fumadocs-ui/css/black.css";
+@import "fumadocs-ui/css/preset.css";
+@source "../node_modules/fumadocs-ui/dist/**/*.js";
+
+/* Tint Fumadocs primary to match Aura's lime accent */
+:root,
+.dark {
+  --color-fd-primary: var(--color-accent-primary);
+  --color-fd-ring: var(--color-accent-primary);
+}
+
+/* ---------------------------------------------------------------
+   Aura UI — Tailwind v4 design tokens
+   Tokens are exposed as both CSS variables (for raw CSS / inline
+   styles) and Tailwind utility namespaces (--color-*, --font-*).
+--------------------------------------------------------------- */
+@theme {
+  /* Surface palette */
+  --color-bg: #080808;
+  --color-surface: #0f0f0f;
+  --color-surface-elevated: #141414;
+
+  /* Foreground — pure white in dark mode so /XX opacity modifiers stay readable */
+  --color-fg: #ffffff;
+  --color-fg-muted: rgba(255, 255, 255, 0.7);
+
+  /* Accents */
+  --color-accent-primary: #b8ff57;
+  --color-accent-secondary: #57c8ff;
+  --color-accent-tertiary: #ff57b8;
+
+  /* Borders (set as plain tokens — usable via bg-/border-[var(--...)]) */
+  --color-border-default: rgba(255, 255, 255, 0.07);
+  --color-border-hover: rgba(255, 255, 255, 0.14);
+
+  /* Glass surface — themed so it inverts in light mode */
+  --color-glass: rgba(15, 15, 15, 0.55);
+
+  /* Neumorphic shadow tokens — set per-theme below */
+  --shadow-neu-dark: 6px 6px 18px rgba(0, 0, 0, 0.5);
+  --shadow-neu-light: -4px -4px 14px rgba(255, 255, 255, 0.04);
+  --shadow-neu-inset-dark: inset 3px 3px 8px rgba(0, 0, 0, 0.45);
+  --shadow-neu-inset-light: inset -2px -2px 6px rgba(255, 255, 255, 0.04);
+
+  /* Type families — Arima drives the entire site, Instrument Serif handles display italics */
+  --font-sans: var(--font-arima), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
+
+  /* Easing */
+  --ease-aura: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Motion-driven keyframes (registered with Tailwind v4) */
+  --animate-pulse-glow: pulse-glow 7s ease-in-out infinite;
+  --animate-blink: blink 1.6s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
+}
+
+/* ---------------------------------------------------------------
+   Light theme — activates when next-themes adds `.light` to <html>
+--------------------------------------------------------------- */
+.light {
+  --color-bg: #fffdd0;
+  --color-surface: #fffce0;
+  --color-surface-elevated: #fffacf;
+  --color-fg: #000000;
+  --color-fg-muted: rgba(0, 0, 0, 0.72);
+  --color-border-default: rgba(120, 110, 40, 0.12);
+  --color-border-hover: rgba(120, 110, 40, 0.22);
+  --color-glass: rgba(255, 253, 208, 0.7);
+
+  /* Warm cream-toned neumorphic shadow stack */
+  --shadow-neu-dark: 8px 8px 22px rgba(170, 155, 60, 0.22);
+  --shadow-neu-light: -6px -6px 18px rgba(255, 255, 245, 0.95);
+  --shadow-neu-inset-dark: inset 4px 4px 10px rgba(170, 155, 60, 0.22);
+  --shadow-neu-inset-light: inset -3px -3px 8px rgba(255, 255, 245, 0.9);
+
+  color-scheme: light;
+}
+
+/* ---------------------------------------------------------------
+   Base — page chrome, smooth scroll, body type
+--------------------------------------------------------------- */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-feature-settings: "ss01", "cv11";
+    min-height: 100dvh;
+    overflow-x: hidden;
+    transition: background-color 320ms var(--ease-aura), color 320ms var(--ease-aura);
+  }
+
+  ::selection {
+    background-color: var(--color-accent-primary);
+    color: var(--color-bg);
+  }
+
+  /* Subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-default);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-border-hover);
+  }
+}
+
+/* ---------------------------------------------------------------
+   Component primitives
+--------------------------------------------------------------- */
+@layer components {
+  .aura-border {
+    border: 1px solid var(--color-border-default);
+    transition: border-color 220ms var(--ease-aura);
+  }
+  .aura-border:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .aura-glass {
+    background: var(--color-glass);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid var(--color-border-default);
+  }
+  .light .aura-glass {
+    box-shadow: var(--shadow-neu-dark), var(--shadow-neu-light);
+  }
+
+  .aura-card {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    var(--color-surface);
+    border: 1px solid var(--color-border-default);
+    border-radius: 20px;
+    transition:
+      transform 420ms var(--ease-aura),
+      border-color 220ms var(--ease-aura),
+      box-shadow 420ms var(--ease-aura);
+    will-change: transform;
+  }
+  .light .aura-card {
+    background: var(--color-surface);
+    box-shadow:
+      12px 12px 28px rgba(120, 100, 30, 0.22),
+      -8px -8px 22px rgba(255, 255, 250, 0.95),
+      inset 0 0 0 1px rgba(255, 255, 245, 0.5);
+  }
+  .aura-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-hover);
+    box-shadow:
+      0 30px 80px -40px color-mix(in srgb, var(--color-accent-primary) 18%, transparent),
+      0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  }
+  .light .aura-card:hover {
+    box-shadow:
+      12px 12px 28px rgba(170, 155, 60, 0.28),
+      -8px -8px 22px rgba(255, 255, 245, 1),
+      0 0 0 1px color-mix(in srgb, var(--color-accent-primary) 35%, transparent);
+  }
+
+  /* Soft tile — used for the small cards inside the WindowMockup,
+     replaces the muddy `bg-black/30` overlay that broke in light mode. */
+  .aura-tile {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-default);
+    border-radius: 0.75rem;
+    transition:
+      box-shadow 320ms var(--ease-aura),
+      border-color 220ms var(--ease-aura),
+      transform 320ms var(--ease-aura);
+  }
+  .dark .aura-tile,
+  :root:not(.light) .aura-tile {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .light .aura-tile {
+    box-shadow:
+      6px 6px 14px rgba(170, 155, 60, 0.18),
+      -4px -4px 12px rgba(255, 255, 245, 0.9);
+    border-color: rgba(170, 155, 60, 0.08);
+  }
+  .light .aura-tile:hover {
+    box-shadow:
+      8px 8px 18px rgba(170, 155, 60, 0.24),
+      -5px -5px 14px rgba(255, 255, 245, 1);
+    border-color: rgba(170, 155, 60, 0.16);
+    transform: translateY(-2px);
+  }
+
+  /* Inset input — pressed-in look for search fields and text inputs. */
+  .aura-input {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-default);
+    border-radius: 0.625rem;
+    transition: box-shadow 220ms var(--ease-aura), border-color 220ms var(--ease-aura);
+  }
+  .dark .aura-input,
+  :root:not(.light) .aura-input {
+    background: rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+  .light .aura-input {
+    box-shadow: var(--shadow-neu-inset-dark), var(--shadow-neu-inset-light);
+    border-color: rgba(170, 155, 60, 0.12);
+  }
+  .aura-input:focus-within {
+    border-color: color-mix(in srgb, var(--color-accent-primary) 50%, var(--color-border-hover));
+  }
+
+  /* Raised pill button — primarily for accented CTAs in light mode so
+     they sit off the cream surface with a soft drop shadow. */
+  .light .aura-raised {
+    box-shadow:
+      6px 6px 16px rgba(170, 155, 60, 0.28),
+      -3px -3px 10px rgba(255, 255, 245, 0.85);
+  }
+
+  /* Window mockup chrome — themed shadow stack. */
+  .aura-window {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-default);
+    border-radius: 1rem;
+    box-shadow:
+      0 60px 120px -40px rgba(0, 0, 0, 0.7),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+  .light .aura-window {
+    box-shadow:
+      22px 22px 60px rgba(170, 155, 60, 0.36),
+      -10px -10px 32px rgba(255, 255, 245, 1),
+      inset 0 0 0 1px rgba(255, 255, 245, 0.7);
+  }
+
+  /* Stacked-cards effect — places two ghost cards behind the window
+     so it reads like a stack of papers. Apply to a wrapper that has
+     no overflow:hidden of its own. */
+  .aura-stack {
+    position: relative;
+  }
+  .aura-stack::before,
+  .aura-stack::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-default);
+    z-index: -1;
+    pointer-events: none;
+    transition: transform 420ms var(--ease-aura), opacity 420ms var(--ease-aura);
+  }
+  .aura-stack::before {
+    transform: translateY(14px) scaleX(0.97);
+    opacity: 0.65;
+  }
+  .aura-stack::after {
+    transform: translateY(28px) scaleX(0.93);
+    opacity: 0.42;
+  }
+  .light .aura-stack::before {
+    box-shadow:
+      14px 22px 36px rgba(120, 100, 30, 0.40),
+      -4px -2px 14px rgba(255, 255, 245, 0.85);
+  }
+  .light .aura-stack::after {
+    box-shadow:
+      12px 18px 30px rgba(120, 100, 30, 0.34),
+      -3px -2px 12px rgba(255, 255, 245, 0.7);
+  }
+  .dark .aura-stack::before,
+  :root:not(.light) .aura-stack::before {
+    box-shadow:
+      0 36px 70px -20px rgba(0, 0, 0, 0.85),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+  .dark .aura-stack::after,
+  :root:not(.light) .aura-stack::after {
+    box-shadow:
+      0 30px 60px -20px rgba(0, 0, 0, 0.7),
+      0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  }
+
+  /* Hero radial glow — sits behind the headline */
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 50% 30%,
+        color-mix(in srgb, var(--color-accent-primary) 18%, transparent) 0%,
+        transparent 70%),
+      radial-gradient(40% 30% at 70% 60%,
+        color-mix(in srgb, var(--color-accent-secondary) 12%, transparent) 0%,
+        transparent 70%),
+      radial-gradient(35% 25% at 25% 70%,
+        color-mix(in srgb, var(--color-accent-tertiary) 12%, transparent) 0%,
+        transparent 70%);
+    filter: blur(20px);
+    animation: var(--animate-pulse-glow);
+  }
+
+  .display-clamp {
+    font-family: var(--font-display);
+    font-style: italic;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    font-size: clamp(2.75rem, 7vw + 1rem, 7.5rem);
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    color: var(--color-fg-muted);
+  }
+}
+
+/* ---------------------------------------------------------------
+   Global grain overlay — fixed pseudo-element on <body>.
+   Uses inline fractal-noise SVG, 4% opacity. Hidden in light theme
+   so the cream surface stays clean.
+--------------------------------------------------------------- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
+}
+.light body::after { opacity: 0.025; }
+
+/* ---------------------------------------------------------------
+   Keyframes
+--------------------------------------------------------------- */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.06); }
+}
+
+@keyframes blink {
+  0%, 60%, 100% { opacity: 1; }
+  30%           { opacity: 0.25; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Genie effect — used by WindowMockup on hover */
+@keyframes genie-in {
+  0%   { transform: scale(0.4) translateY(60%); transform-origin: 50% 100%; opacity: 0; filter: blur(8px); }
+  100% { transform: scale(1)   translateY(0);   transform-origin: 50% 100%; opacity: 1; filter: blur(0);   }
+}
+
+/* ---------------------------------------------------------------
+   View Transitions — circular reveal for theme toggle (Magic UI style).
+   The toggle handler sets --x / --y / --r on <html> from the click point,
+   then calls document.startViewTransition(...) so the new theme is
+   "wiped in" through an expanding circle.
+--------------------------------------------------------------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 0;
+}
+::view-transition-new(root) {
+  z-index: 1;
+  animation: aura-theme-reveal 700ms var(--ease-aura) forwards;
+}
+
+@keyframes aura-theme-reveal {
+  from {
+    clip-path: circle(0px at var(--x, 100%) var(--y, 0%));
+  }
+  to {
+    clip-path: circle(var(--r, 150vmax) at var(--x, 100%) var(--y, 0%));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

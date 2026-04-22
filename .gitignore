@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.env*
+!.env.example
+.DS_Store
+*.log
+.vercel
+next-env.d.ts.bak
+
+# Fumadocs MDX generated source
+.source

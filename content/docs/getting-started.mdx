@@ -1,0 +1,36 @@
+---
+title: Getting Started
+description: Install Aura UI and run it locally in under a minute.
+---
+
+## Install
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Stack
+
+| Concern    | Choice                              |
+| ---------- | ----------------------------------- |
+| Framework  | Next.js 15 — App Router             |
+| Language   | TypeScript (strict)                 |
+| Styling    | Tailwind v4 (CSS-first `@theme`)    |
+| Motion     | Framer Motion                       |
+| Docs       | Fumadocs (this site)                |
+
+## Project layout
+
+```
+app/
+  (site)/        ← marketing surface — uses Aura Navbar
+  docs/          ← Fumadocs-powered docs
+content/docs/    ← MDX content for /docs
+components/      ← Navbar, Spotlight, Hero, …
+lib/
+  motion.ts
+  source.ts      ← Fumadocs source loader
+```

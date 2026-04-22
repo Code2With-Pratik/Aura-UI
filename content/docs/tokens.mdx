@@ -1,0 +1,35 @@
+---
+title: Tokens
+description: The full Aura UI token surface — all defined in a single Tailwind v4 @theme block.
+---
+
+All tokens live in [`app/globals.css`](https://github.com/) under one `@theme` block. Tailwind v4 reads them at build time and exposes utilities (`bg-bg`, `text-accent-primary`, …) plus raw CSS variables (`var(--color-accent-primary)`).
+
+## Surfaces
+
+| Token                       | Value      |
+| --------------------------- | ---------- |
+| `--color-bg`                | `#080808`  |
+| `--color-surface`           | `#0f0f0f`  |
+| `--color-surface-elevated`  | `#141414`  |
+
+## Accents
+
+| Token                         | Value       |
+| ----------------------------- | ----------- |
+| `--color-accent-primary`      | `#b8ff57`   |
+| `--color-accent-secondary`    | `#57c8ff`   |
+| `--color-accent-tertiary`     | `#ff57b8`   |
+
+## Borders
+
+| Token                       | Value                       |
+| --------------------------- | --------------------------- |
+| `--color-border-default`    | `rgba(255,255,255,0.07)`    |
+| `--color-border-hover`      | `rgba(255,255,255,0.14)`    |
+
+## Motion
+
+| Token            | Value                            |
+| ---------------- | -------------------------------- |
+| `--ease-aura`    | `cubic-bezier(0.16, 1, 0.3, 1)`  |
