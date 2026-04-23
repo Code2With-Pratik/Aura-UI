@@ -65,7 +65,6 @@ export default function Navbar() {
       root.style.setProperty("--y", `${y}px`);
       root.style.setProperty("--r", `${r}px`);
 
-      // @ts-expect-error — View Transitions API typing not yet in lib.dom
       document.startViewTransition(() => {
         setTheme(next);
       });

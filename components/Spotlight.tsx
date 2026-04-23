@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { auraEase } from "@/lib/motion";
@@ -111,14 +118,39 @@ export default function Spotlight({ open, onClose }: Props) {
   // Reset selection when query changes
   useEffect(() => setActiveIdx(0), [query]);
 
-  // Auto-focus input on open
-  useEffect(() => {
-    if (open) {
-      setQuery("");
-      setActiveIdx(0);
-      const id = window.setTimeout(() => inputRef.current?.focus(), 30);
-      return () => window.clearTimeout(id);
-    }
+  /* Auto-focus input on open.
+     useLayoutEffect runs SYNCHRONOUSLY after DOM commit (before paint),
+     so by the time it runs, the panel and input are already in the DOM
+     and the input ref is populated. We also fire a couple of follow-up
+     focus attempts on rAF + a short timeout to defeat any race where
+     framer-motion's animation frame steals focus from us. */
+  useLayoutEffect(() => {
+    if (!open) return;
+    setQuery("");
+    setActiveIdx(0);
+
+    const focusInput = () => {
+      const el = inputRef.current;
+      if (!el) return;
+      el.focus();
+      try {
+        const len = el.value.length;
+        el.setSelectionRange(len, len);
+      } catch {
+        /* setSelectionRange throws on some input types — safe to ignore */
+      }
+    };
+
+    focusInput();                                          // synchronous, before paint
+    const raf = requestAnimationFrame(focusInput);          // next paint
+    const t1 = window.setTimeout(focusInput, 80);           // after framer-motion's first frame
+    const t2 = window.setTimeout(focusInput, 360);          // after the entry tween settles
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+    };
   }, [open]);
 
   // Lock body scroll when open
@@ -198,7 +230,14 @@ export default function Spotlight({ open, onClose }: Props) {
             {/* Search input */}
             <div className="flex items-center gap-3 border-b border-[var(--color-border-default)] px-4 py-3.5">
               <input
+                /* Plain object ref — STABLE across renders so React
+                   doesn't run a ref-cleanup + ref-setup cycle on every
+                   keystroke. The earlier inline arrow-function ref was
+                   re-focusing the input on every render, which was
+                   eating the user's keystrokes. Focus is now handled
+                   exclusively by the useLayoutEffect above. */
                 ref={inputRef}
+                autoFocus
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search pages and actions…"
