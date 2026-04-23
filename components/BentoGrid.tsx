@@ -83,7 +83,8 @@ export default function BentoGrid() {
           transition={{ duration: 0.7, delay: i * 0.06, ease: auraEase }}
           className={`aura-card group relative overflow-hidden p-6 md:p-8 ${spanClass(c.span)}`}
           style={{
-            background: `linear-gradient(180deg, color-mix(in srgb, var(--color-accent-${c.accent}) 5%, transparent) 0%, transparent 35%), linear-gradient(180deg, rgba(255,255,255,0.03), transparent 60%), var(--color-surface)`,
+            backgroundImage: `linear-gradient(180deg, color-mix(in srgb, var(--color-accent-${c.accent}) 5%, transparent) 0%, transparent 35%), linear-gradient(180deg, rgba(255,255,255,0.03), transparent 60%)`,
+            backgroundColor: "var(--color-surface)",
           }}
         >
           <div className="relative z-10 flex h-full flex-col">
@@ -105,7 +106,7 @@ export default function BentoGrid() {
             aria-hidden
             className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-60"
             style={{
-              background: `var(--color-accent-${c.accent})`,
+              backgroundColor: `var(--color-accent-${c.accent})`,
             }}
           />
         </motion.article>
@@ -155,15 +156,23 @@ function Visual({
     return (
       <div className="flex h-24 items-end gap-1.5 overflow-hidden rounded-xl aura-tile p-3">
         {Array.from({ length: 28 }).map((_, i) => {
-          const h = 20 + Math.abs(Math.sin(i * 0.55)) * 70;
+          const sin = Math.sin(i * 0.55);
+          // Round to fixed precision so the SSR string and the
+          // client-rendered value are byte-identical (avoids hydration mismatch).
+          const h = (20 + Math.abs(sin) * 70).toFixed(2);
+          const opacity = Number((0.5 + sin * 0.5).toFixed(3));
           return (
             <span
               key={i}
               className="flex-1 rounded-sm"
               style={{
                 height: `${h}%`,
-                background: `linear-gradient(180deg, ${color}, color-mix(in srgb, ${color} 20%, transparent))`,
-                opacity: 0.5 + Math.sin(i * 0.55) * 0.5,
+                // Use longhand `backgroundImage` instead of `background`
+                // shorthand — the browser parses the shorthand into
+                // multiple longhand props on hydration, which React then
+                // sees as a mismatch with the original shorthand.
+                backgroundImage: `linear-gradient(180deg, ${color}, color-mix(in srgb, ${color} 20%, transparent))`,
+                opacity,
               }}
             />
           );
@@ -180,7 +189,7 @@ function Visual({
             key={i}
             className="rounded-sm"
             style={{
-              background:
+              backgroundColor:
                 i % 5 === 0
                   ? color
                   : "rgba(255,255,255,0.04)",
@@ -201,7 +210,7 @@ function Visual({
             className="absolute left-1/2 h-16 w-4/5 -translate-x-1/2 rounded-md border border-[var(--color-border-default)]"
             style={{
               top: 18 + i * 14,
-              background: `color-mix(in srgb, ${color} ${14 - i * 4}%, var(--color-surface-elevated))`,
+              backgroundColor: `color-mix(in srgb, ${color} ${14 - i * 4}%, var(--color-surface-elevated))`,
               transform: `translateX(-50%) scale(${1 - i * 0.06})`,
               opacity: 1 - i * 0.2,
             }}

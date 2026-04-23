@@ -110,10 +110,15 @@ const CodeCards: React.FC<{ className?: string }> = ({ className }) => {
         
         .svg-path-style {
           fill: none;
-          stroke: url(#cl1);
+          /* Two-step paint: try the gradient, fall back to a solid purple so
+             the snake is always visible even if the paint server fails to
+             resolve inside a transformed parent. */
+          stroke: #b169db;
+          stroke: url(#cl1) #b169db;
           stroke-linecap: round;
-          stroke-dashoffset: var(--strokeDashoffset);
+          stroke-dashoffset: var(--strokeDashoffset, 0px);
           transition: stroke-width 0.3s ease;
+          opacity: 0.95;
         }
       `}</style>
 
@@ -132,7 +137,7 @@ const CodeCards: React.FC<{ className?: string }> = ({ className }) => {
           <div className="card-wrapper">
             <div id="codepen" className="inner-card">
               <header className="gradient-text text-[34px] font-semibold leading-tight">
-                The best place to build, test, and discover front-end code.
+                Elevate your web apps with the depth and motion of macOS
               </header>
             </div>
           </div>
@@ -187,8 +192,15 @@ const CodeCards: React.FC<{ className?: string }> = ({ className }) => {
           </div>
         </div>
 
-        {/* Global SVG Definitions */}
-        <svg className="hidden">
+        {/* Global SVG Definitions — kept visible-but-zero-sized so paint
+            servers (linearGradient, masks) resolve in every browser, even
+            inside transformed parents. */}
+        <svg
+          width="0"
+          height="0"
+          aria-hidden
+          style={{ position: "absolute", overflow: "hidden", pointerEvents: "none" }}
+        >
           <defs>
             <path id="linePath01" d="m 106,45h 375c 114,0 226,128 226,235v 236c 0,136 -122,222 -224,221l -182,-2c -89,1 -141,42 -142,158l -2,204c -1,117 37,173 134,173h 186c 110,-3 230,111 230,220v 242c 0,113 -125,225 -248,225H 105" />
             <path id="linePath02" d="m 33,85h 444c 96,0 190,107 190,201v 224c 0,116 -98,188 -190,187l -192,-2c -92,0 -166,75 -166,168v 278c 0,94 74,169 166,169h 194c 92,0 188,94 188,188v 228c 0,94 -104,191 -214,191H 105" />

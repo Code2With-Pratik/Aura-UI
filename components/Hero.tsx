@@ -1,55 +1,21 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { fadeUp, stagger } from "@/lib/motion";
 import HoneycombGallery from "./HoneycombGallery";
-import CodeCards from "./CodeCards";
 
-if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
-
+/**
+ * Hero
+ *
+ * Centered intro copy with the HoneycombGallery decoration on the left.
+ * The right-side SnakeAnimation now lives in `<SnakeRail />`, which is
+ * mounted in `app/(site)/page.tsx` so it can span both the Hero and the
+ * WindowMockup section as a sticky overlay.
+ */
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const cardsScrollerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current || !cardsScrollerRef.current) return;
-    const el = cardsScrollerRef.current;
-
-    const ctx = gsap.context(() => {
-      /* All transforms are GSAP-managed so the scroll-driven `y` doesn't
-         clobber the static scale/xPercent we need to centre the 740-wide
-         CodeCards canvas inside the 480-wide wrapper. */
-      gsap.set(el, {
-        xPercent: -50,
-        scale: 0.62,
-        transformOrigin: "top center",
-        y: 0,
-      });
-
-      gsap.to(el, {
-        y: -1300,            // shifts the inner content up so cards 2 → 4 scroll into view
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=1800",     // length of the scroll-linked phase
-          scrub: true,        // reversible: scroll back, the cards slide back down
-          invalidateOnRefresh: true,
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative isolate overflow-hidden pt-32 pb-24 md:pt-40 md:pb-36"
-    >
+    <section className="relative isolate overflow-hidden pt-16 pb-24 md:pt-24 md:pb-36">
       <div className="hero-glow" />
 
       {/* Top-left decoration — Honeycomb showcase */}
@@ -59,34 +25,6 @@ export default function Hero() {
       >
         <div className="pointer-events-auto">
           <HoneycombGallery />
-        </div>
-      </div>
-
-      {/* Top-right decoration — CodeCards with scroll-linked vertical translate
-          and the snake-stroke dashoffset animation already baked in. */}
-      <div className="pointer-events-none absolute right-0 top-12 z-10 hidden lg:block">
-        <div
-          className="pointer-events-auto relative overflow-hidden"
-          style={{
-            width: 480,
-            height: 640,
-            maskImage:
-              "linear-gradient(to bottom, transparent 0%, #000 8%, #000 80%, transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, transparent 0%, #000 8%, #000 80%, transparent 100%)",
-          }}
-        >
-          <div
-            ref={cardsScrollerRef}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: "50%",
-              width: 740,
-            }}
-          >
-            <CodeCards className="font-sans" />
-          </div>
         </div>
       </div>
 
@@ -103,11 +41,12 @@ export default function Hero() {
 
         <motion.h1
           variants={fadeUp}
-          className="display-clamp mt-7 text-balance text-fg"
+          className="display-clamp mt-6 text-balance text-fg"
         >
-          Interfaces with{" "}
+          Interfaces with
+          <br />
           <span className="not-italic font-sans font-extralight tracking-tight text-accent-primary">
-            aura.
+            Aura
           </span>
         </motion.h1>
 
@@ -123,15 +62,15 @@ export default function Hero() {
           variants={fadeUp}
           className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
         >
-          <a
-            href="#components"
+          <Link
+            href="/components"
             className="group inline-flex items-center gap-2 rounded-full bg-accent-primary px-5 py-2.5 text-sm font-semibold text-black transition-all duration-300 hover:scale-[1.02]"
             style={{
               boxShadow:
                 "0 18px 50px -15px color-mix(in srgb, var(--color-accent-primary) 55%, transparent)",
             }}
           >
-            Explore the system
+            Explore Components
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
                 d="M3.5 7h7m0 0L7.5 4m3 3L7.5 10"
@@ -141,13 +80,13 @@ export default function Hero() {
                 strokeLinejoin="round"
               />
             </svg>
-          </a>
-          <a
-            href="#docs"
+          </Link>
+          <Link
+            href="/docs"
             className="aura-border inline-flex items-center gap-2 rounded-full bg-fg/2 px-5 py-2.5 text-sm font-medium text-fg/85 transition-colors hover:bg-fg/5 hover:text-fg"
           >
             <span className="font-mono text-xs text-fg/50">⌘</span> Read the docs
-          </a>
+          </Link>
         </motion.div>
       </motion.div>
 

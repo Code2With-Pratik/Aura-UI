@@ -2,15 +2,22 @@ import Hero from "@/components/Hero";
 import WindowMockup from "@/components/WindowMockup";
 import BentoGrid from "@/components/BentoGrid";
 import Marquee from "@/components/Marquee";
+import SnakeRail from "@/components/SnakeRail";
 
 export default function Page() {
   return (
     <main className="relative">
-      <Hero />
+      {/* SnakeRail spans Hero + WindowMockup as a sticky right-side overlay,
+          so the four cards (CodePen / HTML / CSS / JS) and the snake-stroke
+          flow continuously across both sections as the user scrolls. */}
+      <div className="relative">
+        <SnakeRail />
+        <Hero />
 
-      <section className="relative mx-auto w-full max-w-[1240px] px-6 pb-24 md:pb-36">
-        <WindowMockup />
-      </section>
+        <section className="relative z-20 mx-auto w-full max-w-[1060px] px-6 pb-24 md:pb-36">
+          <WindowMockup />
+        </section>
+      </div>
 
       <Marquee />
 
