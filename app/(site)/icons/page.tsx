@@ -157,7 +157,7 @@ export default function IconsPage() {
           className="display-clamp text-balance text-fg"
           style={{ fontSize: "clamp(2rem, 4.5vw + 0.5rem, 4.75rem)" }}
         >
-          Drawn on a
+          Ready to Use
           <br />
           <span className="relative inline-block px-2.5 align-baseline">
             <Sparkle
@@ -180,7 +180,7 @@ export default function IconsPage() {
               className="relative not-italic font-sans font-light"
               style={{ color: "var(--color-accent-primary)" }}
             >
-              16px grid.
+              Icons.
             </span>
           </span>
         </h1>

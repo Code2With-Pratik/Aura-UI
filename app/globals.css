@@ -151,6 +151,10 @@
     transition: background-color 320ms var(--ease-aura), color 320ms var(--ease-aura);
   }
 
+  button {
+    cursor: pointer;
+  }
+
   ::selection {
     background-color: var(--color-accent-primary);
     color: var(--color-bg);

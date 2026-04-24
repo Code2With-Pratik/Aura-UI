@@ -6,38 +6,51 @@ import { motion } from 'framer-motion';
 export default function Buttons1() {
   return (
     <motion.button
-      className="relative px-8 py-3 font-semibold text-white rounded-lg overflow-hidden"
+      className="group relative px-8 py-3 font-semibold text-white rounded-lg overflow-hidden aura-border"
       whileHover="hover"
       whileTap="tap"
       initial="rest"
       variants={{
-        rest: {},
-        hover: {},
-        tap: {},
+        rest: { scale: 1 },
+        hover: { scale: 1.02 },
+        tap: { scale: 0.98 },
       }}
     >
-      {/* Vibrant mesh gradient background */}
-      <div
-        className="absolute inset-0"
+      {/* Background Layer: Deep surface with mesh overlay */}
+      <div className="absolute inset-0 bg-[#0a0a0a]" />
+      
+      {/* Mesh Gradient */}
+      <motion.div
+        className="absolute inset-0 opacity-40 mix-blend-screen transition-opacity group-hover:opacity-60"
+        variants={{
+          rest: { scale: 1.2, rotate: 0 },
+          hover: { 
+            scale: 1.4, 
+            rotate: 5,
+            transition: { duration: 3, repeat: Infinity, repeatType: "mirror", ease: "linear" }
+          }
+        }}
         style={{
           background: `
-            linear-gradient(135deg, #ff6b9d 0%, transparent 40%),
-            linear-gradient(45deg, #4facfe 0%, transparent 40%),
-            linear-gradient(225deg, #43e97b 0%, transparent 40%),
-            linear-gradient(315deg, #fa709a 0%, transparent 40%)
+            radial-gradient(at 0% 0%, var(--color-accent-primary) 0%, transparent 60%),
+            radial-gradient(at 100% 0%, var(--color-accent-secondary) 0%, transparent 60%),
+            radial-gradient(at 100% 100%, var(--color-accent-tertiary) 0%, transparent 60%),
+            radial-gradient(at 0% 100%, #b8ff57 0%, transparent 60%)
           `,
-          backgroundSize: '200% 200%',
+          filter: "blur(20px)",
         }}
       />
 
+      {/* Internal Glass Highlight */}
+      <div className="absolute inset-[1px] rounded-[7px] bg-gradient-to-b from-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+
       {/* Pulsing outer glow on hover */}
       <motion.div
-        className="absolute inset-0 rounded-lg"
+        className="absolute inset-0 rounded-lg pointer-events-none"
         variants={{
-          rest: { opacity: 0, scale: 0.8 },
+          rest: { opacity: 0 },
           hover: {
-            opacity: [0.3, 0.6, 0.3],
-            scale: [1, 1.05, 1],
+            opacity: [0, 0.4, 0],
             transition: {
               duration: 2,
               repeat: Infinity,
@@ -46,13 +59,12 @@ export default function Buttons1() {
           },
         }}
         style={{
-          boxShadow: '0 0 30px rgba(255, 107, 157, 0.6)',
-          background: 'radial-gradient(circle, rgba(255,107,157,0.4) 0%, transparent 70%)',
+          boxShadow: '0 0 20px var(--color-accent-primary)',
         }}
       />
 
       {/* Content */}
-      <span className="relative z-10">Aura Gradient</span>
+      <span className="relative z-10 drop-shadow-sm">Aura Gradient</span>
     </motion.button>
   );
 }
