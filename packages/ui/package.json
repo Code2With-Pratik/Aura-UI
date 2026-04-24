@@ -1,0 +1,35 @@
+{
+  "name": "@nexaui-library/aura-ui",
+  "version": "1.0.2",
+  "description": "Aura UI - Icon system",
+  "license": "MIT",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && vite build"
+  },
+  "dependencies": {
+    "lucide-react": "^0.460.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "rimraf": "^6.1.3",
+    "vite": "^8.0.10"
+  },
+  "peerDependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  }
+}

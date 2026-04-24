@@ -4,7 +4,7 @@ import { createMDX } from "fumadocs-mdx/next";
 const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
+  transpilePackages: ["aura-ui"],
 };
 
 export default withMDX(nextConfig);
