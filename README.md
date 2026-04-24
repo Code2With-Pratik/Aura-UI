@@ -48,7 +48,7 @@ All tokens live in [app/globals.css](app/globals.css) under a single `@theme` bl
 | [components/Marquee.tsx](components/Marquee.tsx) | CSS-only horizontal ticker for "Latest Updates" |
 | [components/LogoMark.tsx](components/LogoMark.tsx) | Inline SVG mark, lime-accent radial |
 
-## Performance & a11y
+## Performance
 
 - Animations are driven by **CSS variables and transforms** so they stay on the compositor (60fps on retina displays).
 - The grain overlay is a single fixed pseudo-element on `<body>` — no per-component cost.
