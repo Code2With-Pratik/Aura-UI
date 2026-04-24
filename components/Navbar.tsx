@@ -84,8 +84,8 @@ export default function Navbar() {
         <nav className="mx-auto flex h-[68px] w-full max-w-[1480px] items-center gap-4 px-5 md:px-8">
           {/* Brand */}
           <Link href="/" className="flex items-center gap-2.5">
-            <LogoMark size={26} />
-            <span className="text-[15px] font-semibold tracking-tight text-fg">
+            <LogoMark size={28} />
+            <span className="text-[17px] font-semibold tracking-tight text-fg">
               Aura UI
             </span>
           </Link>
@@ -104,11 +104,11 @@ export default function Navbar() {
             type="button"
             onClick={() => setOpen(true)}
             aria-label="Open spotlight search"
-            className="aura-input group ml-auto flex h-10 max-w-[480px] flex-1 items-center gap-2.5 rounded-full px-4 text-left text-sm text-fg-muted transition-colors hover:text-fg"
+            className="aura-input group ml-auto flex h-10 max-w-[480px] flex-1 items-center gap-2.5 rounded-full px-4 text-left text-[15px] text-fg-muted transition-colors hover:text-fg"
           >
             <SearchIcon />
             <span className="flex-1">Search…</span>
-            <kbd className="hidden items-center gap-1 rounded-md border border-border-default bg-fg/5 px-1.5 py-0.5 font-mono text-[10px] text-accent-primary sm:inline-flex">
+            <kbd className="hidden items-center gap-1 rounded-md border border-border-default bg-fg/5 px-1.5 py-0.5 font-mono text-[11px] text-accent-primary sm:inline-flex">
               <span aria-hidden>⌘</span>K
             </kbd>
           </button>
@@ -154,7 +154,7 @@ function NavLink({
   active?: boolean;
   tooltip?: string;
 }) {
-  const className = `inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[13.5px] transition-colors ${
+  const className = `inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[15px] transition-colors ${
     active
       ? "text-fg"
       : "text-fg-muted hover:bg-fg/5 hover:text-fg"
@@ -199,8 +199,8 @@ function NavLink({
 
 function NavIcon({ name }: { name: "grid" | "book" | "type" | "icons" | "github" }) {
   const common = {
-    width: 14,
-    height: 14,
+    width: 16,
+    height: 16,
     viewBox: "0 0 14 14",
     fill: "none",
     stroke: "currentColor",
@@ -242,7 +242,7 @@ function NavIcon({ name }: { name: "grid" | "book" | "type" | "icons" | "github"
       );
     case "github":
       return (
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38v-1.49c-2.23.49-2.7-1.07-2.7-1.07-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.81.06 1.24.83 1.24.83.72 1.24 1.89.88 2.35.67.07-.52.28-.88.51-1.08-1.78-.2-3.65-.89-3.65-3.96 0-.88.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 014 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.74.54 1.49v2.21c0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z" />
         </svg>
       );

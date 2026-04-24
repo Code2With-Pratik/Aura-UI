@@ -66,7 +66,10 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: ACCENT_REHYDRATE }} />
       </head>
       <body>
-        <RootProvider>
+        {/* search.enabled = false disables Fumadocs' built-in ⌘K/Ctrl+K
+            search dialog so the shortcut belongs exclusively to our
+            custom Spotlight (mounted from Navbar.tsx). */}
+        <RootProvider search={{ enabled: false }}>
           {children}
           <ThemePicker />
         </RootProvider>

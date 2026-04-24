@@ -83,7 +83,12 @@ export default function BentoGrid() {
           transition={{ duration: 0.7, delay: i * 0.06, ease: auraEase }}
           className={`aura-card group relative overflow-hidden p-6 md:p-8 ${spanClass(c.span)}`}
           style={{
-            backgroundImage: `linear-gradient(180deg, color-mix(in srgb, var(--color-accent-${c.accent}) 5%, transparent) 0%, transparent 35%), linear-gradient(180deg, rgba(255,255,255,0.03), transparent 60%)`,
+            /* Theme-safe overlays: previously the second gradient used
+               rgba(255,255,255,0.03) which read as a faint cool tint in
+               dark but vanished into the cream surface in light mode.
+               color-mix on var(--color-fg) gives a soft contrasting wash
+               in either theme. */
+            backgroundImage: `linear-gradient(180deg, color-mix(in srgb, var(--color-accent-${c.accent}) 6%, transparent) 0%, transparent 40%), linear-gradient(180deg, color-mix(in srgb, var(--color-fg) 4%, transparent), transparent 60%)`,
             backgroundColor: "var(--color-surface)",
           }}
         >
@@ -192,7 +197,9 @@ function Visual({
               backgroundColor:
                 i % 5 === 0
                   ? color
-                  : "rgba(255,255,255,0.04)",
+                  /* Was rgba(255,255,255,0.04) — invisible on light bg.
+                     fg-based mix reads as a subtle dot in both themes. */
+                  : "color-mix(in srgb, var(--color-fg) 6%, transparent)",
               opacity: i % 5 === 0 ? 0.85 : 1,
             }}
           />
@@ -224,7 +231,15 @@ function Visual({
   return (
     <div className="flex h-28 items-center justify-center overflow-hidden rounded-xl aura-tile">
       <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
-        <circle cx="60" cy="60" r="48" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+        {/* Track ring + label use fg-based theme tokens so they stay
+            visible in both light and dark mode (was hardcoded white). */}
+        <circle
+          cx="60"
+          cy="60"
+          r="48"
+          stroke="color-mix(in srgb, var(--color-fg) 14%, transparent)"
+          strokeWidth="1"
+        />
         <circle
           cx="60"
           cy="60"
@@ -241,7 +256,7 @@ function Visual({
           textAnchor="middle"
           fontFamily="var(--font-mono)"
           fontSize="18"
-          fill="white"
+          fill="var(--color-fg)"
         >
           78%
         </text>

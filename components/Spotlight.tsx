@@ -153,13 +153,21 @@ export default function Spotlight({ open, onClose }: Props) {
     };
   }, [open]);
 
-  // Lock body scroll when open
+  /* Lock body scroll when open — and compensate for the scrollbar that
+     disappears, otherwise the page shifts ~15px on Windows/Linux. */
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    const prevOverflow = document.body.style.overflow;
+    const prevPadding = document.body.style.paddingRight;
     document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = prevOverflow;
+      document.body.style.paddingRight = prevPadding;
     };
   }, [open]);
 
@@ -225,6 +233,7 @@ export default function Spotlight({ open, onClose }: Props) {
             animate={{ scale: 1, y: 0, opacity: 1, filter: "blur(0px)" }}
             exit={{ scale: 0.97, y: -6, opacity: 0, filter: "blur(4px)" }}
             transition={{ duration: 0.32, ease: auraEase }}
+            onAnimationComplete={() => inputRef.current?.focus()}
             className="relative z-10 w-full max-w-[600px] overflow-hidden rounded-2xl border border-[var(--color-border-default)] bg-[var(--color-surface)]/85 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.7)] backdrop-blur-2xl"
           >
             {/* Search input */}

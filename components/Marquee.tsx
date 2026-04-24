@@ -3,6 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { auraEase } from "@/lib/motion";
+import {
+  MarkBrush,
+  MarkCircle,
+  MarkScribble,
+  Sparkle,
+} from "./HandMarkers";
 
 /**
  * Two-row showcase marquee + click-to-maximize lightbox.
@@ -125,25 +131,54 @@ export default function Marquee() {
   const [active, setActive] = useState<ShowcaseItem | null>(null);
 
   /* Page-scroll direction sets animation-direction directly on the DOM —
-     no React state, no re-renders. */
+     no React state, no re-renders.
+
+     Smoothness fix: trackpad momentum / mouse-wheel jitter emits tiny
+     opposite-sign deltas constantly, which previously thrashed the
+     animation-direction back and forth and looked jittery. We now:
+       - accumulate same-sign deltas (sign flip resets the accumulator)
+       - require ~30 px of sustained motion before flipping
+       - enforce a 400 ms cooldown between flips
+     This kills the micro-flip storm without harming responsiveness. */
   useEffect(() => {
     let lastY = window.scrollY;
     let currentDir: "normal" | "reverse" = "normal";
+    let accumDelta = 0;
+    let lastFlipAt = 0;
     let ticking = false;
+
+    const FLIP_THRESHOLD_PX = 30;
+    const FLIP_COOLDOWN_MS = 400;
 
     const update = () => {
       ticking = false;
       const y = window.scrollY;
       const delta = y - lastY;
-      if (Math.abs(delta) > 6) {
-        const next: "normal" | "reverse" = delta > 0 ? "normal" : "reverse";
-        if (next !== currentDir) {
-          currentDir = next;
-          if (rowARef.current) rowARef.current.style.animationDirection = next;
-          if (rowBRef.current) rowBRef.current.style.animationDirection = next;
-        }
-        lastY = y;
+      lastY = y;
+      if (delta === 0) return;
+
+      // Reset accumulator on sign flip; otherwise compound.
+      if (Math.sign(delta) !== Math.sign(accumDelta)) {
+        accumDelta = delta;
+      } else {
+        accumDelta += delta;
       }
+
+      if (Math.abs(accumDelta) < FLIP_THRESHOLD_PX) return;
+
+      const now = performance.now();
+      if (now - lastFlipAt < FLIP_COOLDOWN_MS) return;
+
+      const next: "normal" | "reverse" = accumDelta > 0 ? "normal" : "reverse";
+      if (next === currentDir) {
+        accumDelta = 0;
+        return;
+      }
+      currentDir = next;
+      lastFlipAt = now;
+      accumDelta = 0;
+      if (rowARef.current) rowARef.current.style.animationDirection = next;
+      if (rowBRef.current) rowBRef.current.style.animationDirection = next;
     };
     const onScroll = () => {
       if (ticking) return;
@@ -178,11 +213,14 @@ export default function Marquee() {
       <section
         id="updates"
         aria-label="Showcase"
-        className="relative border-y border-border-default bg-surface/40 py-10 overflow-hidden"
+        className="relative border-b border-border-default bg-surface/40 pt-2 pb-6 overflow-hidden md:pb-4"
       >
         {/* Edge fades */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-bg to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-bg to-transparent" />
+
+        {/* Centered section header */}
+        <ShowcaseHeader />
 
         <Row
           ref={rowARef}
@@ -215,6 +253,76 @@ export default function Marquee() {
 
       <Lightbox item={active} onClose={() => setActive(null)} />
     </>
+  );
+}
+
+/* ────── Centered section header ──────
+   Eyebrow + "Show case" title where 'case' sits on top of a hand-drawn
+   accent brush wash, then a thin gradient line + center diamond accent
+   to draw the eye into the rows below. All accent colors flow from
+   var(--color-accent-primary) so the ThemePicker FAB updates them live. */
+function ShowcaseHeader() {
+  return (
+    <header className="relative z-20 mb-10 flex flex-col items-center px-6 text-center md:mb-14">
+      <p className="eyebrow mb-3">Gallery</p>
+
+      <h2 className="display-clamp text-balance">
+        Show
+        <span className="relative ml-1.5 inline-block px-2.5 align-baseline">
+          {/* Sparkles — four 4-point stars positioned around the word.
+              Each twinkles on its own staggered animation so the cluster
+              feels alive without being noisy. */}
+          <Sparkle className="absolute -left-1 -top-1 h-4 w-4" delay="0s" />
+          <Sparkle className="absolute -right-2 top-2 h-3 w-3" delay="0.5s" />
+          <Sparkle className="absolute -bottom-1 left-3 h-2.5 w-2.5" delay="1s" />
+          <Sparkle className="absolute -right-1 -bottom-2 h-3.5 w-3.5" delay="1.4s" />
+
+          <span
+            className="relative not-italic font-sans font-light"
+            style={{ color: "var(--color-accent-primary)" }}
+          >
+            case
+          </span>
+        </span>
+      </h2>
+
+      {/* Attractive bottom accent line — thin gradient strokes flanking
+          a diamond accent. Uses color-mix so it stays accent-tinted in
+          both themes. */}
+      <div
+        aria-hidden
+        className="mt-5 flex items-center gap-2.5"
+      >
+        <span
+          className="h-[2px] w-14 rounded-full"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent-primary) 75%, transparent))",
+          }}
+        />
+        <span
+          className="h-1.5 w-1.5 rotate-45"
+          style={{
+            backgroundColor: "var(--color-accent-primary)",
+            boxShadow:
+              "0 0 12px color-mix(in srgb, var(--color-accent-primary) 70%, transparent)",
+          }}
+        />
+        <span
+          className="h-[2px] w-14 rounded-full"
+          style={{
+            background:
+              "linear-gradient(90deg, color-mix(in srgb, var(--color-accent-primary) 75%, transparent), transparent)",
+          }}
+        />
+      </div>
+
+      <p className="mt-6 max-w-[520px] text-pretty text-base leading-relaxed text-fg/70 md:text-lg">
+        Real <MarkScribble>surfaces</MarkScribble> stitched from the same{" "}
+        <MarkCircle>primitives</MarkCircle> — click any{" "}
+        <MarkBrush>card</MarkBrush> to open it as a window.
+      </p>
+    </header>
   );
 }
 

@@ -93,15 +93,26 @@ export default function WindowMockup() {
               />
               <TrafficLight color="#28c840" label="Zoom" />
             </div>
-            <div className="pointer-events-none absolute inset-x-0 flex justify-center">
-              <span className="font-mono text-[12px] text-fg-muted">
-                Aura UI &mdash; Component Explorer
+            {/* Centered title — kept clear of the traffic lights on the
+                left via px-20, and the suffix is hidden on small screens
+                so the title never overflows or collides on mobile. */}
+            <div className="pointer-events-none absolute inset-x-0 flex justify-center px-20">
+              <span className="truncate font-mono text-[10px] text-fg-muted sm:text-[12px]">
+                Aura UI
+                <span className="hidden sm:inline">
+                  {" "}&mdash; Component Explorer
+                </span>
               </span>
             </div>
             <div className="ml-auto" />
           </div>
 
-          <div className="flex min-h-[480px]">
+          {/* Locked height — was min-h-[480px], which allowed taller views
+              (Card, Badge on small screens) to push the window — and the
+              showcase section below — by 30-200px every auto-cycle. With
+              a fixed 540px row + scrollable content, the window's outer
+              dimensions stay constant across all six tabs and breakpoints. */}
+          <div className="flex h-[540px]">
             {/* Sidebar — hidden on mobile */}
             <aside className="hidden w-[210px] shrink-0 border-r border-border-default bg-[var(--color-surface-elevated)]/40 p-3 md:block">
               {(["INPUTS", "DISPLAY"] as const).map((group) => (
@@ -135,8 +146,12 @@ export default function WindowMockup() {
               ))}
             </aside>
 
-            {/* Content — switches per active sidebar item */}
-            <div className="flex-1 p-5 md:p-6">
+            {/* Content — switches per active sidebar item.
+                overflow-y-auto so taller views (Card on sm, Badge on
+                mobile) scroll INSIDE the locked window instead of
+                growing it. The motion.div re-keys per tab so scroll
+                resets to top automatically. */}
+            <div className="flex-1 overflow-y-auto p-5 md:p-6">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active}

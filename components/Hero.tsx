@@ -4,6 +4,14 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/motion";
 import HoneycombGallery from "./HoneycombGallery";
+import {
+  MarkBox,
+  MarkBrush,
+  MarkCircle,
+  MarkDoubleUnderline,
+  MarkScribble,
+  MarkSunburst,
+} from "./HandMarkers";
 
 /**
  * Hero
@@ -21,7 +29,7 @@ export default function Hero() {
       {/* Top-left decoration — Honeycomb showcase */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-[-40px] top-8 z-10 hidden lg:block"
+        className="pointer-events-none absolute left-2 top-8 z-10 hidden lg:block"
       >
         <div className="pointer-events-auto">
           <HoneycombGallery />
@@ -54,8 +62,12 @@ export default function Hero() {
           variants={fadeUp}
           className="mt-6 max-w-[520px] text-pretty text-base leading-relaxed text-fg/70 md:text-lg"
         >
-          A macOS-inspired component system for teams who care about depth,
-          motion, and the quiet details. Built for Next.js and Tailwind v4.
+          A <MarkCircle>macOS-inspired</MarkCircle> component system for teams
+          who care about <MarkDoubleUnderline>depth</MarkDoubleUnderline>,{" "}
+          <MarkBrush>motion</MarkBrush>, and the{" "}
+          <MarkScribble>quiet details</MarkScribble>. Built for{" "}
+          <MarkBox>Next.js</MarkBox> and{" "}
+          <MarkSunburst>Tailwind v4</MarkSunburst>.
         </motion.p>
 
         <motion.div
@@ -119,3 +131,4 @@ function HeroBadge({ children }: { children: React.ReactNode }) {
     </span>
   );
 }
+
