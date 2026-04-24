@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Arima, Instrument_Serif, Geist_Mono } from "next/font/google";
 import { RootProvider } from "fumadocs-ui/provider";
 import ThemePicker from "@/components/ThemePicker";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const arima = Arima({
@@ -70,7 +71,9 @@ export default function RootLayout({
             search dialog so the shortcut belongs exclusively to our
             custom Spotlight (mounted from Navbar.tsx). */}
         <RootProvider search={{ enabled: false }}>
-          {children}
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
           <ThemePicker />
         </RootProvider>
       </body>
