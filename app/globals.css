@@ -243,20 +243,25 @@
       -3px -3px 10px rgba(255, 255, 245, 0.85);
   }
 
-  /* Window mockup chrome — themed shadow stack. */
+  /* Window mockup chrome — frosted-glass surface with deep shadow. */
   .aura-window {
-    background: var(--color-surface);
+    background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+    backdrop-filter: blur(24px) saturate(170%);
+    -webkit-backdrop-filter: blur(24px) saturate(170%);
     border: 1px solid var(--color-border-default);
     border-radius: 1rem;
     box-shadow:
       0 60px 120px -40px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
       inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   }
   .light .aura-window {
+    background: color-mix(in srgb, var(--color-surface) 55%, transparent);
     box-shadow:
       22px 22px 60px rgba(170, 155, 60, 0.36),
       -10px -10px 32px rgba(255, 255, 245, 1),
-      inset 0 0 0 1px rgba(255, 255, 245, 0.7);
+      inset 0 1px 0 rgba(255, 255, 245, 0.85),
+      inset 0 0 0 1px rgba(255, 255, 245, 0.5);
   }
 
   /* Stacked-cards effect — places two ghost cards behind the window

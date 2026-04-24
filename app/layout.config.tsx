@@ -20,6 +20,6 @@ export const baseOptions: BaseLayoutProps = {
     { text: "Components", url: "/components" },
     { text: "Fonts", url: "/fonts" },
     { text: "Icons", url: "/icons" },
-    { text: "GitHub", url: "https://github.com/", external: true },
+    { text: "GitHub", url: "https://github.com/Code2With-Pratik/Aura-UI", external: true },
   ],
 };

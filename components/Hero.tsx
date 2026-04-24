@@ -15,13 +15,13 @@ import HoneycombGallery from "./HoneycombGallery";
  */
 export default function Hero() {
   return (
-    <section className="relative isolate overflow-hidden pt-16 pb-24 md:pt-24 md:pb-36">
+    <section className="relative isolate overflow-hidden pt-16 pb-12 md:pt-24 md:pb-20">
       <div className="hero-glow" />
 
       {/* Top-left decoration — Honeycomb showcase */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-[-40px] top-20 z-10 hidden lg:block"
+        className="pointer-events-none absolute left-[-40px] top-8 z-10 hidden lg:block"
       >
         <div className="pointer-events-auto">
           <HoneycombGallery />
@@ -64,10 +64,17 @@ export default function Hero() {
         >
           <Link
             href="/components"
-            className="group inline-flex items-center gap-2 rounded-full bg-accent-primary px-5 py-2.5 text-sm font-semibold text-black transition-all duration-300 hover:scale-[1.02]"
+            className="group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 hover:scale-[1.02]"
             style={{
+              background:
+                "color-mix(in srgb, var(--color-accent-primary) 28%, transparent)",
+              backdropFilter: "blur(18px) saturate(180%)",
+              WebkitBackdropFilter: "blur(18px) saturate(180%)",
+              border:
+                "1px solid color-mix(in srgb, var(--color-accent-primary) 55%, transparent)",
+              color: "var(--color-fg)",
               boxShadow:
-                "0 18px 50px -15px color-mix(in srgb, var(--color-accent-primary) 55%, transparent)",
+                "inset 0 1px 0 rgba(255,255,255,0.18), 0 18px 50px -15px color-mix(in srgb, var(--color-accent-primary) 55%, transparent)",
             }}
           >
             Explore Components
@@ -83,7 +90,7 @@ export default function Hero() {
           </Link>
           <Link
             href="/docs"
-            className="aura-border inline-flex items-center gap-2 rounded-full bg-fg/2 px-5 py-2.5 text-sm font-medium text-fg/85 transition-colors hover:bg-fg/5 hover:text-fg"
+            className="aura-glass inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-fg/90 transition-colors hover:text-fg"
           >
             <span className="font-mono text-xs text-fg/50">⌘</span> Read the docs
           </Link>

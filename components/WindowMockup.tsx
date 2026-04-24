@@ -266,7 +266,19 @@ function ButtonView() {
   return (
     <ViewGrid>
       <PreviewCard label="primary">
-        <button className="rounded-full bg-accent-primary px-4 py-1.5 text-[13px] font-semibold text-black transition-transform duration-300 hover:scale-[1.03]">
+        <button
+          className="rounded-full px-4 py-1.5 text-[13px] font-semibold text-fg transition-all duration-300 hover:scale-[1.03]"
+          style={{
+            background:
+              "color-mix(in srgb, var(--color-accent-primary) 28%, transparent)",
+            backdropFilter: "blur(14px) saturate(180%)",
+            WebkitBackdropFilter: "blur(14px) saturate(180%)",
+            border:
+              "1px solid color-mix(in srgb, var(--color-accent-primary) 55%, transparent)",
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 24px -10px color-mix(in srgb, var(--color-accent-primary) 55%, transparent)",
+          }}
+        >
           Click me
         </button>
       </PreviewCard>

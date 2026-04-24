@@ -15,7 +15,13 @@ const leftLinks = [
 const rightLinks = [
   { label: "Fonts", href: "/fonts", icon: "type" as const },
   { label: "Icons", href: "/icons", icon: "icons" as const },
-  { label: "GitHub", href: "https://github.com/", icon: "github" as const, external: true },
+  {
+    label: "GitHub",
+    href: "https://github.com/Code2With-Pratik/Aura-UI",
+    icon: "github" as const,
+    external: true,
+    tooltip: "⭐ Star this Repository",
+  },
 ];
 
 export default function Navbar() {
@@ -139,12 +145,14 @@ function NavLink({
   icon,
   external,
   active,
+  tooltip,
 }: {
   label: string;
   href: string;
   icon: "grid" | "book" | "type" | "icons" | "github";
   external?: boolean;
   active?: boolean;
+  tooltip?: string;
 }) {
   const className = `inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[13.5px] transition-colors ${
     active
@@ -155,12 +163,25 @@ function NavLink({
     <>
       <NavIcon name={icon} />
       {label}
+      {tooltip && (
+        <span
+          role="tooltip"
+          className="aura-glass pointer-events-none absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 whitespace-nowrap rounded-full px-3 py-1.5 text-[12px] font-medium text-fg opacity-0 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] transition-all duration-200 group-hover/navlink:opacity-100 group-hover/navlink:translate-x-[-50%] group-hover/navlink:translate-y-1"
+        >
+          {tooltip}
+        </span>
+      )}
     </>
   );
 
+  /* Wrapper li uses `relative` + a named hover group so the absolutely
+     positioned tooltip can anchor to the link and only show on hover of
+     this specific link (not any other navlink). */
+  const wrapperClass = "group/navlink relative";
+
   if (external) {
     return (
-      <li>
+      <li className={wrapperClass}>
         <a href={href} target="_blank" rel="noreferrer" className={className}>
           {inner}
         </a>
@@ -168,7 +189,7 @@ function NavLink({
     );
   }
   return (
-    <li>
+    <li className={wrapperClass}>
       <Link href={href} className={className}>
         {inner}
       </Link>

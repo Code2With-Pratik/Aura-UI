@@ -82,7 +82,7 @@ export default function Spotlight({ open, onClose }: Props) {
         group: "NAVIGATE",
         icon: <GitHubIcon />,
         hint: "↗",
-        href: "https://github.com/",
+        href: "https://github.com/Code2With-Pratik/Aura-UI",
         external: true,
       },
       {
