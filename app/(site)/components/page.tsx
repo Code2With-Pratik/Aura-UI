@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   MarkBrush,
   MarkCircle,
@@ -11,12 +12,19 @@ export const metadata: Metadata = {
   description: "Every primitive that ships with Aura UI today.",
 };
 
-const groups = [
+type Item = {
+  name: string;
+  desc: string;
+  accent: "primary" | "secondary" | "tertiary";
+  href?: string;
+};
+
+const groups: { name: string; items: Item[] }[] = [
   {
     name: "Inputs",
     items: [
-      { name: "Button", desc: "Primary / secondary / ghost variants", accent: "primary" },
-      { name: "Input", desc: "Text, search, with leading/trailing icons", accent: "secondary" },
+      { name: "Button", desc: "8 animated variants — gradient, glass, clay, more", accent: "primary", href: "/components/Buttons" },
+      { name: "Input", desc: "Text, search, with leading/trailing icons", accent: "secondary", href: "/components/Input" },
       { name: "Select", desc: "Native + custom dropdown", accent: "tertiary" },
       { name: "Toggle", desc: "Animated switch with tactile snap", accent: "primary" },
       { name: "Checkbox", desc: "Lime check on dark surface", accent: "primary" },
@@ -25,9 +33,9 @@ const groups = [
   {
     name: "Display",
     items: [
-      { name: "Card", desc: "Surface + subtle border + hover-lift", accent: "secondary" },
+      { name: "Card", desc: "Surface + subtle border + hover-lift", accent: "secondary", href: "/components/Cards" },
       { name: "Badge", desc: "Pill in any of three accents", accent: "tertiary" },
-      { name: "Table", desc: "Dense, ruled, with header sort", accent: "primary" },
+      { name: "Table", desc: "Dense, ruled, with header sort", accent: "primary", href: "/components/Tables" },
       { name: "Avatar Stack", desc: "Overlapping circles with overflow chip", accent: "secondary" },
       { name: "Progress", desc: "Animated linear bar with gradient", accent: "secondary" },
     ],
@@ -38,6 +46,7 @@ const groups = [
       { name: "Spotlight", desc: "⌘K command palette with keyboard nav", accent: "primary" },
       { name: "Toast", desc: "Anchored stack with auto-dismiss", accent: "tertiary" },
       { name: "Tooltip", desc: "Floating label, glass surface", accent: "secondary" },
+      { name: "Footer", desc: "Marketing footer with links + legal row", accent: "primary", href: "/components/Footer" },
       { name: "Window", desc: "macOS chrome with traffic lights + genie", accent: "primary" },
     ],
   },
@@ -130,36 +139,54 @@ export default function ComponentsPage() {
             </div>
 
             <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {g.items.map((item) => (
-                <li
-                  key={item.name}
-                  className="aura-card group relative overflow-hidden p-5"
-                >
-                  <span
-                    aria-hidden
-                    className="absolute inset-x-0 top-0 h-px"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, var(--color-accent-${item.accent}), transparent)`,
-                      opacity: 0.4,
-                    }}
-                  />
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-[15px] font-medium text-fg">{item.name}</h3>
-                      <p className="mt-1 text-[13px] leading-relaxed text-fg/55">
-                        {item.desc}
-                      </p>
-                    </div>
+              {g.items.map((item) => {
+                const inner = (
+                  <>
                     <span
-                      className="h-2 w-2 shrink-0 rounded-full transition-transform duration-300 group-hover:scale-150"
+                      aria-hidden
+                      className="absolute inset-x-0 top-0 h-px"
                       style={{
-                        backgroundColor: `var(--color-accent-${item.accent})`,
-                        boxShadow: `0 0 14px var(--color-accent-${item.accent})`,
+                        background: `linear-gradient(90deg, transparent, var(--color-accent-${item.accent}), transparent)`,
+                        opacity: 0.4,
                       }}
                     />
-                  </div>
-                </li>
-              ))}
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-[15px] font-medium text-fg">{item.name}</h3>
+                        <p className="mt-1 text-[13px] leading-relaxed text-fg/55">
+                          {item.desc}
+                        </p>
+                      </div>
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-full transition-transform duration-300 group-hover:scale-150"
+                        style={{
+                          backgroundColor: `var(--color-accent-${item.accent})`,
+                          boxShadow: `0 0 14px var(--color-accent-${item.accent})`,
+                        }}
+                      />
+                    </div>
+                  </>
+                );
+                /* Items with `href` become full-card links so the entire
+                   tile is clickable — keeps the visual recipe intact while
+                   surfacing routes (Buttons, Cards, Tables, Footer, ...). */
+                return (
+                  <li key={item.name}>
+                    {item.href ? (
+                      <Link
+                        href={item.href}
+                        className="aura-card group relative block overflow-hidden p-5"
+                      >
+                        {inner}
+                      </Link>
+                    ) : (
+                      <div className="aura-card group relative overflow-hidden p-5">
+                        {inner}
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </section>
         ))}
