@@ -26,7 +26,7 @@ const groups: { name: string; items: Item[] }[] = [
       { name: "Button", desc: "8 animated variants — gradient, glass, clay, more", accent: "primary", href: "/components/Buttons" },
       { name: "Input", desc: "Text, search, with leading/trailing icons", accent: "secondary", href: "/components/Input" },
       { name: "Select", desc: "Native + custom dropdown", accent: "tertiary" },
-      { name: "Toggle", desc: "Animated switch with tactile snap", accent: "primary" },
+      { name: "Theme Toggle", desc: "Tactile theme switch with GIF transitions", accent: "primary", href: "/components/ThemeToggle" },
       { name: "Checkbox", desc: "Lime check on dark surface", accent: "primary" },
     ],
   },
