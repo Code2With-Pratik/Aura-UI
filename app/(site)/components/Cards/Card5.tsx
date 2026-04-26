@@ -1,29 +1,128 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function Card5() {
+export default function Card11() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Assuming CardCoverImage.jpg is located in the public folder
+  const frontImageUrl = "/CardCoverImage.jpg";
+
+  // Use inline styles for a drop-in component.
+  const styles = {
+    cardContainer: {
+      perspective: '1000px', // Creates the 3D space for the flip
+      width: '280px',
+      height: '420px',
+      cursor: 'pointer',
+      margin: '20px',
+    },
+    cardInner: {
+      position: 'relative',
+      width: '100%',
+      height: '100%',
+      textAlign: 'center',
+      transition: 'transform 0.8s',
+      transformStyle: 'preserve-3d',
+      // Condition for flipping based on hover state
+      transform: isHovered ? 'rotateY(180deg)' : 'rotateY(0deg)',
+      borderRadius: '30px', // Common aesthetic for modern cards
+      boxShadow: isHovered
+        ? '0 20px 40px rgba(0,0,0,0.3)'
+        : '0 8px 16px rgba(0,0,0,0.1)',
+    },
+    cardFace: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      backfaceVisibility: 'hidden', // Hides the side not facing the user
+      display: 'flex',
+      flexDirection: 'column',
+      borderRadius: '30px',
+      overflow: 'hidden',
+    },
+    cardFront: {
+      backgroundColor: '#bbb',
+      color: 'black',
+      zIndex: 2,
+    },
+    cardBack: {
+      // Styling for the back to match the "dark mode" UI seen in the images
+      backgroundColor: '#121212', 
+      color: 'white',
+      transform: 'rotateY(180deg)', // Initially rotated out of view
+      padding: '30px',
+      textAlign: 'left',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+    },
+    frontImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      display: 'block',
+    },
+    heading: {
+      fontSize: '24px',
+      fontWeight: 'bold',
+      marginBottom: '20px',
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+    },
+    paragraph: {
+      fontSize: '14px',
+      lineHeight: '1.7',
+      marginBottom: '10px',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      color: '#e0e0e0',
+    },
+    readMore: {
+      fontSize: '16px',
+      fontWeight: 'bold',
+      color: '#ffffff',
+      textDecoration: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginTop: 'auto', // Pushes the link to the bottom
+      padding: '10px 0',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+    },
+    arrow: {
+      fontSize: '20px',
+      transform: 'translateY(1px)',
+    }
+  };
+
   return (
-    <div className="w-72 h-72 bg-white dark:bg-zinc-900 rounded-3xl border border-neutral-200 dark:border-zinc-800 overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-shadow duration-500">
-      
-      <div className="w-full h-full p-6 flex flex-col justify-start relative transform transition-transform duration-500 ease-in-out group-hover:-translate-y-4">
+    <div
+      // Typescript help for style object
+      style={styles.cardContainer as React.CSSProperties}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div style={styles.cardInner as React.CSSProperties}>
         
-        {/* Icon & Title */}
-        <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center mb-6">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        {/* Front Side */}
+        <div style={{ ...styles.cardFace, ...styles.cardFront } as React.CSSProperties}>
+          <img
+            src={frontImageUrl}
+            alt="Card Cover"
+            style={styles.frontImage as React.CSSProperties}
+          />
         </div>
-        
-        <h3 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">Time Tracking</h3>
-        <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">
-          Monitor your productivity and analyze hours spent on development tasks.
-        </p>
 
-        {/* Action Buttons (Hidden initially, slides up) */}
-        <div className="absolute bottom-[-32px] left-6 right-6 opacity-0 group-hover:opacity-100 group-hover:bottom-6 transition-all duration-500 delay-100 flex gap-2">
-          <button className="flex-1 bg-zinc-900 dark:bg-white text-white dark:text-black py-2 rounded-lg font-medium hover:scale-105 transition-transform">
-            Launch
-          </button>
-          <button className="px-4 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-lg hover:bg-zinc-200 transition-colors">
-            •••
-          </button>
+        {/* Back Side (Hover State) */}
+        <div style={{ ...styles.cardFace, ...styles.cardBack } as React.CSSProperties}>
+          <h2 style={styles.heading as React.CSSProperties}>CARD HEADING</h2>
+          <p style={styles.paragraph as React.CSSProperties}>1. Lorem ipsum dolor sit amet consectetur...</p>
+          <p style={styles.paragraph as React.CSSProperties}>2. Quis consectetur cupiditate vitae...</p>
+          <p style={styles.paragraph as React.CSSProperties}>3. Vitae consequatur quis consectetur cupiditate...</p>
+          
+          <a href="" target="_blank" rel="noopener noreferrer" style={styles.readMore as React.CSSProperties}>
+            Read More <span style={styles.arrow as React.CSSProperties}>→</span>
+          </a>
         </div>
 
       </div>

@@ -23,6 +23,8 @@ import Card7 from "./Card7";
 import Card8 from "./Card8";
 import Card9 from "./Card9";
 import Card10 from "./Card10";
+import Card11 from "./Card11";
+import Card12 from "./Card12";
 
 export interface Variant {
   id: number;
@@ -45,6 +47,8 @@ const PREVIEWS: Record<number, ComponentType> = {
   8: Card8,
   9: Card9,
   10: Card10,
+  11: Card11,
+  12: Card12,
 };
 
 function Preview({ id }: { id: number }) {

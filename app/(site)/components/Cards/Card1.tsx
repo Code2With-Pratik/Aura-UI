@@ -8,11 +8,12 @@ export default function Card1() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext('webgl');
-    if (!gl) {
+    const gl_raw = canvas.getContext('webgl');
+    if (!gl_raw) {
       console.error('WebGL not supported');
       return;
     }
+    const gl = gl_raw;
 
     gl.getExtension('OES_texture_float');
 
@@ -189,12 +190,12 @@ export default function Card1() {
 
     // --- WebGL Helpers ---
     function createShader(sourceCode: string, type: number) {
-      const shader = gl!.createShader(type)!;
-      gl!.shaderSource(shader, sourceCode);
-      gl!.compileShader(shader);
-      if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
-        console.error(gl!.getShaderInfoLog(shader));
-        gl!.deleteShader(shader);
+      const shader = gl.createShader(type)!;
+      gl.shaderSource(shader, sourceCode);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
         return null;
       }
       return shader;
@@ -203,12 +204,12 @@ export default function Card1() {
     const vertexShader = createShader(vertexShaderSrc, gl.VERTEX_SHADER)!;
 
     function createShaderProgram(vs: WebGLShader, fs: WebGLShader) {
-      const program = gl!.createProgram()!;
-      gl!.attachShader(program, vs);
-      gl!.attachShader(program, fs);
-      gl!.linkProgram(program);
-      if (!gl!.getProgramParameter(program, gl!.LINK_STATUS)) {
-        console.error(gl!.getProgramInfoLog(program));
+      const program = gl.createProgram()!;
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
         return null;
       }
       return program;
@@ -216,10 +217,10 @@ export default function Card1() {
 
     function getUniforms(program: WebGLProgram) {
       const uniforms: Record<string, WebGLUniformLocation | null> = {};
-      const uniformCount = gl!.getProgramParameter(program, gl!.ACTIVE_UNIFORMS);
+      const uniformCount = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
       for (let i = 0; i < uniformCount; i++) {
-        const uniformName = gl!.getActiveUniform(program, i)!.name;
-        uniforms[uniformName] = gl!.getUniformLocation(program, uniformName);
+        const uniformName = gl.getActiveUniform(program, i)!.name;
+        uniforms[uniformName] = gl.getUniformLocation(program, uniformName);
       }
       return uniforms;
     }
@@ -276,7 +277,7 @@ export default function Card1() {
       }
     }
 
-    function createFBO(w: number, h: number, type = gl.RGBA) {
+    function createFBO(w: number, h: number, type: GLenum = gl.RGBA) {
       gl.activeTexture(gl.TEXTURE0);
       const texture = gl.createTexture();
       gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -310,7 +311,7 @@ export default function Card1() {
       };
     }
 
-    function createDoubleFBO(w: number, h: number, type: number = gl.RGBA) {
+    function createDoubleFBO(w: number, h: number, type: GLenum = gl.RGBA) {
       let fbo1 = createFBO(w, h, type);
       let fbo2 = createFBO(w, h, type);
       return {
