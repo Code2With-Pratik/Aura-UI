@@ -4,7 +4,7 @@ export default function Card5() {
   return (
     <div className="w-72 h-72 bg-white dark:bg-zinc-900 rounded-3xl border border-neutral-200 dark:border-zinc-800 overflow-hidden group cursor-pointer shadow-sm hover:shadow-2xl transition-shadow duration-500">
       
-      <div className="w-full h-full p-6 flex flex-col justify-start relative transform transition-transform duration-500 ease-in-out group-hover:-translate-y-8">
+      <div className="w-full h-full p-6 flex flex-col justify-start relative transform transition-transform duration-500 ease-in-out group-hover:-translate-y-4">
         
         {/* Icon & Title */}
         <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center mb-6">
@@ -17,7 +17,7 @@ export default function Card5() {
         </p>
 
         {/* Action Buttons (Hidden initially, slides up) */}
-        <div className="absolute bottom-[-40px] left-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 flex gap-2">
+        <div className="absolute bottom-[-32px] left-6 right-6 opacity-0 group-hover:opacity-100 group-hover:bottom-6 transition-all duration-500 delay-100 flex gap-2">
           <button className="flex-1 bg-zinc-900 dark:bg-white text-white dark:text-black py-2 rounded-lg font-medium hover:scale-105 transition-transform">
             Launch
           </button>

@@ -3,18 +3,15 @@ import React from 'react';
 export default function Card8() {
   return (
     <>
-      <div className="gev-card-wrapper">
-        {/* You can easily change the hover color by modifying the --color variable here */}
-        <div className="gev-card" style={{ "--color": "#da9696" } as React.CSSProperties}>
-          <span>1</span>
-          <h2>Card Heading</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod nam
-            quis consectetur, cupiditate vitae consequatur.
-          </p>
-          <a href="#">read more</a>
-        </div>
-      </div>
+    <div className="gev-card" style={{ "--color": "#da9696" } as React.CSSProperties}>
+      <span>1</span>
+      <h2>Card Heading</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod nam
+        quis consectetur, cupiditate vitae consequatur.
+      </p>
+      <a href="#">read more</a>
+    </div>
 
       <style dangerouslySetInnerHTML={{ __html: styles }} />
     </>
@@ -37,8 +34,9 @@ const styles = `
     padding: 120px 30px 30px;
     position: relative;
     z-index: 1;
-    width: 100%;
-    max-width: 350px;
+    width: 320px;
+    min-width: 320px;
+    border-radius: 2rem;
     overflow: hidden;
   }
 

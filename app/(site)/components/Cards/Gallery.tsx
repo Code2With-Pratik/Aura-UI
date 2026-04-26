@@ -21,6 +21,8 @@ import Card5 from "./Card5";
 import Card6 from "./Card6";
 import Card7 from "./Card7";
 import Card8 from "./Card8";
+import Card9 from "./Card9";
+import Card10 from "./Card10";
 
 export interface Variant {
   id: number;
@@ -41,6 +43,8 @@ const PREVIEWS: Record<number, ComponentType> = {
   6: Card6,
   7: Card7,
   8: Card8,
+  9: Card9,
+  10: Card10,
 };
 
 function Preview({ id }: { id: number }) {
@@ -48,8 +52,8 @@ function Preview({ id }: { id: number }) {
   if (!Component) return null;
   
   return (
-    <div className="flex h-full w-full items-center justify-center pointer-events-none">
-      <div className="flex items-center justify-center origin-center scale-[0.45] sm:scale-[0.5] md:scale-[0.55] transition-transform duration-300">
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="flex shrink-0 w-max items-center justify-center origin-center scale-[0.32] sm:scale-[0.38] md:scale-[0.42] transition-transform duration-500 ease-aura">
          <Component />
       </div>
     </div>
@@ -121,7 +125,7 @@ export default function Gallery({
                   className="aura-card group flex flex-col overflow-hidden p-4 outline-none"
                 >
                   <div className="flex flex-1 items-center justify-center">
-                    <div className="flex h-[340px] w-full items-center justify-center rounded-lg bg-black/5 dark:bg-black/40 p-4 overflow-hidden relative">
+                    <div className="flex h-[180px] w-full items-center justify-center rounded-lg bg-black/5 dark:bg-black/40 p-4 overflow-hidden relative">
                       <Preview id={v.id} />
                     </div>
                   </div>
