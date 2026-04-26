@@ -189,12 +189,12 @@ export default function Card1() {
 
     // --- WebGL Helpers ---
     function createShader(sourceCode: string, type: number) {
-      const shader = gl.createShader(type)!;
-      gl.shaderSource(shader, sourceCode);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error(gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
+      const shader = gl!.createShader(type)!;
+      gl!.shaderSource(shader, sourceCode);
+      gl!.compileShader(shader);
+      if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
+        console.error(gl!.getShaderInfoLog(shader));
+        gl!.deleteShader(shader);
         return null;
       }
       return shader;
@@ -203,12 +203,12 @@ export default function Card1() {
     const vertexShader = createShader(vertexShaderSrc, gl.VERTEX_SHADER)!;
 
     function createShaderProgram(vs: WebGLShader, fs: WebGLShader) {
-      const program = gl.createProgram()!;
-      gl.attachShader(program, vs);
-      gl.attachShader(program, fs);
-      gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.error(gl.getProgramInfoLog(program));
+      const program = gl!.createProgram()!;
+      gl!.attachShader(program, vs);
+      gl!.attachShader(program, fs);
+      gl!.linkProgram(program);
+      if (!gl!.getProgramParameter(program, gl!.LINK_STATUS)) {
+        console.error(gl!.getProgramInfoLog(program));
         return null;
       }
       return program;
@@ -216,10 +216,10 @@ export default function Card1() {
 
     function getUniforms(program: WebGLProgram) {
       const uniforms: Record<string, WebGLUniformLocation | null> = {};
-      const uniformCount = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+      const uniformCount = gl!.getProgramParameter(program, gl!.ACTIVE_UNIFORMS);
       for (let i = 0; i < uniformCount; i++) {
-        const uniformName = gl.getActiveUniform(program, i)!.name;
-        uniforms[uniformName] = gl.getUniformLocation(program, uniformName);
+        const uniformName = gl!.getActiveUniform(program, i)!.name;
+        uniforms[uniformName] = gl!.getUniformLocation(program, uniformName);
       }
       return uniforms;
     }
