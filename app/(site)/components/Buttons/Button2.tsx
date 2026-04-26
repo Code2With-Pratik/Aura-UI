@@ -1,37 +1,45 @@
-'use client';
+import React from 'react';
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-
-export default function Buttons2() {
-  const [isPressed, setIsPressed] = useState(false);
-
+export default function Button2() {
   return (
-    <motion.button
-      className="relative px-8 py-3 font-semibold text-white rounded-lg overflow-hidden"
-      onMouseDown={() => setIsPressed(true)}
-      onMouseUp={() => setIsPressed(false)}
-      onMouseLeave={() => setIsPressed(false)}
-      animate={{
-        y: isPressed ? 2 : 0,
-        boxShadow: isPressed
-          ? '0px 2px 8px rgba(0, 0, 0, 0.3)'
-          : '0px 4px 16px rgba(0, 0, 0, 0.4)',
-      }}
-      transition={{
-        type: 'spring',
-        stiffness: 400,
-        damping: 30,
-      }}
-      style={{
-        background: 'linear-gradient(135deg, #ff9a56 0%, #ff7043 100%)',
-      }}
-    >
-      {/* Hard shadow backdrop */}
-      <div className="absolute -inset-1 bg-orange-900 opacity-50 blur-sm -z-10" />
+    <>
+      <button className="comic-button">
+        Click me!
+      </button>
 
-      {/* Content */}
-      <span className="relative z-10">Retro 3D</span>
-    </motion.button>
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
+    </>
   );
 }
+
+const styles = `
+  /* From Uiverse.io by Gautammsharma */ 
+  .comic-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff5252;
+    border: 2px solid #000;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0px #000;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .comic-button:hover {
+    background-color: #fff;
+    color: #ff5252;
+    border: 2px solid #ff5252;
+    box-shadow: 5px 5px 0px #ff5252;
+  }
+
+  .comic-button:active {
+    background-color: #fcf414;
+    box-shadow: none;
+    transform: translateY(4px);
+  }
+`;

@@ -6,20 +6,19 @@ import { motion } from 'framer-motion';
 export default function Buttons4() {
   return (
     <motion.button
-      className="relative px-8 py-3 font-semibold text-white rounded-lg overflow-hidden group"
+      className="relative inline-flex overflow-hidden rounded-lg p-[2px] group focus:outline-none"
       whileHover="hover"
-      initial="rest"
-      variants={{
-        rest: {},
-        hover: {},
-      }}
+      whileTap={{ scale: 0.98 }}
     >
-      {/* Rotating conic-gradient border */}
+      {/* THE FIX: 
+        1. Make it a massive square (aspect-square w-[300%]) so the edges never clip.
+        2. Pin it precisely to the center (left-1/2 top-1/2).
+        3. Use Framer Motion to handle the centering translation (x: '-50%', y: '-50%') ALONG with the rotation.
+      */}
       <motion.div
-        className="absolute inset-0 rounded-lg"
-        animate={{
-          backgroundPosition: ['0% 0%', '100% 100%'],
-        }}
+        className="absolute left-1/2 top-1/2 aspect-square w-[300%]"
+        initial={{ x: '-50%', y: '-50%', rotate: 0 }}
+        animate={{ rotate: 360 }}
         transition={{
           duration: 3,
           repeat: Infinity,
@@ -34,16 +33,13 @@ export default function Buttons4() {
             #fa709a 270deg,
             #ff6b9d 360deg
           )`,
-          backgroundSize: '200% 200%',
-          padding: '2px',
         }}
-      >
-        {/* Inner transparent area */}
-        <div className="absolute inset-0 bg-black rounded-lg m-0.5" />
-      </motion.div>
+      />
 
-      {/* Content */}
-      <span className="relative z-10">Gradient Border</span>
+      {/* Inner Button Area */}
+      <div className="relative flex h-full w-full items-center justify-center rounded-[6px] bg-black px-8 py-3 font-semibold text-white z-10 transition-colors duration-300 group-hover:bg-neutral-900">
+        Gradient Border
+      </div>
     </motion.button>
   );
 }

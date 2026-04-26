@@ -21,6 +21,14 @@ import Button5 from "./Button5";
 import Button6 from "./Button6";
 import Button7 from "./Button7";
 import Button8 from "./Button8";
+import Button9 from "./Button9";
+import Button10 from "./Button10";
+import Button11 from "./Button11";
+import Button12 from "./Button12";
+import Button13 from "./Button13";
+import Button14 from "./Button14";
+import Button15 from "./Button15";
+import Button16 from "./Button16";
 
 export interface Variant {
   id: number;
@@ -45,6 +53,14 @@ const PREVIEWS: Record<number, ComponentType> = {
   6: Button6,
   7: Button7,
   8: Button8,
+  9: Button9,
+  10: Button10,
+  11: Button11,
+  12: Button12,
+  13: Button13,
+  14: Button14,
+  15: Button15,
+  16: Button16,
 };
 
 function Preview({ id }: { id: number }) {
@@ -145,7 +161,7 @@ function Grid({
             <div className="flex flex-1 items-center justify-center">
               {/* Preview surface — neutral slab so each variant's own
                   background pops without competing with the card chrome. */}
-              <div className="grid w-full flex-1 place-items-center rounded-lg bg-black/5 dark:bg-black/40 p-4">
+              <div className="grid h-[120px] w-full place-items-center rounded-lg bg-black/5 dark:bg-black/40 p-4">
                 <Preview id={v.id} />
               </div>
             </div>
@@ -242,7 +258,7 @@ function Panel({
   children: ReactNode;
 }) {
   return (
-    <section className="aura-tile p-4">
+    <section className="aura-tile p-3 md:p-4">
       <header className="mb-3 flex items-center justify-between">
         <p className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-fg-muted">
           {icon}
@@ -301,20 +317,20 @@ function CodeBlock({
 
       <div
         data-lenis-prevent
-        className={`relative rounded-lg border border-border-default transition-all duration-500 ease-aura ${
-          !expanded ? "max-h-[220px] overflow-hidden" : "max-h-[800px] overflow-auto"
+        className={`relative w-full overflow-x-auto rounded-lg border border-border-default transition-all duration-500 ease-aura ${
+          !expanded ? "max-h-[220px] overflow-hidden" : "max-h-[800px] overflow-y-auto"
         } bg-[#0d1117] dark:bg-[#0d1117]`}
       >
         {isHtml ? (
           <div
             data-lenis-prevent
-            className="shiki-wrapper p-5 pr-20 font-mono text-[13px] leading-relaxed [&_pre]:!bg-transparent [&_pre]:!p-0 [&_pre]:!overflow-visible [&_code]:!bg-transparent"
+            className="shiki-wrapper p-4 md:p-5 pr-12 md:pr-20 font-mono text-[12px] md:text-[13px] leading-relaxed [&_pre]:!bg-transparent [&_pre]:!p-0 [&_pre]:!overflow-visible [&_code]:!bg-transparent"
             dangerouslySetInnerHTML={{ __html: value }}
           />
         ) : (
           <pre
             data-lenis-prevent
-            className="p-5 pr-20 font-mono text-[13px] leading-relaxed text-gray-300"
+            className="p-4 md:p-5 pr-12 md:pr-20 font-mono text-[12px] md:text-[13px] leading-relaxed text-gray-300"
             data-lang={language}
           >
             <code data-lenis-prevent>{value}</code>

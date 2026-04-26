@@ -5,18 +5,26 @@ import Gallery, { type Variant } from "./Gallery";
 
 export const metadata: Metadata = {
   title: "Buttons — Aura UI",
-  description: "Eight animated button variants, ready to drop in.",
+  description: "Sixteen animated button variants, ready to drop in.",
 };
 
 const NAMES = [
-  "Aura Gradient",
+  "Complete Order",
   "Retro 3D",
   "Glass Morphic",
   "Gradient Border",
   "Overlay Reveal",
-  "Bento Icon",
-  "Claymorphism",
+  "Download button",
+  "Voltage Button",
   "Liquid Ghost",
+  "Magic Generate",
+  "Social Cluster",
+  "Destructive Trash",
+  "Neumorphic Slide",
+  "Split Text",
+  "Arcade Play",
+  "UI Anatomy",
+  "Side Fill",
 ];
 
 import { codeToHtml } from "shiki";
@@ -34,7 +42,7 @@ async function loadVariants(): Promise<Variant[]> {
   );
 
   const variants = await Promise.all(
-    Array.from({ length: 8 }, async (_, i) => {
+    Array.from({ length: 16 }, async (_, i) => {
       const fileName = `Button${i + 1}.tsx`;
       const code = fs.readFileSync(path.join(dir, fileName), "utf8");
       

@@ -62,12 +62,12 @@ const styles = `
     border: 0;
     background: var(--dark);
     position: relative;
-    height: 63px;
-    width: 240px; 
+    height: 56px;
+    width: 200px; 
     padding: 0;
     outline: none;
     cursor: pointer;
-    border-radius: 32px;
+    border-radius: 28px;
     -webkit-tap-highlight-color: transparent;
     overflow: hidden;
     transition: transform 0.3s ease;
@@ -77,11 +77,10 @@ const styles = `
   .order span {
     --o: 1;
     position: absolute;
-    left: 0;
-    right: 0;
-    text-align: center;
-    top: 19px;
-    line-height: 24px;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--white);
     font-size: 16px;
     font-weight: 500;
@@ -96,15 +95,14 @@ const styles = `
   .order span.success {
     --offset: 16px;
     --o: 0;
+    gap: 8px;
   }
   
   .order span.success svg {
     width: 12px;
     height: 10px;
     display: inline-block;
-    vertical-align: top;
     fill: none;
-    margin: 7px 0 0 4px;
     stroke: var(--green);
     stroke-width: 2;
     stroke-linecap: round;
@@ -330,16 +328,16 @@ const styles = `
   }
   
   @keyframes truck {
-    10%, 30% { transform: translateX(-164px); }
-    40% { transform: translateX(-104px); }
-    60% { transform: translateX(-224px); }
+    10%, 30% { transform: translateX(-134px); }
+    40% { transform: translateX(-84px); }
+    60% { transform: translateX(-184px); }
     75%, 100% { transform: translateX(24px); }
   }
   @keyframes lines {
     0%, 30% { opacity: 0; transform: scaleY(0.7) translateX(0); }
     35%, 65% { opacity: 1; }
     70% { opacity: 0; }
-    100% { transform: scaleY(0.7) translateX(-400px); }
+    100% { transform: scaleY(0.7) translateX(-320px); }
   }
   @keyframes light {
     0%, 30% { opacity: 0; transform: perspective(2px) rotateY(-15deg) scaleX(0.88); }
@@ -352,9 +350,9 @@ const styles = `
     30%, 50% { transform: rotate(-32deg); }
   }
   @keyframes box {
-    8%, 10% { transform: translateX(40px); opacity: 1; }
-    25% { transform: translateX(112px); opacity: 1; }
-    26% { transform: translateX(112px); opacity: 0; }
+    8%, 10% { transform: translateX(35px); opacity: 1; }
+    25% { transform: translateX(85px); opacity: 1; }
+    26% { transform: translateX(85px); opacity: 0; }
     27%, 100% { transform: translateX(0px); opacity: 0; }
   }
 `;
