@@ -27,7 +27,7 @@ const groups: { name: string; items: Item[] }[] = [
       { name: "Input", desc: "Text, search, with leading/trailing icons", accent: "secondary", href: "/components/Input" },
       { name: "Select", desc: "Native + custom dropdown", accent: "tertiary" },
       { name: "Theme Toggle", desc: "Tactile theme switch with GIF transitions", accent: "primary", href: "/components/ThemeToggle" },
-      { name: "Checkbox", desc: "Lime check on dark surface", accent: "primary" },
+      { name: "Checkbox", desc: "Lime check on dark surface", accent: "primary", href: "/components/CheckBoxs" },
     ],
   },
   {
