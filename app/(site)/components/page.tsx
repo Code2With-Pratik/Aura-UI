@@ -35,6 +35,7 @@ const groups: { name: string; items: Item[] }[] = [
     items: [
       { name: "Card", desc: "Surface + subtle border + hover-lift", accent: "secondary", href: "/components/Cards" },
       { name: "Badges", desc: "Animated status and label badges with motion-rich detail", accent: "tertiary", href: "/components/Badges" },
+      { name: "Loaders", desc: "Ten motion-rich loaders for loading states and brand moments", accent: "primary", href: "/components/Loaders" },
       { name: "Table", desc: "Dense, ruled, with header sort", accent: "primary", href: "/components/Tables" },
       { name: "Avatar Stack", desc: "Overlapping circles with overflow chip", accent: "secondary" },
       { name: "Progress", desc: "Animated linear bar with gradient", accent: "secondary" },
