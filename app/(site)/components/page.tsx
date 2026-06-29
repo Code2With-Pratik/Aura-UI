@@ -34,7 +34,7 @@ const groups: { name: string; items: Item[] }[] = [
     name: "Display",
     items: [
       { name: "Card", desc: "Surface + subtle border + hover-lift", accent: "secondary", href: "/components/Cards" },
-      { name: "Badge", desc: "Pill in any of three accents", accent: "tertiary" },
+      { name: "Badges", desc: "Animated status and label badges with motion-rich detail", accent: "tertiary", href: "/components/Badges" },
       { name: "Table", desc: "Dense, ruled, with header sort", accent: "primary", href: "/components/Tables" },
       { name: "Avatar Stack", desc: "Overlapping circles with overflow chip", accent: "secondary" },
       { name: "Progress", desc: "Animated linear bar with gradient", accent: "secondary" },
