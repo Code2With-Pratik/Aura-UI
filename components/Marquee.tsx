@@ -43,7 +43,7 @@ const rowA: ShowcaseItem[] = [
     href: "https://www.pratikdhandare.in",
   },
   {
-    src: "https://github-production-user-asset-6210df.s3.amazonaws.com/272112625/619940061-b5182a67-b51f-4968-b7b4-e31847d42c4c.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260723%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260723T113409Z&X-Amz-Expires=300&X-Amz-Signature=4cae4abbc0260ae96173073edcaa5916d9a713124bc38a88f5bec02ef26245a6&X-Amz-SignedHeaders=host&response-content-type=image%2Fpng",
+    src: "https://zjjcbyeirsumszohvtvu.supabase.co/storage/v1/object/public/portfolio/projects/d22d833d-dfb5-40dc-97d7-4267f44d49cd.jpg",
     title: "Code Editor Theme",
     description: "Monochrome syntax with a single accent for emphasis.",
     href: "https://designer-portfolio-adx.vercel.app",
