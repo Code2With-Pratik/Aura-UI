@@ -1,5 +1,8 @@
 # Aura UI.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/aa9d3371-1cbb-40ad-82cf-bc861430dae4" />
+
+
 A high-fidelity, macOS-inspired component system built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS v4**, and **Framer Motion**.
 
 ## Quick start
