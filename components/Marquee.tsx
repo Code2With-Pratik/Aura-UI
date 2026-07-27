@@ -379,8 +379,8 @@ function ShowcaseCard({
       onClick={onClick}
       className="group relative shrink-0 overflow-hidden border border-border-default transition-transform duration-300 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary"
       style={{
-        width: 280,
-        height: 170,
+        width: 300,
+        height: 190,
         borderRadius: 18,
         backgroundColor: "var(--color-surface)",
       }}
