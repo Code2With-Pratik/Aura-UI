@@ -470,7 +470,7 @@ function Lightbox({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.22, ease: auraEase }}
+          transition={{ duration: 0.01, ease: auraEase }}
           className="fixed inset-0 z-[120] flex items-center justify-center px-4 sm:px-8"
           aria-modal
           role="dialog"
@@ -481,9 +481,9 @@ function Lightbox({
             className="absolute inset-0"
             onClick={onClose}
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.12)",
-              backdropFilter: "blur(28px) saturate(160%)",
-              WebkitBackdropFilter: "blur(28px) saturate(160%)",
+              backgroundColor: "rgba(255, 255, 255, 0)",
+              backdropFilter: "blur(8px) saturate(60%)",
+              WebkitBackdropFilter: "blur(28px) saturate(60%)",
             }}
           />
 
@@ -492,7 +492,7 @@ function Lightbox({
             initial={{ scale: 0.92, y: 24, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.94, y: 16, opacity: 0 }}
-            transition={{ duration: 0.32, ease: auraEase }}
+            transition={{ duration: 0.12, ease: auraEase }}
             className="relative z-10 w-full overflow-hidden rounded-2xl shadow-[0_60px_140px_-30px_rgba(0,0,0,0.7)]"
             style={{
               maxWidth: "min(880px, 95vw)",
