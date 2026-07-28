@@ -5,7 +5,7 @@
 
 A high-fidelity, macOS-inspired component system built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS v4**, and **Framer Motion**.
 
-## Quick start
+## Quick start.
 
 ```bash
 npm install
