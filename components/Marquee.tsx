@@ -38,9 +38,15 @@ type ShowcaseItem = {
 const rowA: ShowcaseItem[] = [
   {
     src: "https://zjjcbyeirsumszohvtvu.supabase.co/storage/v1/object/public/portfolio/projects/2c41cac4-7cb6-4c78-83b8-9f4f5faf1427.png",
-    title: "Analytics Dashboard",
+    title: "Developer Portfolio",
     description: "Live metrics with smooth motion and crisp typography.",
     href: "https://www.pratikdhandare.in",
+  },
+  {
+    src: "https://zjjcbyeirsumszohvtvu.supabase.co/storage/v1/object/public/portfolio/projects/22371395-fcc1-4c24-883d-00808591055b.png",
+    title: "Spylt Protein Website",
+    description: "Rev up your rebel spirit and feed the adventure of life with SPYLT, where you’re one chug away from epic nostalgia and fearless fun.",
+    href: "https://try-spylt.vercel.app",
   },
   {
     src: "https://zjjcbyeirsumszohvtvu.supabase.co/storage/v1/object/public/portfolio/projects/d22d833d-dfb5-40dc-97d7-4267f44d49cd.jpg",
