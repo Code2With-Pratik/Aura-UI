@@ -179,7 +179,7 @@ export default function FrameworkSelector() {
             {isCopied ? "Copied" : "Copy"}
           </button>
         </div>
-        <pre className="overflow-x-auto text-sm leading-6 text-accent-primary">
+        <pre className="overflow-x-auto text-sm leading-6 text-fg">
           <code>{command}</code>
         </pre>
       </div>
@@ -187,7 +187,7 @@ export default function FrameworkSelector() {
   };
 
   return (
-    <div className="aura-card not-prose my-8 overflow-hidden p-4 md:p-6">
+    <div className="aura-card not-prose my-8 overflow-hidden border-border-default p-4 md:p-6">
       <div className="mb-5">
         <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-fg-muted">
           Choose your framework
