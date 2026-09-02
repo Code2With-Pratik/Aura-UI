@@ -125,7 +125,7 @@ export default function Gallery({
                   className="aura-card group flex flex-col overflow-hidden p-4 outline-none"
                 >
                   <div className="flex flex-1 items-center justify-center">
-                    <div className="flex h-[180px] w-full items-center justify-center rounded-lg bg-black/5 dark:bg-black/40 p-4 overflow-hidden relative">
+                    <div className="relative isolate flex h-[180px] w-full items-center justify-center overflow-hidden rounded-lg bg-black/5 p-4 dark:bg-black/40">
                       <Preview id={v.id} />
                     </div>
                   </div>
@@ -166,7 +166,7 @@ function Detail({ variant, onBack }: { variant: Variant; onBack: () => void }) {
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Panel label="Preview">
-          <div className="grid h-[480px] place-items-center rounded-lg bg-black/5 dark:bg-black/40 p-6">
+          <div className="relative isolate grid h-[480px] place-items-center overflow-hidden rounded-lg bg-black/5 p-6 dark:bg-black/40">
             <div className="flex items-center justify-center w-full h-full">
               <PreviewDetail id={variant.id} />
             </div>

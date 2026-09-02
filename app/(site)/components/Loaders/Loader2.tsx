@@ -25,6 +25,9 @@ const StyledWrapper = styled.div`
   }
 
   .loop {
+    position: relative;
+    top: auto;
+    left: auto;
     transform: rotateX(-35deg) rotateY(-45deg) translateZ(1.5625em);
   }
 
