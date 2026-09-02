@@ -238,9 +238,9 @@ export default function FrameworkSelector() {
           </div>
         </div>
 
-        <div className="mt-5 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="mt-5 space-y-4">
           <div className="aura-tile p-4">
-            <p className="mb-3 text-sm font-medium text-fg">Setup steps</p>
+            <p className="mb-3 text-sm font-medium text-fg">What's inside</p>
             <ol className="space-y-3 text-sm leading-6 text-fg-muted">
               {current.steps.map((step, index) => (
                 <li key={step} className="flex gap-3">
@@ -254,7 +254,7 @@ export default function FrameworkSelector() {
           </div>
 
           <div className="aura-tile p-4">
-            <p className="mb-3 text-sm font-medium text-fg">Example</p>
+            <p className="mb-3 text-sm font-medium text-fg">Where to start</p>
             <pre className="overflow-x-auto rounded-xl border border-border-default bg-surface-elevated p-3 text-sm leading-6 text-accent-secondary">
               <code>{current.snippet}</code>
             </pre>
