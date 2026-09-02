@@ -172,11 +172,11 @@ export default function FrameworkSelector() {
           <button
             type="button"
             onClick={() => handleCopy(command)}
-            className="inline-flex items-center gap-2 rounded-md border border-border-default bg-fg/5 px-2 py-1 text-[10px] font-medium text-fg-muted transition hover:border-border-hover hover:bg-fg/10 hover:text-fg"
+            className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border-default bg-fg/5 text-fg-muted transition hover:border-border-hover hover:bg-fg/10 hover:text-fg"
             aria-label={`Copy ${label.toLowerCase()} command`}
+            title={`Copy ${label.toLowerCase()} command`}
           >
             {isCopied ? <Check className="h-3.5 w-3.5 text-[#b8ff57]" /> : <Copy className="h-3.5 w-3.5" />}
-            {isCopied ? "Copied" : "Copy"}
           </button>
         </div>
         <pre className="overflow-x-auto text-sm leading-6 text-fg">
