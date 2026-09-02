@@ -1,0 +1,72 @@
+---
+title: Fonts
+description: Aura UI uses a compact type system built around Arima, Instrument Serif, and Geist Mono.
+---
+
+The type system is intentionally small and opinionated. It gives the interface a strong visual rhythm while keeping the code readable and production-friendly.
+
+## Font stack
+
+The project wires fonts in `app/layout.tsx` using `next/font/google`:
+
+```tsx
+import { Arima, Instrument_Serif, Geist_Mono } from "next/font/google";
+
+const arima = Arima({
+  subsets: ["latin"],
+  variable: "--font-arima",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-instrument-serif",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
+```
+
+These are then exposed through the Tailwind theme in `app/globals.css`:
+
+```css
+@theme {
+  --font-sans: var(--font-arima), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
+}
+```
+
+## Type roles
+
+| Family | Role | Usage |
+| --- | --- | --- |
+| `Arima` | Sans / UI | Body copy, labels, navigation |
+| `Instrument Serif` | Display | Hero headlines, feature emphasis |
+| `Geist Mono` | Code | Monospace snippets, commands, numbers |
+
+## Usage examples
+
+```tsx
+<h1 className="font-display text-fg">Interfaces with Aura</h1>
+<p className="font-sans text-fg/80">Readable UI copy with a soft macOS tone.</p>
+<code className="font-mono text-accent-primary">npm run dev</code>
+```
+
+## Design notes
+
+- Body and UI text default to the `Arima` stack for warmth and clarity.
+- Display moments use `Instrument Serif` for a premium editorial accent.
+- Code and terminal-style content use `Geist Mono` to keep commands legible and precise.
+
+## Theme-aware usage
+
+Use the CSS variables or Tailwind classes instead of hardcoded font stacks when building new components:
+
+```tsx
+<div className="font-display text-5xl">A soft editorial headline</div>
+<div className="font-mono text-sm text-fg/60">npm install</div>
+```
+
+This keeps the visual identity aligned with the rest of the Aura system and makes swapping styles easier across the whole product.

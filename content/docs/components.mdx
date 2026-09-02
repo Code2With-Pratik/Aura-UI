@@ -1,28 +1,83 @@
 ---
 title: Components
-description: The primitives that ship with Aura UI today.
+description: Drop-in UI patterns for the Aura system, built with Tailwind and motion tokens.
 ---
+
+Aura UI ships with a small set of opinionated building blocks. The components live in the `components/` directory and are designed to be composed together with the global tokens from `app/globals.css`.
+
+## Start from the app shell
+
+```tsx
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import WindowMockup from "@/components/WindowMockup";
+import BentoGrid from "@/components/BentoGrid";
+import Marquee from "@/components/Marquee";
+
+export default function Page() {
+  return (
+    <main>
+      <Navbar />
+      <Hero />
+      <WindowMockup />
+      <BentoGrid />
+      <Marquee />
+    </main>
+  );
+}
+```
+
+## Common patterns
+
+The system leans on a few shared utility classes so the same feel carries across every surface:
+
+```tsx
+<div className="aura-card aura-glass rounded-2xl p-6">
+  <h3 className="text-fg">A card with Aura styling</h3>
+</div>
+```
+
+These base classes are defined in `app/globals.css` and cover the glass look, border system, and motion timing. Use the global tokens for accent colors instead of hardcoding raw hex values.
 
 ## Navbar
 
-A horizontal, full-width nav with a wide search trigger. Clicking the search field — or pressing `⌘K` / `⌃K` anywhere — opens the **Spotlight** modal.
+A floating glass nav with a search trigger and theme toggle. It also listens for `⌘K` / `⌃K` to open the Spotlight command palette.
 
-## Spotlight
+```tsx
+import Navbar from "@/components/Navbar";
 
-A keyboard-driven command palette inspired by macOS Spotlight. Filter by typing, navigate with `↑` `↓`, activate with `Enter`, dismiss with `Esc`.
+<Navbar />
+```
 
 ## Hero
 
-Radial glow + blinking-status badge + Instrument Serif display headline that scales with `clamp()`.
+A centered launch section with a lime glow, status pill, and large display headline built with the `font-display` token set.
 
 ## Window Mockup
 
-Functional macOS window: traffic-light controls (yellow click triggers a genie minimize), sidebar with grouped items, and a 3-column preview grid of tiny live components.
+The desktop-style preview component is ideal for showing product shots, code snippets, or dashboards in a macOS-inspired frame.
 
 ## Bento Grid
 
-12-column grid with 4 / 5 / 7 spans, each card carrying a unique data-viz visual and a hover-lift on the same `--ease-aura` curve.
+A responsive grid with varied card spans, designed for feature highlights and content tiles. The layout rhythm is intentionally tight and modular.
 
 ## Marquee
 
-A CSS-only horizontal ticker for changelog or status updates, with edge-fade masks on either side.
+Use the marquee for low-noise updates, changelogs, or feature announcements. It is CSS-based and inherits the project motion and color tokens.
+
+## Spotlight
+
+The search palette is keyboard-first and pairs with the nav search trigger. It is a good fit for navigating docs, commands, or product actions inside an app shell.
+
+```tsx
+import Spotlight from "@/components/Spotlight";
+
+<Spotlight open={open} onClose={() => setOpen(false)} />
+```
+
+## Styling tips
+
+- Keep accent colors in the theme tokens instead of custom inline colors.
+- Use `text-fg`, `text-fg-muted`, and `bg-accent-primary` for consistent surfaces.
+- Prefer `transition-all` and `var(--ease-aura)` for motion that matches the rest of the product.
+- Use `aura-card` and `aura-glass` as the default starting points for new panels.

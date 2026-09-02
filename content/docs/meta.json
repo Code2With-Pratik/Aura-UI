@@ -1,4 +1,4 @@
 {
   "title": "Aura UI",
-  "pages": ["index", "getting-started", "tokens", "components"]
+  "pages": ["index", "getting-started", "installation", "theming", "tokens", "components", "icons", "fonts"]
 }

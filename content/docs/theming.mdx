@@ -1,0 +1,76 @@
+---
+title: Theming
+description: Customize Aura UI with its design tokens, light mode, and motion system.
+---
+
+Aura UI is built around a single source of truth. Most visual decisions come from CSS variables and the Tailwind theme defined in `app/globals.css`.
+
+## Core tokens
+
+```css
+@theme {
+  --color-bg: #080808;
+  --color-surface: #0f0f0f;
+  --color-surface-elevated: #141414;
+  --color-accent-primary: #b8ff57;
+  --color-accent-secondary: #57c8ff;
+  --color-accent-tertiary: #ff57b8;
+  --color-border-default: rgba(255, 255, 255, 0.07);
+  --color-border-hover: rgba(255, 255, 255, 0.14);
+  --ease-aura: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Light mode
+
+The project includes a `.light` override block to shift the palette while keeping the same structure:
+
+```css
+.light {
+  --color-bg: #fffdd0;
+  --color-surface: #fffce0;
+  --color-surface-elevated: #fffacf;
+  --color-fg: #000000;
+  --color-fg-muted: rgba(0, 0, 0, 0.72);
+}
+```
+
+This lets components feel native in both dark and warm-light contexts without needing a separate component rewrite.
+
+## Base utilities
+
+Use the shared utilities that are already defined for the system:
+
+```tsx
+<div className="aura-card aura-glass rounded-2xl p-6">
+  <p className="text-fg">Themed panel</p>
+</div>
+```
+
+Useful patterns:
+
+- `aura-card` for elevated content blocks
+- `aura-glass` for translucent framed surfaces
+- `aura-border` for subtle hover borders
+- `text-fg`, `text-fg-muted`, `text-accent-primary` for consistent color
+
+## Motion
+
+The system centralizes motion timing through one shared easing curve:
+
+```css
+--ease-aura: cubic-bezier(0.16, 1, 0.3, 1);
+```
+
+Use it for transitions and micro-interactions so every component feels part of the same motion language.
+
+```tsx
+<div className="transition-all duration-300" style={{ transitionTimingFunction: "var(--ease-aura)" }} />
+```
+
+## Best practices
+
+- Prefer theme tokens over raw hex values
+- Keep new components inside the same color vocabulary
+- Use the provided `aura-*` helper classes when building a panel or surface
+- Let the theme shape motion and border treatments instead of layering custom styles on top

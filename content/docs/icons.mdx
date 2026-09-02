@@ -1,0 +1,81 @@
+---
+title: Icons
+description: Aura UI icons are built on Lucide and exposed through a single Icon component.
+---
+
+Aura UI ships with a curated icon set around the Lucide library. The icons are mapped in `components/icons/iconMap.ts` and consumed through a single `Icon` wrapper component.
+
+## Installation
+
+If you are using the package build, the standard install is:
+
+```bash
+npm install @nexaui-library/aura-ui
+```
+
+## Import and use
+
+```tsx
+import { Icon } from "@nexaui-library/aura-ui";
+
+export function Example() {
+  return <Icon name="home" size={20} className="text-accent-primary" />;
+}
+```
+
+## Available API
+
+```tsx
+<Icon
+  name="search"
+  size={24}
+  className="text-fg"
+  strokeWidth={1.8}
+/>
+```
+
+The component accepts the standard Lucide icon props plus:
+
+- `name`: one of the registered icon names in `iconMap`
+- `size`: icon width/height in pixels or CSS size values
+- `className`: styling hook for color and layout adjustments
+- `strokeWidth`: forwarded to Lucide
+
+## Common icon groups
+
+The built-in list includes a broad set of categories:
+
+- Navigation: `home`, `menu`, `chevronLeft`, `arrowRight`, `externalLink`
+- Actions: `search`, `plus`, `minus`, `trash`, `share`, `x`
+- Status: `check`, `info`, `alertCircle`, `bell`, `checkCircle`
+- User: `user`, `settings`, `login`, `logout`, `lock`
+- Media: `play`, `pause`, `volume`, `image`, `video`, `music`
+- Files & misc: `file`, `folder`, `upload`, `download`, `calendar`, `mail`
+
+## Example gallery usage
+
+```tsx
+import { Icon } from "@nexaui-library/aura-ui";
+
+const icons = ["home", "search", "settings", "github", "star", "bell"];
+
+export default function IconRow() {
+  return (
+    <div className="flex items-center gap-3">
+      {icons.map((name) => (
+        <Icon key={name} name={name as any} size={18} className="text-fg/80" />
+      ))}
+    </div>
+  );
+}
+```
+
+## Styling notes
+
+Icons inherit the current text color by default. For Aura-styled UI, pair them with accent and foreground tokens:
+
+```tsx
+<Icon name="sparkle" className="text-accent-primary" />
+```
+
+The icon set is intentionally compact but flexible for dashboards, docs, menu items, and product UI.

@@ -1,0 +1,82 @@
+---
+title: Installation
+description: Install Aura UI and set up the design system in your Next.js project.
+---
+
+## Install the package
+
+```bash
+npm install @nexaui-library/aura-ui
+```
+
+## Add the app shell
+
+Aura UI is designed to work best with a dark or warm-light theme and the shared tokens from `app/globals.css`.
+
+```tsx
+import "./globals.css";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+## Required setup
+
+Use the same Tailwind v4 setup that the project already uses:
+
+```css
+@import "tailwindcss";
+```
+
+Then include the Aura theme tokens:
+
+```css
+@theme {
+  --color-bg: #080808;
+  --color-surface: #0f0f0f;
+  --color-surface-elevated: #141414;
+  --color-accent-primary: #b8ff57;
+  --color-accent-secondary: #57c8ff;
+  --color-accent-tertiary: #ff57b8;
+  --font-sans: var(--font-arima), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --ease-aura: cubic-bezier(0.16, 1, 0.3, 1);
+}
+```
+
+## Basic usage
+
+```tsx
+import { Icon } from "@nexaui-library/aura-ui";
+
+export function Header() {
+  return (
+    <header className="aura-card p-4">
+      <div className="flex items-center gap-2 text-fg">
+        <Icon name="home" size={18} className="text-accent-primary" />
+        <span>Aura UI</span>
+      </div>
+    </header>
+  );
+}
+```
+
+## Recommended project structure
+
+```bash
+app/
+  globals.css
+  layout.tsx
+components/
+  Navbar.tsx
+  Hero.tsx
+  WindowMockup.tsx
+```
+
+This keeps the visual system consistent and lets you compose the primitives without fighting custom styles.
