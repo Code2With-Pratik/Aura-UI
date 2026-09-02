@@ -54,8 +54,8 @@ const frameworkMap = {
     label: "React",
     icon: <ReactIcon />,
     create: `npx create-react-app@latest ${projectName}`,
-    install: `cd ${projectName} && npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/postcss`,
-    start: `cd ${projectName} && npm run start`,
+    install: "npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/postcss",
+    start: "npm run start",
     steps: [
       "Create the React app with the framework generator.",
       "Install Aura UI and the styling dependencies in the project folder.",
@@ -71,8 +71,8 @@ export default function App() {
     label: "Next.js",
     icon: <NextIcon />,
     create: `npx create-next-app@latest ${projectName} --ts --app --eslint --use-npm --src-dir=false --import-alias "@/*"`,
-    install: `cd ${projectName} && npm install @nexaui-library/aura-ui`,
-    start: `cd ${projectName} && npm run dev`,
+    install: "npm install @nexaui-library/aura-ui",
+    start: "npm run dev",
     steps: [
       "Generate a fresh Next.js app with the app router enabled.",
       "Install Aura UI inside the generated project.",
@@ -92,8 +92,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     label: "Astro",
     icon: <AstroIcon />,
     create: `npm create astro@latest ${projectName} -- --template basics`,
-    install: `cd ${projectName} && npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite`,
-    start: `cd ${projectName} && npm run dev`,
+    install: "npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite",
+    start: "npm run dev",
     steps: [
       "Generate an Astro app with the starter template.",
       "Install Aura UI and Tailwind support inside the app.",
@@ -113,8 +113,8 @@ import "../styles.css";
     label: "Vite",
     icon: <ViteIcon />,
     create: `npm create vite@latest ${projectName} -- --template react`,
-    install: `cd ${projectName} && npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite`,
-    start: `cd ${projectName} && npm run dev`,
+    install: "npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite",
+    start: "npm run dev",
     steps: [
       "Generate the Vite app using the React template.",
       "Install Aura UI and the utility CSS dependencies.",
@@ -130,8 +130,8 @@ export default function App() {
     label: "Svelte",
     icon: <SvelteIcon />,
     create: `npm create vite@latest ${projectName} -- --template svelte`,
-    install: `cd ${projectName} && npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite`,
-    start: `cd ${projectName} && npm run dev`,
+    install: "npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite",
+    start: "npm run dev",
     steps: [
       "Generate the Vite app with the Svelte template.",
       "Install Aura UI and Tailwind support in the app folder.",
@@ -166,20 +166,20 @@ export default function FrameworkSelector() {
     const isCopied = copiedCommand === command;
 
     return (
-      <div className="rounded-xl border border-white/10 bg-[#111111] p-3">
+      <div className="aura-tile p-3">
         <div className="mb-2 flex items-center justify-between gap-3">
-          <span className="text-xs uppercase tracking-[0.18em] text-white/55">{label}</span>
+          <span className="text-xs uppercase tracking-[0.18em] text-fg-muted">{label}</span>
           <button
             type="button"
             onClick={() => handleCopy(command)}
-            className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-[10px] font-medium text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-md border border-border-default bg-fg/5 px-2 py-1 text-[10px] font-medium text-fg-muted transition hover:border-border-hover hover:bg-fg/10 hover:text-fg"
             aria-label={`Copy ${label.toLowerCase()} command`}
           >
             {isCopied ? <Check className="h-3.5 w-3.5 text-[#b8ff57]" /> : <Copy className="h-3.5 w-3.5" />}
             {isCopied ? "Copied" : "Copy"}
           </button>
         </div>
-        <pre className="overflow-x-auto text-sm leading-6 text-[#d8ffd1]">
+        <pre className="overflow-x-auto text-sm leading-6 text-accent-primary">
           <code>{command}</code>
         </pre>
       </div>
@@ -187,9 +187,9 @@ export default function FrameworkSelector() {
   };
 
   return (
-    <div className="not-prose my-8 overflow-hidden rounded-[26px] border border-white/10 bg-[#0b0b0b] p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] md:p-6">
+    <div className="aura-card not-prose my-8 overflow-hidden p-4 md:p-6">
       <div className="mb-5">
-        <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white/50">
+        <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-fg-muted">
           Choose your framework
         </p>
 
@@ -207,8 +207,8 @@ export default function FrameworkSelector() {
                   className={[
                     "inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition-all duration-200",
                     active
-                      ? "border-[#b8ff57] bg-[#b8ff57]/10 text-[#d9ff9c] shadow-[0_0_24px_rgba(184,255,87,0.2)]"
-                      : "border-white/10 bg-white/2 text-white/75 hover:border-white/20 hover:bg-white/5",
+                      ? "border-accent-primary bg-accent-primary/10 text-accent-primary shadow-[0_0_24px_color-mix(in_srgb,var(--color-accent-primary)_20%,transparent)]"
+                      : "border-border-default bg-fg/2 text-fg-muted hover:border-border-hover hover:bg-fg/5",
                   ].join(" ")}
                 >
                   <span className="flex h-4 w-4 items-center justify-center text-current">{value.icon}</span>
@@ -221,10 +221,10 @@ export default function FrameworkSelector() {
       </div>
 
       <div className="space-y-4">
-        <div className="rounded-2xl border border-white/10 bg-black/40 p-4 md:p-5">
+        <div className="aura-glass rounded-2xl p-4 md:p-5">
           <div className="mb-3 flex items-center justify-between gap-3">
-            <span className="text-sm font-medium text-white/80">Commands</span>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-white/55">
+            <span className="text-sm font-medium text-fg">Commands</span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-border-default bg-fg/5 px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-fg-muted">
               <span className="flex h-3.5 w-3.5 items-center justify-center text-current">{current.icon}</span>
               {current.label}
             </span>
@@ -232,18 +232,19 @@ export default function FrameworkSelector() {
 
           <div className="space-y-3">
             {renderCommandRow("Create project", current.create)}
+            {renderCommandRow("Enter project", `cd ${projectName}`)}
             {renderCommandRow("Install package", current.install)}
             {renderCommandRow("Start project", current.start)}
           </div>
         </div>
 
         <div className="mt-5 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-            <p className="mb-3 text-sm font-medium text-white/80">Setup steps</p>
-            <ol className="space-y-3 text-sm leading-6 text-white/70">
+          <div className="aura-tile p-4">
+            <p className="mb-3 text-sm font-medium text-fg">Setup steps</p>
+            <ol className="space-y-3 text-sm leading-6 text-fg-muted">
               {current.steps.map((step, index) => (
                 <li key={step} className="flex gap-3">
-                  <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#b8ff57]/15 text-[11px] font-semibold text-[#d9ff9c]">
+                  <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-primary/15 text-[11px] font-semibold text-accent-primary">
                     {index + 1}
                   </span>
                   <span>{step}</span>
@@ -252,9 +253,9 @@ export default function FrameworkSelector() {
             </ol>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-            <p className="mb-3 text-sm font-medium text-white/80">Example</p>
-            <pre className="overflow-x-auto rounded-xl border border-white/10 bg-[#111111] p-3 text-sm leading-6 text-[#d7e7ff]">
+          <div className="aura-tile p-4">
+            <p className="mb-3 text-sm font-medium text-fg">Example</p>
+            <pre className="overflow-x-auto rounded-xl border border-border-default bg-surface-elevated p-3 text-sm leading-6 text-accent-secondary">
               <code>{current.snippet}</code>
             </pre>
           </div>
