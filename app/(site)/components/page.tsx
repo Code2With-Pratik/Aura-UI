@@ -6,6 +6,7 @@ import {
   MarkSparkle,
   Sparkle,
 } from "@/components/HandMarkers";
+import ComponentPicker from "./_shared/ComponentPicker";
 
 export const metadata: Metadata = {
   title: "Components — Aura UI",
@@ -128,6 +129,8 @@ export default function ComponentsPage() {
           <MarkSparkle>easing curve</MarkSparkle>.
         </p>
       </header>
+
+      <ComponentPicker />
 
       <div className="space-y-16">
         {groups.map((g) => (
