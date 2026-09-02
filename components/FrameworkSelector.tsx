@@ -1,5 +1,6 @@
 "use client";
 
+import { Check, Copy } from "lucide-react";
 import { type ReactNode, useState } from "react";
 
 function ReactIcon() {
@@ -46,15 +47,19 @@ function SvelteIcon() {
   );
 }
 
+const projectName = "aura-app";
+
 const frameworkMap = {
   react: {
     label: "React",
     icon: <ReactIcon />,
-    install: "npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/postcss",
+    create: `npx create-react-app@latest ${projectName}`,
+    install: `cd ${projectName} && npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/postcss`,
+    start: `cd ${projectName} && npm run start`,
     steps: [
-      "Create a global CSS file and add the Aura theme tokens.",
-      "Import the stylesheet in your app entry file.",
-      "Use Aura components directly in your React pages, layouts, and views.",
+      "Create the React app with the framework generator.",
+      "Install Aura UI and the styling dependencies in the project folder.",
+      "Import the Aura stylesheet and start composing components in your app.",
     ],
     snippet: `import "./styles.css";
 
@@ -65,11 +70,13 @@ export default function App() {
   nextjs: {
     label: "Next.js",
     icon: <NextIcon />,
-    install: "npm install @nexaui-library/aura-ui",
+    create: `npx create-next-app@latest ${projectName} --ts --app --eslint --use-npm --src-dir=false --import-alias "@/*"`,
+    install: `cd ${projectName} && npm install @nexaui-library/aura-ui`,
+    start: `cd ${projectName} && npm run dev`,
     steps: [
-      "Add the Aura theme tokens to your global stylesheet.",
-      "Import the stylesheet in your app layout or root entry file.",
-      "Start building with Aura primitives in your components.",
+      "Generate a fresh Next.js app with the app router enabled.",
+      "Install Aura UI inside the generated project.",
+      "Add the Aura tokens to the global stylesheet and build from the app shell.",
     ],
     snippet: `import "./globals.css";
 
@@ -84,11 +91,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   astro: {
     label: "Astro",
     icon: <AstroIcon />,
-    install: "npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite",
+    create: `npm create astro@latest ${projectName} -- --template basics`,
+    install: `cd ${projectName} && npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite`,
+    start: `cd ${projectName} && npm run dev`,
     steps: [
-      "Configure Tailwind in Astro and import the CSS entry file.",
-      "Add the Aura theme tokens to your global stylesheet.",
-      "Import Aura components into your Astro pages and islands as needed.",
+      "Generate an Astro app with the starter template.",
+      "Install Aura UI and Tailwind support inside the app.",
+      "Hook the Aura tokens into the stylesheet and render components in your pages.",
     ],
     snippet: `---
 import "../styles.css";
@@ -103,11 +112,13 @@ import "../styles.css";
   vite: {
     label: "Vite",
     icon: <ViteIcon />,
-    install: "npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite",
+    create: `npm create vite@latest ${projectName} -- --template react`,
+    install: `cd ${projectName} && npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite`,
+    start: `cd ${projectName} && npm run dev`,
     steps: [
-      "Configure Tailwind in your Vite project and import Tailwind in CSS.",
-      "Add the Aura design tokens and base theme to your global stylesheet.",
-      "Render Aura components from your App or route components.",
+      "Generate the Vite app using the React template.",
+      "Install Aura UI and the utility CSS dependencies.",
+      "Load the Aura theme into the global CSS and start building UI.",
     ],
     snippet: `import "./styles.css";
 
@@ -118,11 +129,13 @@ export default function App() {
   svelte: {
     label: "Svelte",
     icon: <SvelteIcon />,
-    install: "npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite",
+    create: `npm create vite@latest ${projectName} -- --template svelte`,
+    install: `cd ${projectName} && npm install @nexaui-library/aura-ui tailwindcss @tailwindcss/vite`,
+    start: `cd ${projectName} && npm run dev`,
     steps: [
-      "Set up Tailwind and import the global Aura stylesheet in your app.",
-      "Apply the design tokens in your root CSS entry.",
-      "Compose Aura components into your Svelte components with a simple import.",
+      "Generate the Vite app with the Svelte template.",
+      "Install Aura UI and Tailwind support in the app folder.",
+      "Import the global Aura theme and begin composing UI in Svelte components.",
     ],
     snippet: `<script lang="ts">
   import "./styles.css";
@@ -136,7 +149,42 @@ type FrameworkKey = keyof typeof frameworkMap;
 
 export default function FrameworkSelector() {
   const [selected, setSelected] = useState<FrameworkKey>("nextjs");
+  const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
   const current = frameworkMap[selected];
+
+  const handleCopy = async (command: string) => {
+    try {
+      await navigator.clipboard.writeText(command);
+      setCopiedCommand(command);
+      window.setTimeout(() => setCopiedCommand((value) => (value === command ? null : value)), 1400);
+    } catch (error) {
+      console.error("Failed to copy command", error);
+    }
+  };
+
+  const renderCommandRow = (label: string, command: string) => {
+    const isCopied = copiedCommand === command;
+
+    return (
+      <div className="rounded-xl border border-white/10 bg-[#111111] p-3">
+        <div className="mb-2 flex items-center justify-between gap-3">
+          <span className="text-xs uppercase tracking-[0.18em] text-white/55">{label}</span>
+          <button
+            type="button"
+            onClick={() => handleCopy(command)}
+            className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-[10px] font-medium text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+            aria-label={`Copy ${label.toLowerCase()} command`}
+          >
+            {isCopied ? <Check className="h-3.5 w-3.5 text-[#b8ff57]" /> : <Copy className="h-3.5 w-3.5" />}
+            {isCopied ? "Copied" : "Copy"}
+          </button>
+        </div>
+        <pre className="overflow-x-auto text-sm leading-6 text-[#d8ffd1]">
+          <code>{command}</code>
+        </pre>
+      </div>
+    );
+  };
 
   return (
     <div className="not-prose my-8 overflow-hidden rounded-[26px] border border-white/10 bg-[#0b0b0b] p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] md:p-6">
@@ -172,40 +220,44 @@ export default function FrameworkSelector() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-black/40 p-4 md:p-5">
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <span className="text-sm font-medium text-white/80">Install</span>
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-white/55">
-            <span className="flex h-3.5 w-3.5 items-center justify-center text-current">{current.icon}</span>
-            {current.label}
-          </span>
+      <div className="space-y-4">
+        <div className="rounded-2xl border border-white/10 bg-black/40 p-4 md:p-5">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <span className="text-sm font-medium text-white/80">Commands</span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-white/55">
+              <span className="flex h-3.5 w-3.5 items-center justify-center text-current">{current.icon}</span>
+              {current.label}
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            {renderCommandRow("Create project", current.create)}
+            {renderCommandRow("Install package", current.install)}
+            {renderCommandRow("Start project", current.start)}
+          </div>
         </div>
 
-        <pre className="overflow-x-auto rounded-xl border border-white/10 bg-[#111111] p-3 text-sm leading-6 text-[#d8ffd1]">
-          <code>{current.install}</code>
-        </pre>
-      </div>
+        <div className="mt-5 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+            <p className="mb-3 text-sm font-medium text-white/80">Setup steps</p>
+            <ol className="space-y-3 text-sm leading-6 text-white/70">
+              {current.steps.map((step, index) => (
+                <li key={step} className="flex gap-3">
+                  <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#b8ff57]/15 text-[11px] font-semibold text-[#d9ff9c]">
+                    {index + 1}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
 
-      <div className="mt-5 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-        <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-          <p className="mb-3 text-sm font-medium text-white/80">Setup steps</p>
-          <ol className="space-y-3 text-sm leading-6 text-white/70">
-            {current.steps.map((step, index) => (
-              <li key={step} className="flex gap-3">
-                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#b8ff57]/15 text-[11px] font-semibold text-[#d9ff9c]">
-                  {index + 1}
-                </span>
-                <span>{step}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-          <p className="mb-3 text-sm font-medium text-white/80">Example</p>
-          <pre className="overflow-x-auto rounded-xl border border-white/10 bg-[#111111] p-3 text-sm leading-6 text-[#d7e7ff]">
-            <code>{current.snippet}</code>
-          </pre>
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+            <p className="mb-3 text-sm font-medium text-white/80">Example</p>
+            <pre className="overflow-x-auto rounded-xl border border-white/10 bg-[#111111] p-3 text-sm leading-6 text-[#d7e7ff]">
+              <code>{current.snippet}</code>
+            </pre>
+          </div>
         </div>
       </div>
     </div>
