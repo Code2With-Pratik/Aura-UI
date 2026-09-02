@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 
 type ComponentOption = {
@@ -32,8 +31,8 @@ const componentOptions: ComponentOption[] = [
 
 export default function ComponentPicker() {
   return (
-    <div className="mb-10 flex flex-wrap items-center justify-center gap-3 md:mb-14">
-      <label htmlFor="component-picker" className="eyebrow">
+    <div className="mt-2 px-2 pb-2">
+      <label htmlFor="component-picker" className="mb-1 block text-[10px] uppercase tracking-[0.16em] text-fd-muted-foreground">
         Browse components
       </label>
       <div className="relative">
@@ -43,7 +42,7 @@ export default function ComponentPicker() {
           onChange={(event) => {
             if (event.target.value) window.location.href = event.target.value;
           }}
-          className="h-10 min-w-56 appearance-none rounded-full border border-border-default bg-surface px-4 pr-10 text-sm font-medium text-fg outline-none transition-colors hover:border-border-hover focus:border-accent-primary"
+          className="h-9 w-full appearance-none rounded-lg border border-border-default bg-surface px-3 pr-9 text-xs font-medium text-fg outline-none transition-colors hover:border-border-hover focus:border-accent-primary"
         >
           <option value="" disabled>
             Select a component
@@ -59,12 +58,6 @@ export default function ComponentPicker() {
           className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-fg-muted"
         />
       </div>
-      <Link
-        href="/docs/installation"
-        className="text-[13px] text-fg-muted underline decoration-border-hover underline-offset-4 transition-colors hover:text-fg"
-      >
-        Installation guide
-      </Link>
     </div>
   );
 }
