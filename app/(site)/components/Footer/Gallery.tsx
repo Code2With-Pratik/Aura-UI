@@ -193,7 +193,7 @@ function Detail({ variant, backRef, onBack }: { variant: Variant; backRef: RefOb
 
       <div className="mt-4">
         <Panel label="Full code">
-          <CodeBlock value={variant.highlightedCode} isHtml expandable />
+          <CodeBlock value={variant.code} expandable />
         </Panel>
       </div>
     </>
