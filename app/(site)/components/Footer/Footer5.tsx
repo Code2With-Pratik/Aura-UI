@@ -1,21 +1,21 @@
+import { ArrowUpRight, Download, Instagram, Linkedin, Plus, Youtube } from "lucide-react";
+
+const groups = [
+  { title: "Aura UI", links: [["About us", "/about"], ["Our work", "/components"], ["Careers", "/careers"], ["Contact", "mailto:hello@auraui.dev"]] },
+  { title: "Library", links: [["All components", "/components"], ["Documentation", "/docs"], ["Changelog", "/changelog"], ["Pricing", "/pricing"]] },
+  { title: "Explore", links: [["Journal", "/blog"], ["Inspiration", "/components"], ["Accessibility", "/accessibility"], ["Support", "mailto:support@auraui.dev"]] },
+];
+
 export default function Footer5() {
   return (
-    <div className="w-full overflow-hidden rounded-2xl border border-[var(--color-border-default)] bg-[var(--color-bg)] p-3 text-[10px] shadow-sm">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div
-            className="h-2.5 w-2.5 rounded-full"
-            style={{ backgroundColor: "var(--color-accent-secondary)" }}
-          />
-          <span className="font-semibold text-fg">Luma</span>
-        </div>
-        <div className="text-fg/60">Fast • Clear • Lovely</div>
+    <footer className="w-full overflow-hidden rounded-[18px] border border-[var(--color-border-default)] bg-[var(--color-bg)] px-5 py-6 text-[var(--color-fg)] shadow-sm sm:px-7 sm:py-7">
+      <div className="mb-6 flex items-center justify-between border-b border-[var(--color-border-default)] pb-4"><span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent-primary)]">Aura UI / Product systems</span><span className="text-[9px] text-[var(--color-fg-muted)]">Build with intention ↗</span></div>
+      <div className="grid gap-8 sm:grid-cols-[1.2fr_2.8fr_1.15fr] sm:gap-7">
+        <div className="flex flex-col justify-between gap-5"><div><div className="flex items-center gap-2 text-[14px] font-semibold tracking-[-0.04em]"><span className="grid h-6 w-6 place-items-center rounded-full bg-[var(--color-accent-primary)] text-[var(--color-bg)]"><Plus className="h-4 w-4" strokeWidth={2.5} /></span>Aura UI</div><p className="mt-3 max-w-[185px] text-[11px] leading-relaxed text-[var(--color-fg-muted)]">The considered toolkit for building digital experiences with character.</p></div><a href="/components" className="group inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--color-accent-primary)]">Browse the library <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></a></div>
+        <div className="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-3">{groups.map((group) => <nav key={group.title} aria-label={group.title}><h2 className="mb-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-[var(--color-fg-muted)]">{group.title}</h2><ul className="space-y-2">{group.links.map(([label, href]) => <li key={label}><a href={href} className="text-[11px] text-[var(--color-fg)]/80 transition-colors hover:text-[var(--color-accent-primary)]">{label}</a></li>)}</ul></nav>)}</div>
+        <div className="border-t border-[var(--color-border-default)] pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0"><p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-[var(--color-fg-muted)]">Talk to Aura</p><form action="mailto:hello@auraui.dev" method="post" encType="text/plain" className="aura-input flex items-center gap-2 p-1"><label htmlFor="footer5-email" className="sr-only">Email address</label><input id="footer5-email" name="email" type="email" required placeholder="Your email address" className="min-w-0 flex-1 bg-transparent px-2 py-1 text-[10px] text-[var(--color-fg)] outline-none placeholder:text-[var(--color-fg-muted)]" /><button type="submit" className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-[var(--color-accent-primary)] text-[var(--color-bg)] transition-transform hover:scale-105" aria-label="Email Aura UI"><ArrowUpRight className="h-3 w-3" /></button></form><div className="mt-4 flex flex-wrap gap-2"><a href="https://instagram.com" aria-label="Instagram" className="rounded-md border border-[var(--color-border-default)] p-1.5 hover:text-[var(--color-accent-primary)]"><Instagram className="h-3 w-3" /></a><a href="https://linkedin.com" aria-label="LinkedIn" className="rounded-md border border-[var(--color-border-default)] p-1.5 hover:text-[var(--color-accent-primary)]"><Linkedin className="h-3 w-3" /></a><a href="https://youtube.com" aria-label="YouTube" className="rounded-md border border-[var(--color-border-default)] p-1.5 hover:text-[var(--color-accent-primary)]"><Youtube className="h-3 w-3" /></a></div><div className="mt-4 grid gap-1.5"><a href="https://www.apple.com/app-store/" className="flex items-center gap-1.5 rounded-md border border-[var(--color-border-default)] px-2 py-1.5 text-[9px] hover:border-[var(--color-accent-primary)]"><Download className="h-3 w-3" /> App Store</a><a href="https://play.google.com/store" className="flex items-center gap-1.5 rounded-md border border-[var(--color-border-default)] px-2 py-1.5 text-[9px] hover:border-[var(--color-accent-primary)]"><Download className="h-3 w-3" /> Google Play</a></div></div>
       </div>
-      <div className="mt-3 flex justify-between border-t border-[var(--color-border-default)] pt-2 text-[9px] text-fg/60">
-        <span>Features</span>
-        <span>Customers</span>
-        <span>Careers</span>
-      </div>
-    </div>
+      <div className="mt-7 flex flex-col gap-3 border-t border-[var(--color-border-default)] pt-4 text-[9px] text-[var(--color-fg-muted)] sm:flex-row sm:items-center sm:justify-between"><span>(c) 2026 Aura UI - made with intention.</span><div className="flex items-center gap-4"><a href="/privacy" className="hover:text-[var(--color-fg)]">Privacy</a><a href="/terms" className="hover:text-[var(--color-fg)]">Terms</a><a href="https://pinterest.com" className="inline-flex items-center gap-1 rounded-full border border-[var(--color-border-default)] px-2 py-1 font-semibold hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)]"><span className="text-[11px]">p</span> pinterest inspiration</a></div></div>
+    </footer>
   );
 }

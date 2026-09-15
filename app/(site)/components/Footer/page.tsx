@@ -5,7 +5,7 @@ import Gallery, { type Variant } from "./Gallery";
 
 export const metadata: Metadata = {
   title: "Footer — Aura UI",
-  description: "Six footer layout variants, ready to drop in.",
+  description: "Nine footer layout variants, ready to drop in.",
 };
 
 const NAMES = [
@@ -15,13 +15,16 @@ const NAMES = [
   "Newsletter CTA",
   "Compact Brand",
   "Launchpad Split",
+  "Browser Studio",
+  "Animated Waves",
+  "Quiet Precision",
 ];
 
 async function loadVariants(): Promise<Variant[]> {
   const dir = path.join(process.cwd(), "app", "(site)", "components", "Footer");
 
   return Promise.all(
-    Array.from({ length: 6 }, async (_, i) => {
+    Array.from({ length: 9 }, async (_, i) => {
       const fileName = `Footer${i + 1}.tsx`;
       const code = fs.readFileSync(path.join(dir, fileName), "utf8");
       const snippet = `import Footer${i + 1} from "@/app/(site)/components/Footer/Footer${i + 1}";\n\nexport default function Demo() {\n  return <Footer${i + 1} />;\n}`;
