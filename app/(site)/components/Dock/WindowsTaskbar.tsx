@@ -111,6 +111,10 @@ export default function WindowsTaskbar({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const appWindowRef = useRef<HTMLDivElement>(null);
   const appTriggerRef = useRef<HTMLButtonElement>(null);
+  const railWrapperRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const clockRef = useRef<HTMLButtonElement>(null);
+  const [clockCenter, setClockCenter] = useState<number | null>(null);
   const reducedMotion = useReducedMotion();
   const calendarDays = useMemo(
     () => createCalendarDays(calendarDate),
@@ -238,6 +242,29 @@ export default function WindowsTaskbar({
     return () => window.clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const wrapper = railWrapperRef.current;
+    const rail = railRef.current;
+    const clock = clockRef.current;
+    if (!wrapper || !rail || !clock) return;
+    const updateClockPosition = () => {
+      const wrapperRect = wrapper.getBoundingClientRect();
+      const clockRect = clock.getBoundingClientRect();
+      setClockCenter(clockRect.left - wrapperRect.left + clockRect.width / 2);
+    };
+    updateClockPosition();
+    const observer = new ResizeObserver(updateClockPosition);
+    observer.observe(wrapper);
+    observer.observe(clock);
+    rail.addEventListener("scroll", updateClockPosition, { passive: true });
+    window.addEventListener("resize", updateClockPosition);
+    return () => {
+      observer.disconnect();
+      rail.removeEventListener("scroll", updateClockPosition);
+      window.removeEventListener("resize", updateClockPosition);
+    };
+  }, [currentTime]);
+
   const activeApp = windowApp
     ? apps.find(([label]) => label === windowApp)
     : null;
@@ -361,8 +388,8 @@ export default function WindowsTaskbar({
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="relative max-w-full">
-        <div className="flex w-max min-w-0 max-w-full items-center gap-3 overflow-x-auto rounded-2xl border border-[color-mix(in_srgb,var(--color-fg)_14%,transparent)] bg-[color-mix(in_srgb,var(--color-bg)_70%,var(--color-fg)_10%)] px-2 py-2 text-fg shadow-[0_16px_45px_color-mix(in_srgb,var(--color-fg)_20%,transparent)] backdrop-blur-xl sm:gap-4 sm:px-3">
+      <div ref={railWrapperRef} className="relative isolate max-w-full overflow-visible">
+        <div ref={railRef} className="flex w-max min-w-0 max-w-full items-center gap-3 overflow-x-auto rounded-2xl border border-[color-mix(in_srgb,var(--color-fg)_14%,transparent)] bg-[color-mix(in_srgb,var(--color-bg)_70%,var(--color-fg)_10%)] px-2 py-2 text-fg shadow-[0_16px_45px_color-mix(in_srgb,var(--color-fg)_20%,transparent)] backdrop-blur-xl sm:gap-4 sm:px-3">
           <button
             type="button"
             aria-label="Open launcher"
@@ -448,6 +475,7 @@ export default function WindowsTaskbar({
             <span className="relative ml-1 inline-flex">
               <button
                 type="button"
+                ref={clockRef}
                 aria-label="Open timer"
                 aria-expanded={panel === "timer"}
                 aria-controls="windows-timer"
@@ -460,8 +488,8 @@ export default function WindowsTaskbar({
           </div>
         </div>
         <AnimatePresence initial={false}>
-          {timerComplete && (
-            <span className="pointer-events-none absolute bottom-full right-0 z-40 mb-1 flex h-7 w-14 items-center justify-center">
+          {timerComplete && clockCenter !== null && (
+            <span className="pointer-events-none absolute bottom-full z-40 mb-1 flex h-7 w-7 items-center justify-center" style={{ left: clockCenter ?? 0, transform: "translateX(-50%)" }}>
               <motion.div
                 role="status"
                 aria-live="polite"
