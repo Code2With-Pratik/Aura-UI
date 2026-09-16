@@ -446,37 +446,6 @@ export default function WindowsTaskbar({
               }
             />
             <span className="relative ml-1 inline-flex">
-              <AnimatePresence initial={false}>
-                {timerComplete && (
-                  <span className="pointer-events-none absolute bottom-full left-1/2 z-40 mb-1 h-7 w-7 -translate-x-1/2">
-                    <motion.div
-                      role="status"
-                      aria-live="polite"
-                      initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 4, scale: 0.82 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -4, scale: 0.9 }}
-                      transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 24 }}
-                      className="h-7 w-7 text-[var(--color-accent-primary)]"
-                    >
-                      {Array.from({ length: reducedMotion ? 1 : 4 }, (_, burstIndex) => (
-                        <span key={burstIndex} aria-hidden="true" className="absolute inset-0">
-                          {timerBurstParticles.map((particle, index) => (
-                            <motion.span
-                              key={`${burstIndex}-${index}`}
-                              initial={reducedMotion ? { opacity: 0.8, x: particle.dx, y: particle.dy } : { opacity: 0, x: 0, y: 0, scale: 0.4 }}
-                              animate={reducedMotion ? { opacity: 0.8, x: particle.dx, y: particle.dy } : { opacity: [0, 1, 0], x: [0, particle.dx], y: [0, particle.dy], scale: [0.4, 1.12, 0.7] }}
-                              transition={reducedMotion ? { duration: 0 } : { duration: 0.75, delay: burstIndex * 0.85 + particle.delay, ease: "easeOut" }}
-                              style={{ rotate: particle.rotate }}
-                              className={`absolute left-1/2 top-1/2 origin-left rounded-full bg-current ${particle.ray ? "h-px w-3" : "h-1.5 w-1.5"}`}
-                            />
-                          ))}
-                        </span>
-                      ))}
-                      <span className="sr-only">Timer complete. Your timer reached zero.</span>
-                    </motion.div>
-                  </span>
-                )}
-              </AnimatePresence>
               <button
                 type="button"
                 aria-label="Open timer"
@@ -490,8 +459,39 @@ export default function WindowsTaskbar({
             </span>
           </div>
         </div>
+        <AnimatePresence initial={false}>
+          {timerComplete && (
+            <span className="pointer-events-none absolute bottom-full right-0 z-40 mb-1 flex h-7 w-14 items-center justify-center">
+              <motion.div
+                role="status"
+                aria-live="polite"
+                initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 4, scale: 0.82 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -4, scale: 0.9 }}
+                transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 24 }}
+                className="h-7 w-7 text-[var(--color-accent-primary)]"
+              >
+                {Array.from({ length: reducedMotion ? 1 : 4 }, (_, burstIndex) => (
+                  <span key={burstIndex} aria-hidden="true" className="absolute inset-0">
+                    {timerBurstParticles.map((particle, index) => (
+                      <motion.span
+                        key={`${burstIndex}-${index}`}
+                        initial={reducedMotion ? { opacity: 0.8, x: particle.dx, y: particle.dy } : { opacity: 0, x: 0, y: 0, scale: 0.4 }}
+                        animate={reducedMotion ? { opacity: 0.8, x: particle.dx, y: particle.dy } : { opacity: [0, 1, 0], x: [0, particle.dx], y: [0, particle.dy], scale: [0.4, 1.12, 0.7] }}
+                        transition={reducedMotion ? { duration: 0 } : { duration: 0.75, delay: burstIndex * 0.85 + particle.delay, ease: "easeOut" }}
+                        style={{ rotate: particle.rotate }}
+                        className={`absolute left-1/2 top-1/2 origin-left rounded-full bg-current ${particle.ray ? "h-px w-3" : "h-1.5 w-1.5"}`}
+                      />
+                    ))}
+                  </span>
+                ))}
+                <span className="sr-only">Timer complete. Your timer reached zero.</span>
+              </motion.div>
+            </span>
+          )}
+        </AnimatePresence>
+        </div>
       </div>
-    </div>
   );
 }
 
