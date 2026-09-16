@@ -48,6 +48,7 @@ const groups: { name: string; items: Item[] }[] = [
       { name: "Toast", desc: "Anchored stack with auto-dismiss", accent: "tertiary" },
       { name: "Tooltip", desc: "Floating label, glass surface", accent: "secondary" },
       { name: "Footer", desc: "Marketing footer with links + legal row", accent: "primary", href: "/components/Footer" },
+      { name: "Dock", desc: "Desktop launcher and taskbar patterns", accent: "secondary", href: "/components/Dock" },
       { name: "Window", desc: "macOS chrome with traffic lights + genie", accent: "primary" },
     ],
   },

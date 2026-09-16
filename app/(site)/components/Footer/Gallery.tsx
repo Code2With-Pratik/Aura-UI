@@ -14,7 +14,6 @@ import Footer5 from "./Footer5";
 import Footer6 from "./Footer6";
 import Footer7 from "./Footer7";
 import Footer8 from "./Footer8";
-import Footer9 from "./Footer9";
 
 export interface Variant {
   id: number;
@@ -35,7 +34,6 @@ const PREVIEWS: Record<number, ComponentType> = {
   6: Footer6,
   7: Footer7,
   8: Footer8,
-  9: Footer9,
 };
 
 function Preview({ id }: { id: number }) {
