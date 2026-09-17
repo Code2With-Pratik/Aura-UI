@@ -104,8 +104,9 @@ const groups: { name: string; items: Item[] }[] = [
       },
       {
         name: "Tooltip",
-        desc: "Floating label, glass surface",
+        desc: "Floating labels, rich content, and smart placement",
         accent: "secondary",
+        href: "/components/Tooltip",
       },
       {
         name: "Footer",
