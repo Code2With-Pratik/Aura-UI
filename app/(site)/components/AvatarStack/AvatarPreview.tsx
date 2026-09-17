@@ -30,14 +30,14 @@ function Avatar({
         type="button"
         aria-label={`View ${name}`}
         style={{ backgroundColor: color }}
-        className={`relative grid h-12 w-12 place-items-center overflow-hidden border-[3px] border-[var(--color-bg)] text-[13px] font-medium text-white outline-none transition-shadow duration-300 group-hover/avatar:shadow-[0_10px_20px_rgba(0,0,0,.35)] focus-visible:ring-2 focus-visible:ring-accent-primary ${shape === "circle" ? "rounded-full" : "rounded-xl"}`}
+        className={`relative grid h-12 w-12 place-items-center overflow-hidden border-2 border-[var(--color-fg)] text-[13px] font-medium text-white outline-none transition-shadow duration-300 group-hover/avatar:shadow-[0_10px_20px_rgba(0,0,0,.35)] focus-visible:ring-2 focus-visible:ring-accent-primary ${shape === "circle" ? "rounded-full" : "rounded-xl"}`}
       >
         {children}
       </button>
       {status && (
         <span
           aria-label={status === "#ffb547" ? "Away" : "Online"}
-          className="pointer-events-none absolute bottom-0 right-0 z-[100] h-3.5 w-3.5 translate-x-1 translate-y-1 rounded-full border-2 border-[var(--color-bg)] shadow-[0_0_0_1px_rgba(255,255,255,.14),0_2px_8px_rgba(0,0,0,.5)]"
+          className="pointer-events-none absolute bottom-0 right-0 z-[100] h-3.5 w-3.5 rounded-full border-2 border-[var(--color-fg)] shadow-[0_0_0_1px_rgba(255,255,255,.14),0_2px_8px_rgba(0,0,0,.5)]"
           style={{ backgroundColor: status }}
         />
       )}
