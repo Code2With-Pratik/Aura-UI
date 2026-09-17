@@ -12,6 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, Check, Copy, Terminal } from "lucide-react";
 import MacDock from "./MacDock";
 import WindowsTaskbar from "./WindowsTaskbar";
+import CategoryNav from "../_shared/CategoryNav";
 
 export interface Variant {
   id: number;
@@ -103,6 +104,7 @@ export default function Gallery({ variants }: { variants: Variant[] }) {
           </motion.div>
         )}
       </AnimatePresence>
+      <CategoryNav slug="Dock" />
     </main>
   );
 }

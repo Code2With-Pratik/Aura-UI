@@ -11,12 +11,12 @@ import {
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, Check, Copy, Terminal } from "lucide-react";
-import Avatar1 from "./Avatar1";
-import Avatar2 from "./Avatar2";
-import Avatar3 from "./Avatar3";
-import Avatar4 from "./Avatar4";
-import Avatar5 from "./Avatar5";
-import Avatar6 from "./Avatar6";
+import Table1 from "./Table1";
+import Table2 from "./Table2";
+import Table3 from "./Table3";
+import Table4 from "./Table4";
+import Table5 from "./Table5";
+import Table6 from "./Table6";
 import CategoryNav from "../_shared/CategoryNav";
 
 export type Variant = {
@@ -28,12 +28,12 @@ export type Variant = {
   install: string;
 };
 const PREVIEWS: Record<number, ComponentType> = {
-  1: Avatar1,
-  2: Avatar2,
-  3: Avatar3,
-  4: Avatar4,
-  5: Avatar5,
-  6: Avatar6,
+  1: Table1,
+  2: Table2,
+  3: Table3,
+  4: Table4,
+  5: Table5,
+  6: Table6,
 };
 
 export default function Gallery({ variants }: { variants: Variant[] }) {
@@ -70,11 +70,11 @@ export default function Gallery({ variants }: { variants: Variant[] }) {
           className="display-clamp text-fg"
           style={{ fontSize: "clamp(2rem, 4.5vw + 0.5rem, 4.75rem)" }}
         >
-          Avatar Stack
+          Tables
         </h1>
-        <p className="mt-5 max-w-[540px] text-[15px] leading-relaxed text-fg/70">
-          Animated overlapping avatars that lift on hover and identify every
-          teammate with a small, useful tooltip.
+        <p className="mt-5 max-w-[560px] text-[15px] leading-relaxed text-fg/70">
+          Minimal, premium data surfaces for dashboards and apps—with the
+          controls your users actually need.
         </p>
       </header>
       <AnimatePresence mode="wait">
@@ -102,7 +102,7 @@ export default function Gallery({ variants }: { variants: Variant[] }) {
           </motion.div>
         )}
       </AnimatePresence>
-      <CategoryNav slug="AvatarStack" />
+      <CategoryNav slug="Tables" />
     </main>
   );
 }
@@ -117,7 +117,7 @@ function Grid({
   cardRefs: MutableRefObject<Record<number, HTMLDivElement | null>>;
 }) {
   return (
-    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-5 lg:grid-cols-2">
       {variants.map((variant) => {
         const Preview = PREVIEWS[variant.id];
         return (
@@ -136,9 +136,9 @@ function Grid({
                   onSelect(variant.id);
                 }
               }}
-              className="aura-tile group cursor-pointer overflow-visible p-3 text-left outline-none transition hover:-translate-y-1 hover:border-accent-primary/50 focus-visible:ring-2 focus-visible:ring-accent-primary"
+              className="aura-tile group cursor-pointer overflow-hidden p-3 text-left outline-none transition hover:-translate-y-1 hover:border-accent-primary/50 focus-visible:ring-2 focus-visible:ring-accent-primary"
             >
-              <div className="overflow-visible rounded-[14px] border border-border-default bg-fg/[0.03]">
+              <div className="overflow-hidden rounded-[14px] border border-border-default bg-fg/[0.03]">
                 <Preview />
               </div>
               <div className="flex items-center justify-between gap-2 px-1 pt-3">
@@ -172,11 +172,11 @@ function Detail({ variant, onBack }: { variant: Variant; onBack: () => void }) {
           {variant.fileName}
         </span>
       </div>
-      <section className="aura-tile overflow-visible p-3 md:p-4">
+      <section className="aura-tile p-3 md:p-4">
         <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-fg-muted">
           Live preview
         </p>
-        <div className="flex min-h-[300px] items-center justify-center overflow-visible rounded-[14px] border border-border-default bg-fg/[0.03] sm:min-h-[400px]">
+        <div className="overflow-hidden rounded-[14px] border border-border-default bg-fg/[0.03] p-2 md:p-4">
           <Preview />
         </div>
       </section>

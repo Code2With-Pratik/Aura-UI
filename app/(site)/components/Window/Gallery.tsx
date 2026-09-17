@@ -13,6 +13,7 @@ import { ArrowLeft, Check, Copy, Terminal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import WindowsWindow from "./WindowsWindow";
 import MacOSWindow from "./MacOSWindow";
+import CategoryNav from "../_shared/CategoryNav";
 
 export type Variant = {
   id: number;
@@ -94,6 +95,7 @@ export default function Gallery({ variants }: { variants: Variant[] }) {
           </motion.div>
         )}
       </AnimatePresence>
+      <CategoryNav slug="Window" />
     </main>
   );
 }

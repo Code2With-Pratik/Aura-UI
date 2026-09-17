@@ -17,6 +17,7 @@ import Tooltip3 from "./Tooltip3";
 import Tooltip4 from "./Tooltip4";
 import Tooltip5 from "./Tooltip5";
 import Tooltip6 from "./Tooltip6";
+import CategoryNav from "../_shared/CategoryNav";
 import Tooltip7 from "./Tooltip7";
 import Tooltip8 from "./Tooltip8";
 import Tooltip9 from "./Tooltip9";
@@ -114,6 +115,7 @@ export default function Gallery({ variants }: { variants: Variant[] }) {
           </motion.div>
         )}
       </AnimatePresence>
+      <CategoryNav slug="Tooltip" />
     </main>
   );
 }
