@@ -23,33 +23,108 @@ const groups: { name: string; items: Item[] }[] = [
   {
     name: "Inputs",
     items: [
-      { name: "Button", desc: "8 animated variants — gradient, glass, clay, more", accent: "primary", href: "/components/Buttons" },
-      { name: "Input", desc: "Text, search, with leading/trailing icons", accent: "secondary", href: "/components/Input" },
+      {
+        name: "Button",
+        desc: "8 animated variants — gradient, glass, clay, more",
+        accent: "primary",
+        href: "/components/Buttons",
+      },
+      {
+        name: "Input",
+        desc: "Text, search, with leading/trailing icons",
+        accent: "secondary",
+        href: "/components/Input",
+      },
       { name: "Select", desc: "Native + custom dropdown", accent: "tertiary" },
-      { name: "Theme Toggle", desc: "Tactile theme switch with GIF transitions", accent: "primary", href: "/components/ThemeToggle" },
-      { name: "Checkbox", desc: "Lime check on dark surface", accent: "primary", href: "/components/CheckBoxs" },
+      {
+        name: "Theme Toggle",
+        desc: "Tactile theme switch with GIF transitions",
+        accent: "primary",
+        href: "/components/ThemeToggle",
+      },
+      {
+        name: "Checkbox",
+        desc: "Lime check on dark surface",
+        accent: "primary",
+        href: "/components/CheckBoxs",
+      },
     ],
   },
   {
     name: "Display",
     items: [
-      { name: "Card", desc: "Surface + subtle border + hover-lift", accent: "secondary", href: "/components/Cards" },
-      { name: "Badges", desc: "Animated status and label badges with motion-rich detail", accent: "tertiary", href: "/components/Badges" },
-      { name: "Loaders", desc: "Ten motion-rich loaders for loading states and brand moments", accent: "primary", href: "/components/Loaders" },
-      { name: "Table", desc: "Dense, ruled, with header sort", accent: "primary", href: "/components/Tables" },
-      { name: "Avatar Stack", desc: "Overlapping circles with overflow chip", accent: "secondary" },
-      { name: "Progress", desc: "Animated linear bar with gradient", accent: "secondary" },
+      {
+        name: "Card",
+        desc: "Surface + subtle border + hover-lift",
+        accent: "secondary",
+        href: "/components/Cards",
+      },
+      {
+        name: "Badges",
+        desc: "Animated status and label badges with motion-rich detail",
+        accent: "tertiary",
+        href: "/components/Badges",
+      },
+      {
+        name: "Loaders",
+        desc: "Ten motion-rich loaders for loading states and brand moments",
+        accent: "primary",
+        href: "/components/Loaders",
+      },
+      {
+        name: "Table",
+        desc: "Dense, ruled, with header sort",
+        accent: "primary",
+        href: "/components/Tables",
+      },
+      {
+        name: "Avatar Stack",
+        desc: "Overlapping circles with overflow chip",
+        accent: "secondary",
+      },
+      {
+        name: "Progress",
+        desc: "Animated linear bar with gradient",
+        accent: "secondary",
+      },
     ],
   },
   {
     name: "Overlays",
     items: [
-      { name: "Spotlight", desc: "⌘K command palette with keyboard nav", accent: "primary" },
-      { name: "Toast", desc: "Anchored stack with auto-dismiss", accent: "tertiary" },
-      { name: "Tooltip", desc: "Floating label, glass surface", accent: "secondary" },
-      { name: "Footer", desc: "Marketing footer with links + legal row", accent: "primary", href: "/components/Footer" },
-      { name: "Dock", desc: "Desktop launcher and taskbar patterns", accent: "secondary", href: "/components/Dock" },
-      { name: "Window", desc: "macOS chrome with traffic lights + genie", accent: "primary" },
+      {
+        name: "Spotlight",
+        desc: "⌘K command palette with keyboard nav",
+        accent: "primary",
+      },
+      {
+        name: "Toast",
+        desc: "Anchored stack with auto-dismiss",
+        accent: "tertiary",
+      },
+      {
+        name: "Tooltip",
+        desc: "Floating label, glass surface",
+        accent: "secondary",
+      },
+      {
+        name: "Footer",
+        desc: "Marketing footer with links + legal row",
+        accent: "primary",
+        href: "/components/Footer",
+      },
+      {
+        name: "Dock",
+        desc: "Desktop launcher and taskbar patterns",
+        accent: "secondary",
+        href: "/components/Dock",
+      },
+      {
+        name: "Window",
+        desc: "Windows + macOS chrome with embedded video previews",
+        accent: "primary",
+        href: "/components/Window",
+      },
     ],
   },
 ];
@@ -71,14 +146,8 @@ export default function ComponentsPage() {
           Components, ready to
           <br />
           <span className="relative inline-block px-2.5 align-baseline">
-            <Sparkle
-              className="absolute -left-1 -top-1 h-4 w-4"
-              delay="0s"
-            />
-            <Sparkle
-              className="absolute -right-2 top-2 h-3 w-3"
-              delay="0.5s"
-            />
+            <Sparkle className="absolute -left-1 -top-1 h-4 w-4" delay="0s" />
+            <Sparkle className="absolute -right-2 top-2 h-3 w-3" delay="0.5s" />
             <Sparkle
               className="absolute -bottom-1 left-3 h-2.5 w-2.5"
               delay="1s"
@@ -123,10 +192,9 @@ export default function ComponentsPage() {
         </div>
 
         <p className="mt-7 max-w-[560px] text-pretty text-base leading-relaxed text-fg/70 md:text-lg">
-          A small, opinionated set of{" "}
-          <MarkCircle>primitives</MarkCircle> — every one styled with the same{" "}
-          <MarkBrush>tokens</MarkBrush>, animated on the same{" "}
-          <MarkSparkle>easing curve</MarkSparkle>.
+          A small, opinionated set of <MarkCircle>primitives</MarkCircle> —
+          every one styled with the same <MarkBrush>tokens</MarkBrush>, animated
+          on the same <MarkSparkle>easing curve</MarkSparkle>.
         </p>
       </header>
 
@@ -136,7 +204,8 @@ export default function ComponentsPage() {
             <div className="mb-6 flex items-end justify-between border-b border-[var(--color-border-default)] pb-3">
               <h2 className="font-display text-2xl italic text-fg">{g.name}</h2>
               <span className="font-mono text-xs text-fg/40">
-                {g.items.length} {g.items.length === 1 ? "component" : "components"}
+                {g.items.length}{" "}
+                {g.items.length === 1 ? "component" : "components"}
               </span>
             </div>
 
@@ -154,7 +223,9 @@ export default function ComponentsPage() {
                     />
                     <div className="flex items-start justify-between">
                       <div>
-                        <h3 className="text-[15px] font-medium text-fg">{item.name}</h3>
+                        <h3 className="text-[15px] font-medium text-fg">
+                          {item.name}
+                        </h3>
                         <p className="mt-1 text-[13px] leading-relaxed text-fg/55">
                           {item.desc}
                         </p>
@@ -173,16 +244,16 @@ export default function ComponentsPage() {
                    tile is clickable — keeps the visual recipe intact while
                    surfacing routes (Buttons, Cards, Tables, Footer, ...). */
                 return (
-                  <li key={item.name}>
+                  <li key={item.name} className="h-full">
                     {item.href ? (
                       <Link
                         href={item.href}
-                        className="aura-card group relative block overflow-hidden p-5"
+                        className="aura-card group relative block h-full overflow-hidden p-5"
                       >
                         {inner}
                       </Link>
                     ) : (
-                      <div className="aura-card group relative overflow-hidden p-5">
+                      <div className="aura-card group relative h-full overflow-hidden p-5">
                         {inner}
                       </div>
                     )}
