@@ -11,6 +11,7 @@ import {
   Terminal,
 } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import CategoryNav from "../_shared/CategoryNav";
 
 export interface Variant {
   id: number;
@@ -21,11 +22,7 @@ export interface Variant {
   highlightedSnippet: string;
 }
 
-export default function Gallery({
-  variant,
-}: {
-  variant: Variant;
-}) {
+export default function Gallery({ variant }: { variant: Variant }) {
   return (
     <main className="relative mx-auto w-full max-w-[1240px] px-6 pt-6 pb-20 md:pt-10 md:pb-28">
       <Link
@@ -44,7 +41,8 @@ export default function Gallery({
           Theme Toggle
         </h1>
         <p className="mt-5 max-w-[520px] text-pretty text-[15px] leading-relaxed text-fg/70">
-          A high-fidelity theme switcher with custom GIF transitions and a bento-style settings dashboard.
+          A high-fidelity theme switcher with custom GIF transitions and a
+          bento-style settings dashboard.
         </p>
       </header>
 
@@ -52,9 +50,9 @@ export default function Gallery({
         <div className="grid gap-4 lg:grid-cols-2">
           <Panel label="Live Preview">
             <div className="grid h-[580px] place-items-center rounded-lg bg-black/5 dark:bg-black/40 p-6 overflow-hidden">
-               <div className="scale-[0.8] sm:scale-100 origin-center">
-                 <ThemeToggle />
-               </div>
+              <div className="scale-[0.8] sm:scale-100 origin-center">
+                <ThemeToggle />
+              </div>
             </div>
           </Panel>
 
@@ -74,6 +72,7 @@ export default function Gallery({
           <CodeBlock value={variant.highlightedCode} isHtml expandable />
         </Panel>
       </div>
+      <CategoryNav slug="ThemeToggle" />
     </main>
   );
 }
@@ -116,7 +115,12 @@ function CodeBlock({
 
   const onCopy = () => {
     const textToCopy = isHtml
-      ? value.replace(/<[^>]*>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+      ? value
+          .replace(/<[^>]*>/g, "")
+          .replace(/&lt;/g, "<")
+          .replace(/&gt;/g, ">")
+          .replace(/&quot;/g, '"')
+          .replace(/&#39;/g, "'")
       : value;
     navigator.clipboard.writeText(textToCopy);
     setCopied(true);
@@ -128,7 +132,9 @@ function CodeBlock({
       <div
         data-lenis-prevent
         className={`relative w-full overflow-x-auto rounded-lg border border-border-default transition-all duration-500 ease-aura ${
-          !expanded ? "max-h-[220px] overflow-hidden" : "max-h-[800px] overflow-y-auto"
+          !expanded
+            ? "max-h-[220px] overflow-hidden"
+            : "max-h-[800px] overflow-y-auto"
         } bg-[#0d1117] dark:bg-[#0d1117]`}
       >
         {isHtml ? (
@@ -174,7 +180,11 @@ function CodeBlock({
           onClick={onCopy}
           className="flex h-8 w-8 items-center justify-center rounded-md border border-white/10 bg-white/5 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/10 hover:text-white"
         >
-          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? (
+            <Check className="h-3.5 w-3.5" />
+          ) : (
+            <Copy className="h-3.5 w-3.5" />
+          )}
         </button>
       </div>
     </div>

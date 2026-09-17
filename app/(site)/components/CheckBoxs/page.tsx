@@ -11,6 +11,7 @@ import Checkbox7 from "./Checkbox7";
 import Checkbox8 from "./Checkbox8";
 import Checkbox9 from "./Checkbox9";
 import Checkbox10 from "./Checkbox10";
+import CategoryNav from "../_shared/CategoryNav";
 
 export const metadata: Metadata = {
   title: "Checkboxes — Aura UI",
@@ -35,7 +36,8 @@ const CHECKBOX_VARIANTS = [
   },
   {
     name: "Neon Glow",
-    description: "Electric borders and glowing particles for a futuristic look.",
+    description:
+      "Electric borders and glowing particles for a futuristic look.",
     Component: Checkbox4,
   },
   {
@@ -108,6 +110,7 @@ export default function CheckBoxsPage() {
           </section>
         ))}
       </div>
+      <CategoryNav slug="CheckBoxs" />
     </main>
   );
 }

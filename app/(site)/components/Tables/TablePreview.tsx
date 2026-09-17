@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import {
   Check,
   ChevronDown,
@@ -44,6 +45,7 @@ function Status({
   const initial = String(children);
   const [value, setValue] = useState(initial);
   const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const choices = Array.from(
     new Set(options ?? [initial, "Active", "Review", "Paused", "Archived"]),
   );
@@ -54,6 +56,7 @@ function Status({
         type="button"
         aria-label={`Change status from ${value}`}
         aria-expanded={open}
+        ref={buttonRef}
         onClick={() => setOpen((current) => !current)}
         className="inline-flex items-center gap-1.5 rounded-full px-2 py-1 text-[9px] font-semibold transition-opacity hover:opacity-80"
         style={{
@@ -68,23 +71,38 @@ function Status({
         {value}
         <ChevronDown className="h-2.5 w-2.5" />
       </button>
-      {open && (
-        <span className="aura-glass absolute bottom-7 left-0 z-50 w-28 overflow-hidden rounded-lg p-1 shadow-xl">
-          {choices.map((choice) => (
-            <button
-              key={choice}
-              type="button"
-              onClick={() => {
-                setValue(choice);
-                setOpen(false);
-              }}
-              className={`block w-full rounded-md px-2 py-1.5 text-left text-[10px] hover:bg-fg/10 ${choice === value ? "text-accent-primary" : "text-fg-muted"}`}
-            >
-              {choice}
-            </button>
-          ))}
-        </span>
-      )}
+      {open &&
+        typeof document !== "undefined" &&
+        buttonRef.current &&
+        createPortal(
+          <span
+            className="aura-glass fixed z-[9999] w-28 overflow-hidden rounded-lg p-1 shadow-xl"
+            style={{
+              left: buttonRef.current.getBoundingClientRect().left,
+              top: Math.max(
+                8,
+                buttonRef.current.getBoundingClientRect().top -
+                  choices.length * 29 -
+                  16,
+              ),
+            }}
+          >
+            {choices.map((choice) => (
+              <button
+                key={choice}
+                type="button"
+                onClick={() => {
+                  setValue(choice);
+                  setOpen(false);
+                }}
+                className={`block w-full rounded-md px-2 py-1.5 text-left text-[10px] hover:bg-fg/10 ${choice === value ? "text-accent-primary" : "text-fg-muted"}`}
+              >
+                {choice}
+              </button>
+            ))}
+          </span>,
+          document.body,
+        )}
     </span>
   );
 }
@@ -119,6 +137,25 @@ function Head({ children }: { children?: ReactNode }) {
     <th className="whitespace-nowrap px-3 py-2 text-left align-middle text-[9px] font-semibold uppercase tracking-[0.14em] text-fg-muted">
       {children}
     </th>
+  );
+}
+function SelectAllCheckbox({
+  checked,
+  onChange,
+}: {
+  checked: boolean;
+  onChange: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={checked ? "Clear all rows" : "Select all rows"}
+      aria-pressed={checked}
+      onClick={onChange}
+      className={`grid h-4 w-4 place-items-center rounded border ${checked ? "border-accent-primary bg-accent-primary text-black" : "border-border-hover text-transparent"}`}
+    >
+      <Check className="h-3 w-3" />
+    </button>
   );
 }
 function Cell({
@@ -197,6 +234,8 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
     );
   const deleteRow = (id: number) =>
     setDeletedRows((current) => [...current, id]);
+  const selectAll = () =>
+    setChecked((current) => (current.length === 3 ? [] : [0, 1, 2]));
   const toggle = (id: number) =>
     setChecked((current) =>
       current.includes(id)
@@ -221,6 +260,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
           <thead>
             <tr>
               <Head>#</Head>
+              <Head>
+                <SelectAllCheckbox
+                  checked={checked.length === 3}
+                  onChange={selectAll}
+                />
+              </Head>
               <Head>Project</Head>
               <Head>Owner</Head>
               <Head>Progress</Head>
@@ -237,6 +282,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
               deletedRows.includes(index) ? null : (
                 <tr key={project}>
                   <Cell className="font-mono text-fg-muted">{index + 1}</Cell>
+                  <Cell>
+                    <SelectAllCheckbox
+                      checked={checked.includes(index)}
+                      onChange={() => toggle(index)}
+                    />
+                  </Cell>
                   <Cell className="font-medium text-fg">{project}</Cell>
                   <Cell>{owner}</Cell>
                   <Cell>
@@ -296,6 +347,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
           <thead>
             <tr>
               <Head>#</Head>
+              <Head>
+                <SelectAllCheckbox
+                  checked={checked.length === 3}
+                  onChange={selectAll}
+                />
+              </Head>
               <Head>Invoice</Head>
               <Head>Date</Head>
               <Head>Amount</Head>
@@ -312,6 +369,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
               deletedRows.includes(index) ? null : (
                 <tr key={invoice}>
                   <Cell className="font-mono text-fg-muted">{index + 1}</Cell>
+                  <Cell>
+                    <SelectAllCheckbox
+                      checked={checked.includes(index)}
+                      onChange={() => toggle(index)}
+                    />
+                  </Cell>
                   <Cell className="font-mono text-fg">{invoice}</Cell>
                   <Cell>{date}</Cell>
                   <Cell className="font-mono text-fg">{amount}</Cell>
@@ -367,6 +430,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
           <thead>
             <tr>
               <Head>#</Head>
+              <Head>
+                <SelectAllCheckbox
+                  checked={checked.length === 3}
+                  onChange={selectAll}
+                />
+              </Head>
               <Head>Item</Head>
               <Head>SKU</Head>
               <Head>Stock</Head>
@@ -383,6 +452,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
               deletedRows.includes(index) ? null : (
                 <tr key={sku}>
                   <Cell className="font-mono text-fg-muted">{index + 1}</Cell>
+                  <Cell>
+                    <SelectAllCheckbox
+                      checked={checked.includes(index)}
+                      onChange={() => toggle(index)}
+                    />
+                  </Cell>
                   <Cell className="font-medium text-fg">{item}</Cell>
                   <Cell className="font-mono">{sku}</Cell>
                   <Cell>
@@ -431,7 +506,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
           <thead>
             <tr>
               <Head>#</Head>
-              <Head />
+              <Head>
+                <SelectAllCheckbox
+                  checked={checked.length === 3}
+                  onChange={selectAll}
+                />
+              </Head>
               <Head>Task</Head>
               <Head>Assignee</Head>
               <Head>Priority</Head>
@@ -514,6 +594,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
           <thead>
             <tr>
               <Head>#</Head>
+              <Head>
+                <SelectAllCheckbox
+                  checked={checked.length === 3}
+                  onChange={selectAll}
+                />
+              </Head>
               <Head>Metric</Head>
               <Head>Current</Head>
               <Head>Change</Head>
@@ -530,6 +616,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
               deletedRows.includes(index) ? null : (
                 <tr key={metric}>
                   <Cell className="font-mono text-fg-muted">{index + 1}</Cell>
+                  <Cell>
+                    <SelectAllCheckbox
+                      checked={checked.includes(index)}
+                      onChange={() => toggle(index)}
+                    />
+                  </Cell>
                   <Cell className="font-medium text-fg">{metric}</Cell>
                   <Cell className="font-mono text-fg">{current}</Cell>
                   <Cell
@@ -573,7 +665,12 @@ export default function TablePreview({ variant }: { variant: TableVariant }) {
         <thead>
           <tr>
             <Head>#</Head>
-            <Head />
+            <Head>
+              <SelectAllCheckbox
+                checked={checked.length === 3}
+                onChange={selectAll}
+              />
+            </Head>
             <Head>Member</Head>
             <Head>Role</Head>
             <Head>Status</Head>
