@@ -14,6 +14,7 @@ export const CATEGORIES: Category[] = [
   { slug: "Badges", label: "Badges" },
   { slug: "Loaders", label: "Loaders" },
   { slug: "Tables", label: "Tables" },
+  { slug: "AvatarStack", label: "Avatar Stack" },
   { slug: "ThemeToggle", label: "Theme Toggle" },
   { slug: "Footer", label: "Footer" },
   { slug: "Dock", label: "Dock" },

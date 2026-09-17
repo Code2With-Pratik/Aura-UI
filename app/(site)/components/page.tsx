@@ -79,8 +79,9 @@ const groups: { name: string; items: Item[] }[] = [
       },
       {
         name: "Avatar Stack",
-        desc: "Overlapping circles with overflow chip",
+        desc: "Animated photo, square, and initial-based avatar stacks",
         accent: "secondary",
+        href: "/components/AvatarStack",
       },
       {
         name: "Progress",
