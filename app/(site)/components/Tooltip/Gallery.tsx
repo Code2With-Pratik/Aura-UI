@@ -17,6 +17,12 @@ import Tooltip3 from "./Tooltip3";
 import Tooltip4 from "./Tooltip4";
 import Tooltip5 from "./Tooltip5";
 import Tooltip6 from "./Tooltip6";
+import Tooltip7 from "./Tooltip7";
+import Tooltip8 from "./Tooltip8";
+import Tooltip9 from "./Tooltip9";
+import Tooltip10 from "./Tooltip10";
+import Tooltip11 from "./Tooltip11";
+import Tooltip12 from "./Tooltip12";
 
 export type Variant = {
   id: number;
@@ -34,6 +40,12 @@ const PREVIEWS: Record<number, Preview> = {
   4: Tooltip4,
   5: Tooltip5,
   6: Tooltip6,
+  7: Tooltip7,
+  8: Tooltip8,
+  9: Tooltip9,
+  10: Tooltip10,
+  11: Tooltip11,
+  12: Tooltip12,
 };
 
 export default function Gallery({ variants }: { variants: Variant[] }) {

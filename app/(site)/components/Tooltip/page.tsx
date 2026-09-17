@@ -24,6 +24,12 @@ export default async function TooltipCategoryPage() {
     "Tooltip4.tsx",
     "Tooltip5.tsx",
     "Tooltip6.tsx",
+    "Tooltip7.tsx",
+    "Tooltip8.tsx",
+    "Tooltip9.tsx",
+    "Tooltip10.tsx",
+    "Tooltip11.tsx",
+    "Tooltip12.tsx",
   ];
   const names = [
     "Hover",
@@ -32,6 +38,12 @@ export default async function TooltipCategoryPage() {
     "Placement",
     "Info",
     "Product preview",
+    "Square",
+    "Circle",
+    "Speech bubble",
+    "Notification",
+    "Neon",
+    "Bottom sheet",
   ];
   const variants: Variant[] = await Promise.all(
     files.map(async (fileName, index) => {

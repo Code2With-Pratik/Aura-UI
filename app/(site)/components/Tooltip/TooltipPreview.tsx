@@ -4,10 +4,21 @@ import { Info } from "lucide-react";
 import type { ReactNode } from "react";
 
 export type TooltipVariant =
-  "hover" | "title" | "stats" | "placement" | "info" | "product";
+  | "hover"
+  | "title"
+  | "stats"
+  | "placement"
+  | "info"
+  | "product"
+  | "square"
+  | "circle"
+  | "speech"
+  | "notification"
+  | "neon"
+  | "sheet";
 
 const tipBase =
-  "pointer-events-none absolute z-[9999] rounded-xl bg-[#111] px-3 py-2 text-left text-white opacity-0 shadow-[0_16px_35px_rgba(0,0,0,.35)] ring-1 ring-white/10 transition-opacity duration-200 group-hover/tooltip:opacity-100 group-focus-within/tooltip:opacity-100";
+  "pointer-events-none absolute z-[9999] rounded-xl bg-[#111] px-3 py-2 text-left text-white opacity-0 shadow-[0_16px_35px_rgba(0,0,0,.35)] ring-1 ring-white/10 transition-[opacity,transform] duration-300 ease-out group-hover/tooltip:opacity-100 group-hover/tooltip:scale-100 group-focus-within/tooltip:opacity-100 group-focus-within/tooltip:scale-100";
 
 function Trigger({ children }: { children: ReactNode }) {
   return (
@@ -25,6 +36,89 @@ export default function TooltipPreview({
 }: {
   variant: TooltipVariant;
 }) {
+  if (variant === "square" || variant === "circle") {
+    return (
+      <div className="group/tooltip relative flex h-[190px] items-center justify-center">
+        <div
+          className={`${tipBase} bottom-[calc(50%+28px)] left-1/2 -translate-x-1/2 scale-90 whitespace-nowrap text-[12px] font-semibold ${variant === "circle" ? "grid h-24 w-24 place-items-center rounded-full text-center" : "rounded-md"}`}
+        >
+          {variant === "circle" ? "Saved!" : "Copy command"}
+          <span className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 bg-[#111]" />
+        </div>
+        <Trigger>{variant === "circle" ? "Circle" : "Square"}</Trigger>
+      </div>
+    );
+  }
+
+  if (variant === "speech") {
+    return (
+      <div className="group/tooltip relative flex h-[190px] items-center justify-center">
+        <div
+          className={`${tipBase} bottom-[calc(50%+30px)] left-1/2 w-[230px] -translate-x-1/2 scale-90 rounded-[24px] px-4 py-3 text-[12px] leading-relaxed`}
+        >
+          A softer speech bubble for conversational UI.
+          <span className="absolute -bottom-2 left-8 h-5 w-5 rotate-45 rounded-br-md bg-[#111]" />
+        </div>
+        <Trigger>Speech bubble</Trigger>
+      </div>
+    );
+  }
+
+  if (variant === "notification") {
+    return (
+      <div className="group/tooltip relative flex h-[190px] items-center justify-center">
+        <div
+          className={`${tipBase} bottom-[calc(50%+30px)] left-1/2 w-[210px] -translate-x-1/2 scale-90 rounded-2xl border border-white/10 p-3`}
+        >
+          <div className="flex items-center gap-2">
+            <span className="grid h-6 w-6 place-items-center rounded-lg bg-accent-primary text-[11px] font-bold text-black">
+              ✓
+            </span>
+            <div>
+              <p className="text-[12px] font-semibold">Build complete</p>
+              <p className="text-[10px] text-white/50">
+                All checks passed just now
+              </p>
+            </div>
+          </div>
+          <span className="absolute -bottom-1.5 right-8 h-3 w-3 rotate-45 bg-[#111]" />
+        </div>
+        <Trigger>Notify</Trigger>
+      </div>
+    );
+  }
+
+  if (variant === "neon") {
+    return (
+      <div className="group/tooltip relative flex h-[190px] items-center justify-center">
+        <div
+          className={`${tipBase} bottom-[calc(50%+28px)] left-1/2 -translate-x-1/2 scale-90 whitespace-nowrap border border-accent-primary/70 bg-[#101a0d] text-[12px] font-semibold text-accent-primary shadow-[0_0_28px_rgba(184,255,87,.25)]`}
+        >
+          Neon glow
+          <span className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r border-accent-primary/70 bg-[#101a0d]" />
+        </div>
+        <Trigger>Neon</Trigger>
+      </div>
+    );
+  }
+
+  if (variant === "sheet") {
+    return (
+      <div className="group/tooltip relative flex h-[190px] items-end justify-center pb-8">
+        <div
+          className={`${tipBase} bottom-[calc(50%+8px)] left-1/2 w-[280px] -translate-x-1/2 scale-90 rounded-2xl p-4`}
+        >
+          <div className="mx-auto mb-3 h-1 w-8 rounded-full bg-white/20" />
+          <p className="text-[13px] font-semibold">Quick details</p>
+          <p className="mt-1 text-[11px] leading-relaxed text-white/55">
+            A spacious pop-up surface for actions that need a little more room.
+          </p>
+        </div>
+        <Trigger>Bottom sheet</Trigger>
+      </div>
+    );
+  }
+
   if (variant === "stats") {
     return (
       <div className="group/tooltip relative flex h-[190px] items-center justify-center">
