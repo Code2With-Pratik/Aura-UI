@@ -16,7 +16,7 @@ import { auraEase } from "@/lib/motion";
 type Item = {
   id: string;
   label: string;
-  group: "NAVIGATE" | "THEME";
+  group: "NAVIGATE" | "COMPONENTS" | "THEME";
   icon: React.ReactNode;
   hint?: string;
   href?: string;
@@ -59,7 +59,7 @@ export default function Spotlight({ open, onClose }: Props) {
     const y = window.innerHeight / 2;
     const r = Math.hypot(
       Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
+      Math.max(y, window.innerHeight - y),
     );
 
     const root = document.documentElement;
@@ -90,6 +90,35 @@ export default function Spotlight({ open, onClose }: Props) {
         hint: "/COMPONENTS",
         href: "/components",
       },
+      ...[
+        ["Buttons", "/components/Buttons"],
+        ["Inputs", "/components/Input"],
+        ["Image Uploader", "/components/ImageUploader"],
+        ["Select", "/components/Select"],
+        ["Checkboxes", "/components/CheckBoxs"],
+        ["Cards", "/components/Cards"],
+        ["Badges", "/components/Badges"],
+        ["Loaders", "/components/Loaders"],
+        ["Tables", "/components/Tables"],
+        ["Avatar Stack", "/components/AvatarStack"],
+        ["Progress", "/components/Progress"],
+        ["Theme Toggle", "/components/ThemeToggle"],
+        ["Navbar", "/components/Navbar"],
+        ["Toast", "/components/Toast"],
+        ["Tooltip", "/components/Tooltip"],
+        ["Footer", "/components/Footer"],
+        ["Dock", "/components/Dock"],
+        ["Window", "/components/Window"],
+        ["Mockup", "/components/MockUp"],
+        ["Page Transition", "/components/PageTransition"],
+      ].map(([label, href]) => ({
+        id: `component-${label}`,
+        label,
+        group: "COMPONENTS" as const,
+        icon: <GridIcon />,
+        hint: href.replace("/components/", "/"),
+        href,
+      })),
       {
         id: "docs",
         label: "Docs",
@@ -131,11 +160,12 @@ export default function Spotlight({ open, onClose }: Props) {
         action: toggleTheme,
       },
     ],
-    [toggleTheme]
+    [toggleTheme],
   );
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return items;
+    if (!query.trim())
+      return items.filter((item) => item.group !== "COMPONENTS");
     const q = query.toLowerCase();
     return items.filter((i) => i.label.toLowerCase().includes(q));
   }, [items, query]);
@@ -176,10 +206,10 @@ export default function Spotlight({ open, onClose }: Props) {
       }
     };
 
-    focusInput();                                          // synchronous, before paint
-    const raf = requestAnimationFrame(focusInput);          // next paint
-    const t1 = window.setTimeout(focusInput, 80);           // after framer-motion's first frame
-    const t2 = window.setTimeout(focusInput, 360);          // after the entry tween settles
+    focusInput(); // synchronous, before paint
+    const raf = requestAnimationFrame(focusInput); // next paint
+    const t1 = window.setTimeout(focusInput, 80); // after framer-motion's first frame
+    const t2 = window.setTimeout(focusInput, 360); // after the entry tween settles
 
     return () => {
       cancelAnimationFrame(raf);
@@ -215,7 +245,7 @@ export default function Spotlight({ open, onClose }: Props) {
       item.action?.();
       onClose();
     },
-    [onClose, router]
+    [onClose, router],
   );
 
   // Keyboard handling
@@ -322,7 +352,9 @@ export default function Spotlight({ open, onClose }: Props) {
                             >
                               <span
                                 className={`grid h-5 w-5 place-items-center ${
-                                  isActive ? "text-[var(--color-accent-primary)]" : "text-fg/55"
+                                  isActive
+                                    ? "text-[var(--color-accent-primary)]"
+                                    : "text-fg/55"
                                 }`}
                               >
                                 {item.icon}
