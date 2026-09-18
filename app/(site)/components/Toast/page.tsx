@@ -18,6 +18,10 @@ export default async function ToastCategoryPage() {
     "Toast4.tsx",
     "Toast5.tsx",
     "Toast6.tsx",
+    "Toast7.tsx",
+    "Toast8.tsx",
+    "Toast9.tsx",
+    "Toast10.tsx",
   ];
   const names = [
     "Success",
@@ -26,6 +30,10 @@ export default async function ToastCategoryPage() {
     "Upload progress",
     "Rich toast",
     "Mobile toast",
+    "Neon status",
+    "Announcement",
+    "Celebration",
+    "Command result",
   ];
   const componentCode = fs.readFileSync(
     path.join(dir, "ToastPreview.tsx"),

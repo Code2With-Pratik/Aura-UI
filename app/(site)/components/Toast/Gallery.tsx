@@ -11,6 +11,10 @@ import Toast3 from "./Toast3";
 import Toast4 from "./Toast4";
 import Toast5 from "./Toast5";
 import Toast6 from "./Toast6";
+import Toast7 from "./Toast7";
+import Toast8 from "./Toast8";
+import Toast9 from "./Toast9";
+import Toast10 from "./Toast10";
 
 export type Variant = {
   id: number;
@@ -27,6 +31,10 @@ const previews: Record<number, ComponentType> = {
   4: Toast4,
   5: Toast5,
   6: Toast6,
+  7: Toast7,
+  8: Toast8,
+  9: Toast9,
+  10: Toast10,
 };
 
 export default function Gallery({ variants }: { variants: Variant[] }) {

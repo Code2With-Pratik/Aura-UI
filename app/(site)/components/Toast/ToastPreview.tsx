@@ -4,18 +4,203 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertCircle,
+  Bell,
   Check,
   CheckCircle2,
   Clock3,
   Info,
   Loader2,
   RotateCcw,
+  Sparkles,
   Upload,
   X,
+  Zap,
 } from "lucide-react";
 
 type ToastVariant =
-  "success" | "stack" | "action" | "progress" | "rich" | "mobile";
+  | "success"
+  | "stack"
+  | "action"
+  | "progress"
+  | "rich"
+  | "mobile"
+  | "neon"
+  | "announcement"
+  | "celebration"
+  | "command";
+
+function ExtraVariants({
+  variant,
+  visible,
+  setVisible,
+  extraAction,
+  setExtraAction,
+}: {
+  variant: ToastVariant;
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
+  extraAction: boolean;
+  setExtraAction: (active: boolean) => void;
+}) {
+  if (!visible)
+    return (
+      <Shell>
+        <motion.button
+          type="button"
+          onClick={() => setVisible(true)}
+          initial={{ opacity: 0, scale: 0.78 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 360, damping: 18 }}
+          className="rounded-full border border-border-default px-3 py-1.5 text-xs text-fg-muted hover:text-fg"
+        >
+          Show toast
+        </motion.button>
+      </Shell>
+    );
+  if (variant === "neon")
+    return (
+      <Shell>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7, filter: "blur(8px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ type: "spring", stiffness: 300, damping: 18 }}
+          className="flex w-full max-w-[350px] items-center gap-3 rounded-2xl border border-fuchsia-400/50 bg-[#190b24] p-3 text-white shadow-[0_0_28px_rgba(217,70,239,.35)]"
+        >
+          <motion.button
+            type="button"
+            aria-label="Toggle live mode"
+            onClick={() => setExtraAction(!extraAction)}
+            animate={{ scale: extraAction ? 1 : [1, 1.25, 1] }}
+            transition={
+              extraAction
+                ? { type: "spring", stiffness: 300 }
+                : { repeat: Infinity, duration: 1.8 }
+            }
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-fuchsia-400/20 text-fuchsia-300"
+          >
+            <Zap className="h-4 w-4" />
+          </motion.button>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold">
+              {extraAction ? "Live mode paused" : "Live mode enabled"}
+            </p>
+            <p className="mt-0.5 text-xs text-fuchsia-100/60">
+              {extraAction
+                ? "Resume realtime updates anytime."
+                : "Realtime updates are active."}
+            </p>
+          </div>
+          <Close onClick={() => setVisible(false)} />
+        </motion.div>
+      </Shell>
+    );
+  if (variant === "announcement")
+    return (
+      <Shell>
+        <motion.div
+          initial={{ opacity: 0, y: -28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 380, damping: 20 }}
+          className="flex w-full max-w-[440px] items-center gap-3 rounded-full border border-accent-primary/30 bg-accent-primary/10 px-4 py-2.5 text-fg shadow-lg"
+        >
+          <Bell className="h-4 w-4 shrink-0 text-accent-primary" />
+          <p className="min-w-0 flex-1 truncate text-xs font-medium">
+            {extraAction
+              ? "Features opened in your workspace"
+              : "New workspace features are available"}
+          </p>
+          <button
+            type="button"
+            onClick={() => setExtraAction(!extraAction)}
+            className="shrink-0 text-xs font-semibold text-accent-primary hover:underline"
+          >
+            {extraAction ? "Done" : "Explore"}
+          </button>
+          <Close onClick={() => setVisible(false)} />
+        </motion.div>
+      </Shell>
+    );
+  if (variant === "celebration")
+    return (
+      <Shell>
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.75 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 340, damping: 16 }}
+          className="relative flex w-full max-w-[360px] items-center gap-3 overflow-hidden rounded-2xl border border-amber-300/30 bg-gradient-to-r from-amber-400/20 to-pink-400/20 p-4 text-fg shadow-xl"
+        >
+          <motion.div
+            animate={{ rotate: extraAction ? 360 : [0, 12, -12, 0] }}
+            transition={
+              extraAction
+                ? { duration: 0.5 }
+                : { repeat: Infinity, duration: 2.4 }
+            }
+          >
+            <Sparkles className="h-5 w-5 text-amber-300" />
+          </motion.div>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold">
+              {extraAction ? "Launch details unlocked" : "You shipped it!"}
+            </p>
+            <p className="mt-0.5 text-xs text-fg-muted">
+              {extraAction
+                ? "Your project is ready to share."
+                : "Your project is now live."}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setExtraAction(!extraAction)}
+            className="shrink-0 text-xs font-medium text-amber-300 hover:underline"
+          >
+            {extraAction ? "Close" : "View"}
+          </button>
+          <Close onClick={() => setVisible(false)} />
+        </motion.div>
+      </Shell>
+    );
+  if (variant === "command")
+    return (
+      <Shell>
+        <motion.div
+          initial={{ opacity: 0, y: 18, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 410, damping: 24 }}
+          className="flex w-full max-w-[390px] items-center gap-3 rounded-xl border border-border-default bg-[var(--color-surface)] p-3 shadow-2xl"
+        >
+          <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-fg/10">
+            <span className="font-mono text-sm text-fg">⌘</span>
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs text-fg-muted">
+              {extraAction ? "Command copied" : "Command completed"}
+            </p>
+            <p className="mt-0.5 truncate font-mono text-[11px] text-fg">
+              deploy --production
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setExtraAction(!extraAction)}
+            className="rounded-md border border-border-default px-2 py-1 text-[10px] text-fg-muted hover:text-fg"
+          >
+            {extraAction ? "Copied" : "Copy"}
+          </button>
+          <button
+            type="button"
+            aria-label="Mark command complete"
+            onClick={() => setExtraAction(true)}
+            className="rounded-full p-1 text-lime-400 transition hover:bg-lime-400/10"
+          >
+            <Check className="h-4 w-4" />
+          </button>
+          <Close onClick={() => setVisible(false)} />
+        </motion.div>
+      </Shell>
+    );
+  return null;
+}
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
@@ -68,6 +253,7 @@ function Toast({
 
 export default function ToastPreview({ variant }: { variant: ToastVariant }) {
   const [visible, setVisible] = useState(true);
+  const [extraAction, setExtraAction] = useState(false);
   const [stackItems, setStackItems] = useState([
     "comment",
     "notifications",
@@ -82,6 +268,14 @@ export default function ToastPreview({ variant }: { variant: ToastVariant }) {
     );
     return () => window.clearInterval(timer);
   }, [variant]);
+  const extraVariant = ExtraVariants({
+    variant,
+    visible,
+    setVisible,
+    extraAction,
+    setExtraAction,
+  });
+  if (extraVariant) return extraVariant;
   if (variant === "stack")
     return (
       <Shell>
