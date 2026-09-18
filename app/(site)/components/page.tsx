@@ -85,8 +85,9 @@ const groups: { name: string; items: Item[] }[] = [
       },
       {
         name: "Progress",
-        desc: "Animated linear bar with gradient",
+        desc: "Linear, circular, segmented, and animated progress states",
         accent: "secondary",
+        href: "/components/Progress",
       },
     ],
   },
