@@ -29,6 +29,7 @@ import Button13 from "./Button13";
 import Button14 from "./Button14";
 import Button15 from "./Button15";
 import Button16 from "./Button16";
+import Button17 from "./Button17";
 
 export interface Variant {
   id: number;
@@ -61,6 +62,7 @@ const PREVIEWS: Record<number, ComponentType> = {
   14: Button14,
   15: Button15,
   16: Button16,
+  17: Button17,
 };
 
 function Preview({ id }: { id: number }) {
@@ -182,14 +184,11 @@ function Grid({
    Detail — preview + command + snippet + collapsible source
 ============================================================ */
 
-function Detail({
-  variant,
-  onBack,
-}: {
-  variant: Variant;
-  onBack: () => void;
-}) {
-  const installCmd = buildInstallCommand(variant.code);
+function Detail({ variant, onBack }: { variant: Variant; onBack: () => void }) {
+  const installCmd =
+    variant.id === 17
+      ? "npx aura-ui add button-17"
+      : buildInstallCommand(variant.code);
 
   return (
     <>
@@ -221,8 +220,9 @@ function Detail({
         <Panel label="Command" icon={<Terminal className="h-3.5 w-3.5" />}>
           <CodeBlock value={installCmd} language="bash" />
           <p className="mt-3 text-[11px] text-fg-muted">
-            Install peer dependencies, then drop the component file into your
-            project.
+            {variant.id === 17
+              ? "Add the Liquid Metal button directly to your project."
+              : "Install peer dependencies, then drop the component file into your project."}
           </p>
         </Panel>
       </div>
@@ -318,7 +318,9 @@ function CodeBlock({
       <div
         data-lenis-prevent
         className={`relative w-full overflow-x-auto rounded-lg border border-border-default transition-all duration-500 ease-aura ${
-          !expanded ? "max-h-[220px] overflow-hidden" : "max-h-[800px] overflow-y-auto"
+          !expanded
+            ? "max-h-[220px] overflow-hidden"
+            : "max-h-[800px] overflow-y-auto"
         } bg-[#0d1117] dark:bg-[#0d1117]`}
       >
         {isHtml ? (
@@ -350,7 +352,7 @@ function CodeBlock({
           </div>
         )}
       </div>
-      
+
       {expandable && expanded && (
         <button
           type="button"
@@ -373,7 +375,8 @@ function buildInstallCommand(source: string): string {
   let m: RegExpExecArray | null;
   while ((m = regex.exec(source)) !== null) {
     const pkg = m[1];
-    if (pkg.startsWith(".") || pkg.startsWith("@/") || pkg === "react") continue;
+    if (pkg.startsWith(".") || pkg.startsWith("@/") || pkg === "react")
+      continue;
     /* take the package root for scoped/sub-paths */
     const root = pkg.startsWith("@")
       ? pkg.split("/").slice(0, 2).join("/")

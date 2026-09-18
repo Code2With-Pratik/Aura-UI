@@ -6,7 +6,7 @@ import { codeToHtml } from "shiki";
 
 export const metadata: Metadata = {
   title: "Inputs — Aura UI",
-  description: "Twelve interactive input variants with smooth animations.",
+  description: "Thirteen interactive input variants with smooth animations.",
 };
 
 const NAMES = [
@@ -22,22 +22,17 @@ const NAMES = [
   "Spectrum Glow",
   "Action Field",
   "Perplexity Search",
+  "Image Uploader",
 ];
 
 async function loadVariants(): Promise<Variant[]> {
-  const dir = path.join(
-    process.cwd(),
-    "app",
-    "(site)",
-    "components",
-    "Input",
-  );
+  const dir = path.join(process.cwd(), "app", "(site)", "components", "Input");
 
   const variants = await Promise.all(
-    Array.from({ length: 12 }, async (_, i) => {
+    Array.from({ length: 13 }, async (_, i) => {
       const fileName = `Input${i + 1}.tsx`;
       const code = fs.readFileSync(path.join(dir, fileName), "utf8");
-      
+
       const highlightedCode = await codeToHtml(code, {
         lang: "tsx",
         theme: "github-dark",
@@ -59,7 +54,7 @@ async function loadVariants(): Promise<Variant[]> {
         highlightedCode,
         highlightedSnippet,
       };
-    })
+    }),
   );
 
   return variants;

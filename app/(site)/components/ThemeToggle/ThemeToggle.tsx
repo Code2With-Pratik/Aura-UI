@@ -1,163 +1,213 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useTheme } from "next-themes"
+import * as React from "react";
+import { useTheme } from "next-themes";
 
 // 6 Preset GIFs with transparent backgrounds (or placeholders acting as such)
 const GIF_PRESETS = [
-  { id: 'preset-1', name: 'Apple', url: 'https://i.pinimg.com/originals/be/cb/ca/becbca09cc81c9ecd1ce133c836b3f25.gif' },
-  { id: 'preset-2', name: 'Cat Eyes', url: 'https://i.pinimg.com/originals/6f/b2/d7/6fb2d7e574f85ab02ef9420b4e387552.gif' },
-  { id: 'preset-3', name: 'Hello', url: 'https://i.pinimg.com/originals/3d/5c/f7/3d5cf75049da2de56024d5aaa6e62e25.gif' },
-  { id: 'preset-4', name: 'Hello2', url: 'https://i.pinimg.com/originals/63/7d/98/637d98e729cce811a9f33e1dd957d09b.gif' },
-  { id: 'preset-5', name: 'Cat Walk Paws', url: 'https://i.pinimg.com/originals/11/94/43/119443ce7241ea548fb5a6518c5e4893.gif' },
-  { id: 'preset-6', name: 'Cat Walk', url: 'https://i.pinimg.com/originals/8c/af/c2/8cafc2665a04072d903521931ac15540.gif' },
-]
+  {
+    id: "preset-1",
+    name: "Apple",
+    url: "https://i.pinimg.com/originals/be/cb/ca/becbca09cc81c9ecd1ce133c836b3f25.gif",
+  },
+  {
+    id: "preset-2",
+    name: "Cat Eyes",
+    url: "https://i.pinimg.com/originals/6f/b2/d7/6fb2d7e574f85ab02ef9420b4e387552.gif",
+  },
+  {
+    id: "preset-3",
+    name: "Hello",
+    url: "https://i.pinimg.com/originals/3d/5c/f7/3d5cf75049da2de56024d5aaa6e62e25.gif",
+  },
+  {
+    id: "preset-4",
+    name: "Hello2",
+    url: "https://i.pinimg.com/originals/63/7d/98/637d98e729cce811a9f33e1dd957d09b.gif",
+  },
+  {
+    id: "preset-5",
+    name: "Cat Walk Paws",
+    url: "https://i.pinimg.com/originals/11/94/43/119443ce7241ea548fb5a6518c5e4893.gif",
+  },
+  {
+    id: "preset-6",
+    name: "Cat Walk",
+    url: "https://i.pinimg.com/originals/8c/af/c2/8cafc2665a04072d903521931ac15540.gif",
+  },
+];
 
 export default function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
-  const [activeGifUrl, setActiveGifUrl] = React.useState(GIF_PRESETS[0].url)
-  const [customUrl, setCustomUrl] = React.useState("")
-
-  const styleId = "theme-transition-styles"
+  const { setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+  const [activeGifUrl, setActiveGifUrl] = React.useState(GIF_PRESETS[0].url);
+  const [customUrl, setCustomUrl] = React.useState("");
+  const [isLoadingGif, setIsLoadingGif] = React.useState(false);
+  const [isAnimating, setIsAnimating] = React.useState(false);
+  const styleId = "theme-gif-transition-styles";
 
   // Ensure hydration matches
   React.useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
-  // Function to inject the CSS mask animation into the document head
-  const updateStyles = React.useCallback((css: string) => {
-    if (typeof window === "undefined") return
-
-    let styleElement = document.getElementById(styleId) as HTMLStyleElement
-
+  const updateTransitionStyles = React.useCallback((url: string) => {
+    const cssUrl = url
+      .replace(/\\/g, "\\\\")
+      .replace(/"/g, '\\"')
+      .replace(/\)/g, "\\)");
+    let styleElement = document.getElementById(
+      styleId,
+    ) as HTMLStyleElement | null;
     if (!styleElement) {
-      styleElement = document.createElement("style")
-      styleElement.id = styleId
-      document.head.appendChild(styleElement)
+      styleElement = document.createElement("style");
+      styleElement.id = styleId;
+      document.head.appendChild(styleElement);
     }
 
-    styleElement.textContent = css
-  }, [])
-
-  const toggleTheme = React.useCallback(() => {
-    // 1. Relies on alpha-channel (transparency) instead of luminance.
-    // 2. Scales to 500vmax to ensure full screen coverage.
-    // 3. Smooth cubic-bezier timing function.
-    const animationCss = `
+    styleElement.textContent = `
       ::view-transition-group(root) {
-        animation-duration: 1.5s;
-        animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+        animation-duration: 1500ms;
+        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      ::view-transition-old(root) {
+        z-index: 0;
+        animation: none;
       }
 
       ::view-transition-new(root) {
-        mask-image: url('${activeGifUrl}');
+        z-index: 1;
+        animation: aura-gif-reveal 1500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+        clip-path: none !important;
+        mask-image: url("${cssUrl}");
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: 0vmin;
-
-        -webkit-mask-image: url('${activeGifUrl}');
+        mask-mode: luminance;
+        -webkit-mask-image: url("${cssUrl}");
         -webkit-mask-position: center;
         -webkit-mask-repeat: no-repeat;
         -webkit-mask-size: 0vmin;
-
-        animation: smooth-scale-mask 1.5s forwards;
-        z-index: 10;
+        -webkit-mask-mode: luminance;
       }
 
-      ::view-transition-old(root),
-      .dark::view-transition-old(root) {
-        animation: none;
-        z-index: -1;
-      }
-
-      .dark::view-transition-new(root) {
-        mask-image: url('${activeGifUrl}');
-        mask-position: center;
-        mask-repeat: no-repeat;
-        mask-size: 0vmin;
-
-        -webkit-mask-image: url('${activeGifUrl}');
-        -webkit-mask-position: center;
-        -webkit-mask-repeat: no-repeat;
-        -webkit-mask-size: 0vmin;
-
-        animation: smooth-scale-mask 1.5s forwards;
-        z-index: 10;
-      }
-
-      @keyframes smooth-scale-mask {
-        0% { 
-          mask-size: 0vmin; 
-          -webkit-mask-size: 0vmin; 
+      @keyframes aura-gif-reveal {
+        0% {
+          mask-size: 0vmin;
+          -webkit-mask-size: 0vmin;
         }
-        100% { 
-          mask-size: 500vmax; 
-          -webkit-mask-size: 500vmax; 
+        100% {
+          mask-size: 500vmax;
+          -webkit-mask-size: 500vmax;
         }
       }
-    `
+    `;
+  }, []);
 
-    updateStyles(animationCss)
+  const preloadGif = React.useCallback((url: string) => {
+    return new Promise<void>((resolve) => {
+      const image = new Image();
+      let settled = false;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        resolve();
+      };
 
-    if (typeof window === "undefined") return
+      image.onload = async () => {
+        try {
+          await image.decode?.();
+        } catch {
+          // The image is still usable when decode is unavailable or rejected.
+        }
+        finish();
+      };
+      image.onerror = finish;
+      image.src = url;
+      window.setTimeout(finish, 4000);
+    });
+  }, []);
 
+  const toggleTheme = React.useCallback(async () => {
+    if (!resolvedTheme || isLoadingGif || isAnimating) return;
+
+    setIsLoadingGif(true);
+    await preloadGif(activeGifUrl);
     const switchTheme = () => {
-      setTheme(resolvedTheme === "light" ? "dark" : "light")
-    }
+      setTheme(resolvedTheme === "light" ? "dark" : "light");
+    };
 
-    // Fallback for browsers that don't support View Transitions
-    if (!document.startViewTransition) {
-      switchTheme()
-      return
-    }
-
-    document.startViewTransition(switchTheme)
-  }, [resolvedTheme, setTheme, activeGifUrl, updateStyles])
+    setIsAnimating(true);
+    window.requestAnimationFrame(() => {
+      updateTransitionStyles(activeGifUrl);
+      if (typeof document.startViewTransition === "function") {
+        const transition = document.startViewTransition(switchTheme);
+        transition.finished.finally(() => {
+          setIsLoadingGif(false);
+          window.setTimeout(() => setIsAnimating(false), 180);
+        });
+      } else {
+        switchTheme();
+        setIsLoadingGif(false);
+        window.setTimeout(() => setIsAnimating(false), 1500);
+      }
+    });
+  }, [
+    activeGifUrl,
+    isAnimating,
+    isLoadingGif,
+    preloadGif,
+    resolvedTheme,
+    setTheme,
+    updateTransitionStyles,
+  ]);
 
   const handleCustomUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value
-    setCustomUrl(val)
+    const val = e.target.value;
+    setCustomUrl(val);
     if (val.trim() !== "") {
-      setActiveGifUrl(val)
+      setActiveGifUrl(val);
     } else {
-      setActiveGifUrl(GIF_PRESETS[0].url)
+      setActiveGifUrl(GIF_PRESETS[0].url);
     }
-  }
+  };
 
-  if (!mounted) return null
+  if (!mounted) return null;
 
-  const isDark = resolvedTheme === "dark"
+  const isDark = resolvedTheme === "dark";
 
   return (
     <>
       <div className="theme-dashboard">
-        
         {/* Main Action Button */}
-        <button 
-          onClick={toggleTheme} 
-          className={`glass-toggle-btn ${isDark ? 'dark-btn' : 'light-btn'}`}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          disabled={isLoadingGif || isAnimating}
+          aria-busy={isLoadingGif || isAnimating}
+          className={`glass-toggle-btn ${isDark ? "dark-btn" : "light-btn"}`}
         >
-          {isDark ? '☀️ Switch to Light Mode' : '🌙 Switch to Dark Mode'}
+          {isDark ? "☀️ Switch to Light Mode" : "🌙 Switch to Dark Mode"}
         </button>
 
         {/* Bento Grid Settings Panel */}
         <div className="settings-bento-box">
           <h3 className="bento-title">GIF Mask Transition Settings</h3>
-          
+
           {/* Custom URL Input */}
           <div className="input-group">
             <label>Paste Custom GIF URL</label>
-            <input 
-              type="text" 
-              placeholder="https://example.com/transparent-animation.gif" 
+            <input
+              type="text"
+              placeholder="https://example.com/transparent-animation.gif"
               value={customUrl}
               onChange={handleCustomUrlChange}
               className="custom-url-input"
             />
             <span className="helper-text">
-              *Ensure the GIF has a transparent background so the shape scales correctly.
+              *Ensure the GIF has a transparent background so the shape scales
+              correctly.
             </span>
           </div>
 
@@ -168,11 +218,15 @@ export default function ThemeToggle() {
             {GIF_PRESETS.map((preset) => (
               <button
                 key={preset.id}
+                type="button"
+                disabled={isLoadingGif || isAnimating}
                 onClick={() => {
-                  setCustomUrl("") 
-                  setActiveGifUrl(preset.url)
+                  setCustomUrl("");
+                  setActiveGifUrl(preset.url);
                 }}
-                className={`preset-btn ${activeGifUrl === preset.url && customUrl === "" ? 'active-preset' : ''}`}
+                aria-label={`Use ${preset.name} GIF transition`}
+                aria-pressed={activeGifUrl === preset.url && customUrl === ""}
+                className={`preset-btn ${activeGifUrl === preset.url && customUrl === "" ? "active-preset" : ""}`}
                 style={{ backgroundImage: `url(${preset.url})` }}
                 title={preset.name}
               >
@@ -181,12 +235,17 @@ export default function ThemeToggle() {
             ))}
           </div>
         </div>
-
       </div>
+
+      {isAnimating && (
+        <div className="theme-gif-layer" aria-hidden="true">
+          <img src={activeGifUrl} alt="" />
+        </div>
+      )}
 
       <style dangerouslySetInnerHTML={{ __html: styles }} />
     </>
-  )
+  );
 }
 
 const styles = `
@@ -200,6 +259,41 @@ const styles = `
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
 
+  .theme-gif-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    pointer-events: none;
+    background: transparent;
+    isolation: isolate;
+    will-change: opacity;
+    animation: theme-gif-layer-out 180ms ease 1.5s both;
+  }
+
+  .theme-gif-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    transform-origin: center;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    animation: theme-gif-layer-in 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes theme-gif-layer-in {
+    0% { opacity: 0; transform: scale(0.72) rotate(-3deg); }
+    45% { opacity: 1; transform: scale(1.02) rotate(0.5deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  @keyframes theme-gif-layer-out {
+    to { opacity: 0; }
+  }
+
   /* Main Toggle Button */
   .glass-toggle-btn {
     padding: 16px 32px;
@@ -211,6 +305,12 @@ const styles = `
     backdrop-filter: blur(10px);
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .glass-toggle-btn:disabled {
+    cursor: wait;
+    opacity: 0.78;
+    transform: none;
   }
 
   .dark-btn {
@@ -356,4 +456,4 @@ const styles = `
       grid-template-columns: repeat(2, 1fr);
     }
   }
-`
+`;

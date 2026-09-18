@@ -5,7 +5,7 @@ import Gallery, { type Variant } from "./Gallery";
 
 export const metadata: Metadata = {
   title: "Buttons — Aura UI",
-  description: "Sixteen animated button variants, ready to drop in.",
+  description: "Seventeen animated button variants, ready to drop in.",
 };
 
 const NAMES = [
@@ -25,6 +25,7 @@ const NAMES = [
   "Arcade Play",
   "UI Anatomy",
   "Side Fill",
+  "Liquid Metal",
 ];
 
 import { codeToHtml } from "shiki";
@@ -42,10 +43,10 @@ async function loadVariants(): Promise<Variant[]> {
   );
 
   const variants = await Promise.all(
-    Array.from({ length: 16 }, async (_, i) => {
+    Array.from({ length: 17 }, async (_, i) => {
       const fileName = `Button${i + 1}.tsx`;
       const code = fs.readFileSync(path.join(dir, fileName), "utf8");
-      
+
       // Generate syntax-highlighted HTML on the server
       const highlightedCode = await codeToHtml(code, {
         lang: "tsx",
@@ -68,7 +69,7 @@ async function loadVariants(): Promise<Variant[]> {
         highlightedCode,
         highlightedSnippet,
       };
-    })
+    }),
   );
 
   return variants;

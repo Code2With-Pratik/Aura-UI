@@ -25,6 +25,7 @@ import Input9 from "./Input9";
 import Input10 from "./Input10";
 import Input11 from "./Input11";
 import Input12 from "./Input12";
+import Input13 from "./Input13";
 
 export interface Variant {
   id: number;
@@ -49,6 +50,7 @@ const PREVIEWS: Record<number, ComponentType> = {
   10: Input10,
   11: Input11,
   12: Input12,
+  13: Input13,
 };
 
 function Preview({ id }: { id: number }) {
@@ -126,7 +128,9 @@ export default function Gallery({
                     </div>
                   </div>
                   <div className="mt-4 flex items-center justify-between px-0.5">
-                    <span className="text-[13px] font-medium text-fg">{v.name}</span>
+                    <span className="text-[13px] font-medium text-fg">
+                      {v.name}
+                    </span>
                     <span className="text-[11px] font-medium text-fg-muted/50">
                       {v.fileName}
                     </span>
@@ -225,7 +229,12 @@ function CodeBlock({
 
   const onCopy = () => {
     const textToCopy = isHtml
-      ? value.replace(/<[^>]*>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+      ? value
+          .replace(/<[^>]*>/g, "")
+          .replace(/&lt;/g, "<")
+          .replace(/&gt;/g, ">")
+          .replace(/&quot;/g, '"')
+          .replace(/&#39;/g, "'")
       : value;
     navigator.clipboard.writeText(textToCopy);
     setCopied(true);
@@ -237,7 +246,9 @@ function CodeBlock({
       <div
         data-lenis-prevent
         className={`relative w-full overflow-x-auto rounded-lg border border-border-default transition-all duration-500 ease-aura ${
-          !expanded ? "max-h-[220px] overflow-hidden" : "max-h-[800px] overflow-y-auto"
+          !expanded
+            ? "max-h-[220px] overflow-hidden"
+            : "max-h-[800px] overflow-y-auto"
         } bg-[#0d1117] dark:bg-[#0d1117]`}
       >
         {isHtml ? (
@@ -283,7 +294,11 @@ function CodeBlock({
           onClick={onCopy}
           className="flex h-8 w-8 items-center justify-center rounded-md border border-white/10 bg-white/5 text-white/70 backdrop-blur-sm transition-colors hover:bg-white/10 hover:text-white"
         >
-          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? (
+            <Check className="h-3.5 w-3.5" />
+          ) : (
+            <Copy className="h-3.5 w-3.5" />
+          )}
         </button>
       </div>
     </div>

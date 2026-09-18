@@ -49,7 +49,7 @@ export default function Gallery({ variant }: { variant: Variant }) {
       <div className="flex flex-col gap-10">
         <div className="grid gap-4 lg:grid-cols-2">
           <Panel label="Live Preview">
-            <div className="grid h-[580px] place-items-center rounded-lg bg-black/5 dark:bg-black/40 p-6 overflow-hidden">
+            <div className="grid min-h-[580px] place-items-center rounded-lg bg-black/5 dark:bg-black/40 p-6 overflow-visible">
               <div className="scale-[0.8] sm:scale-100 origin-center">
                 <ThemeToggle />
               </div>
