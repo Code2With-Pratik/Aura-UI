@@ -102,8 +102,9 @@ const groups: { name: string; items: Item[] }[] = [
       },
       {
         name: "Toast",
-        desc: "Anchored stack with auto-dismiss",
+        desc: "Feedback, action, progress, and mobile toast patterns",
         accent: "tertiary",
+        href: "/components/Toast",
       },
       {
         name: "Tooltip",

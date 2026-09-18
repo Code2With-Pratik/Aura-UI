@@ -23,6 +23,7 @@ export const CATEGORIES: Category[] = [
   { slug: "Window", label: "Window" },
   { slug: "MockUp", label: "Mockup" },
   { slug: "Navbar", label: "Navbar" },
+  { slug: "Toast", label: "Toast" },
   { slug: "PageTransition", label: "Page Transition" },
 ];
 
