@@ -95,9 +95,10 @@ const groups: { name: string; items: Item[] }[] = [
     name: "Overlays",
     items: [
       {
-        name: "Spotlight",
-        desc: "⌘K command palette with keyboard nav",
+        name: "Navbar",
+        desc: "Apple, macOS, iOS glass, dashboard, and mega-navigation patterns",
         accent: "primary",
+        href: "/components/Navbar",
       },
       {
         name: "Toast",

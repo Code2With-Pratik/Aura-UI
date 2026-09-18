@@ -3,19 +3,15 @@ import { Analytics } from "@vercel/analytics/next";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ScrollToTop from "./_shared/ScrollToTop";
 
-export default function SiteLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
 
-      <div className="pt-[68px]">
-        {children}
-      </div>
+      <div className="pt-[68px]">{children}</div>
 
       <Footer />
 
