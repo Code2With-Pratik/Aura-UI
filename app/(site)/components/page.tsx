@@ -53,6 +53,12 @@ const groups: { name: string; items: Item[] }[] = [
         accent: "primary",
         href: "/components/CheckBoxs",
       },
+      {
+        name: "Image Uploader",
+        desc: "Upload, crop, zoom, rotate, and confirm photos",
+        accent: "secondary",
+        href: "/components/ImageUploader",
+      },
     ],
   },
   {

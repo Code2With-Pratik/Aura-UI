@@ -9,6 +9,7 @@ export type Category = {
 export const CATEGORIES: Category[] = [
   { slug: "Buttons", label: "Buttons" },
   { slug: "Input", label: "Inputs" },
+  { slug: "ImageUploader", label: "Image Uploader" },
   { slug: "Select", label: "Select" },
   { slug: "CheckBoxs", label: "Checkboxes" },
   { slug: "Cards", label: "Cards" },

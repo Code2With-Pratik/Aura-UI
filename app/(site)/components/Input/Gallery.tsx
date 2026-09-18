@@ -25,7 +25,6 @@ import Input9 from "./Input9";
 import Input10 from "./Input10";
 import Input11 from "./Input11";
 import Input12 from "./Input12";
-import Input13 from "./Input13";
 
 export interface Variant {
   id: number;
@@ -50,7 +49,6 @@ const PREVIEWS: Record<number, ComponentType> = {
   10: Input10,
   11: Input11,
   12: Input12,
-  13: Input13,
 };
 
 function Preview({ id }: { id: number }) {
