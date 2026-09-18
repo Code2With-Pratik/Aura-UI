@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Checkbox = () => {
   return (
@@ -15,12 +15,24 @@ const Checkbox = () => {
             </div>
             <div className="neon-checkbox__glow" />
             <div className="neon-checkbox__borders">
-              <span /><span /><span /><span />
+              <span />
+              <span />
+              <span />
+              <span />
             </div>
           </div>
           <div className="neon-checkbox__effects">
             <div className="neon-checkbox__particles">
-              <span /><span /><span /><span /> <span /><span /><span /><span /> <span /><span /><span /><span />
+              <span />
+              <span />
+              <span />
+              <span /> <span />
+              <span />
+              <span />
+              <span /> <span />
+              <span />
+              <span />
+              <span />
             </div>
             <div className="neon-checkbox__rings">
               <div className="ring" />
@@ -28,20 +40,23 @@ const Checkbox = () => {
               <div className="ring" />
             </div>
             <div className="neon-checkbox__sparks">
-              <span /><span /><span /><span />
+              <span />
+              <span />
+              <span />
+              <span />
             </div>
           </div>
         </div>
       </label>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .neon-checkbox {
-    --primary: #00ffaa;
-    --primary-dark: #00cc88;
-    --primary-light: #88ffdd;
+    --primary: var(--color-accent-primary, #00ffaa);
+    --primary-dark: color-mix(in srgb, var(--primary) 75%, var(--color-fg));
+    --primary-light: color-mix(in srgb, var(--primary) 55%, white);
     --size: 30px;
     position: relative;
     width: var(--size);
@@ -63,7 +78,7 @@ const StyledWrapper = styled.div`
   .neon-checkbox__box {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: var(--color-surface, #101216);
     border-radius: 4px;
     border: 2px solid var(--primary-dark);
     transition: all 0.4s ease;
@@ -394,6 +409,7 @@ const StyledWrapper = styled.div`
   }
   .neon-checkbox__rings .ring:nth-child(3) {
     animation-delay: 0.2s;
-  }`;
+  }
+`;
 
 export default Checkbox;

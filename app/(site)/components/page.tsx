@@ -35,7 +35,12 @@ const groups: { name: string; items: Item[] }[] = [
         accent: "secondary",
         href: "/components/Input",
       },
-      { name: "Select", desc: "Native + custom dropdown", accent: "tertiary" },
+      {
+        name: "Select",
+        desc: "Basic, searchable, grouped, and multi-value dropdowns",
+        accent: "tertiary",
+        href: "/components/Select",
+      },
       {
         name: "Theme Toggle",
         desc: "Tactile theme switch with GIF transitions",

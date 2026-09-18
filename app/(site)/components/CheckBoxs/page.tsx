@@ -1,116 +1,59 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import Checkbox1 from "./Checkbox1";
-import Checkbox2 from "./Checkbox2";
-import Checkbox3 from "./Checkbox3";
-import Checkbox4 from "./Checkbox4";
-import Checkbox5 from "./Checkbox5";
-import Checkbox6 from "./Checkbox6";
-import Checkbox7 from "./Checkbox7";
-import Checkbox8 from "./Checkbox8";
-import Checkbox9 from "./Checkbox9";
-import Checkbox10 from "./Checkbox10";
-import CategoryNav from "../_shared/CategoryNav";
+import { codeToHtml } from "shiki";
+import Gallery, { type Variant } from "./Gallery";
 
 export const metadata: Metadata = {
   title: "Checkboxes — Aura UI",
-  description: "Ten checkbox styles with distinct visual personalities.",
+  description: "Animated checkbox variants for Aura UI.",
 };
 
-const CHECKBOX_VARIANTS = [
-  {
-    name: "Gradient Pulse",
-    description: "Soft motion and a bright burst when toggled.",
-    Component: Checkbox1,
-  },
-  {
-    name: "Wave Check",
-    description: "A compact interactive style with a ripple-like effect.",
-    Component: Checkbox2,
-  },
-  {
-    name: "Heart Toggle",
-    description: "A romantic, rounded checkbox with a heart-shaped gesture.",
-    Component: Checkbox3,
-  },
-  {
-    name: "Neon Glow",
-    description:
-      "Electric borders and glowing particles for a futuristic look.",
-    Component: Checkbox4,
-  },
-  {
-    name: "Spark Switch",
-    description: "A bright, minimal checkbox with a crisp checked state.",
-    Component: Checkbox5,
-  },
-  {
-    name: "Mellow Flip",
-    description: "A gentle, rounded toggle with a polished motion feel.",
-    Component: Checkbox6,
-  },
-  {
-    name: "iOS Stack",
-    description: "Colorful iOS-inspired options for modern interfaces.",
-    Component: Checkbox7,
-  },
-  {
-    name: "Soft Capsule",
-    description: "A calm, pill-like checkbox with softened edges.",
-    Component: Checkbox8,
-  },
-  {
-    name: "Bold Outline",
-    description: "A clean, sturdy checkbox with strong emphasis.",
-    Component: Checkbox9,
-  },
-  {
-    name: "Minimal Toggle",
-    description: "A lightweight option with a restrained, elegant finish.",
-    Component: Checkbox10,
-  },
+const names = [
+  ["Gradient Pulse", "Soft motion and a bright burst when toggled."],
+  ["Wave Check", "A compact interactive style with a ripple-like effect."],
+  ["Heart Toggle", "A romantic, rounded checkbox with a heart-shaped gesture."],
+  [
+    "Neon Glow",
+    "Electric borders and glowing particles for a futuristic look.",
+  ],
+  ["Spark Switch", "A bright, minimal checkbox with a crisp checked state."],
+  ["Mellow Flip", "A gentle, rounded toggle with a polished motion feel."],
+  ["iOS Stack", "Colorful iOS-inspired options for modern interfaces."],
+  ["Soft Capsule", "A calm, pill-like checkbox with softened edges."],
+  ["Bold Outline", "A clean, sturdy checkbox with strong emphasis."],
+  ["Minimal Toggle", "A lightweight option with a restrained, elegant finish."],
 ];
 
-export default function CheckBoxsPage() {
-  return (
-    <main className="relative mx-auto w-full max-w-[1240px] px-6 pt-6 pb-20 md:pt-10 md:pb-28">
-      <Link
-        href="/components"
-        className="mb-8 inline-flex items-center gap-1.5 text-[13px] text-fg-muted transition-colors hover:text-fg"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" /> All components
-      </Link>
-
-      <header className="mb-12 flex flex-col items-center text-center">
-        <p className="eyebrow mb-3">Category</p>
-        <h1
-          className="display-clamp text-balance text-fg"
-          style={{ fontSize: "clamp(2rem, 4.5vw + 0.5rem, 4.75rem)" }}
-        >
-          Checkboxes
-        </h1>
-        <p className="mt-5 max-w-[560px] text-pretty text-[15px] leading-relaxed text-fg/70">
-          Ten distinct checkbox styles, each ready to drop into your UI.
-        </p>
-      </header>
-
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {CHECKBOX_VARIANTS.map(({ name, description, Component }) => (
-          <section key={name} className="aura-tile p-4 md:p-5">
-            <div className="mb-4">
-              <h2 className="text-[15px] font-medium text-fg">{name}</h2>
-              <p className="mt-1 text-[13px] leading-relaxed text-fg/55">
-                {description}
-              </p>
-            </div>
-            <div className="grid min-h-[140px] place-items-center rounded-lg bg-black/5 p-4 dark:bg-black/35">
-              <Component />
-            </div>
-          </section>
-        ))}
-      </div>
-      <CategoryNav slug="CheckBoxs" />
-    </main>
+export default async function CheckboxesPage() {
+  const dir = path.join(
+    process.cwd(),
+    "app",
+    "(site)",
+    "components",
+    "CheckBoxs",
   );
+  const files = Array.from(
+    { length: 10 },
+    (_, index) => [1, 2, 3, 10, 5, 6, 7, 8, 9, 4][index],
+  );
+  const variants: Variant[] = await Promise.all(
+    files.map(async (sourceNumber, index) => {
+      const fileName = `Checkbox${sourceNumber}.tsx`;
+      const code = fs.readFileSync(path.join(dir, fileName), "utf8");
+      return {
+        id: index + 1,
+        name: names[sourceNumber - 1][0],
+        description: names[sourceNumber - 1][1],
+        fileName,
+        code,
+        highlightedCode: await codeToHtml(code, {
+          lang: "tsx",
+          theme: "github-dark",
+        }),
+        install: `npx aura-ui add checkbox-${sourceNumber}`,
+      };
+    }),
+  );
+  return <Gallery variants={variants} />;
 }

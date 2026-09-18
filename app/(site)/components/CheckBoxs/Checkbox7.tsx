@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Checkbox = () => {
   return (
@@ -10,7 +10,14 @@ const Checkbox = () => {
           <div className="checkbox-wrapper">
             <div className="checkbox-bg" />
             <svg fill="none" viewBox="0 0 24 24" className="checkbox-icon">
-              <path strokeLinejoin="round" strokeLinecap="round" strokeWidth={3} stroke="currentColor" d="M4 12L10 18L20 6" className="check-path" />
+              <path
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth={3}
+                stroke="currentColor"
+                d="M4 12L10 18L20 6"
+                className="check-path"
+              />
             </svg>
           </div>
         </label>
@@ -19,7 +26,14 @@ const Checkbox = () => {
           <div className="checkbox-wrapper">
             <div className="checkbox-bg" />
             <svg fill="none" viewBox="0 0 24 24" className="checkbox-icon">
-              <path strokeLinejoin="round" strokeLinecap="round" strokeWidth={3} stroke="currentColor" d="M4 12L10 18L20 6" className="check-path" />
+              <path
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth={3}
+                stroke="currentColor"
+                d="M4 12L10 18L20 6"
+                className="check-path"
+              />
             </svg>
           </div>
         </label>
@@ -28,7 +42,14 @@ const Checkbox = () => {
           <div className="checkbox-wrapper">
             <div className="checkbox-bg" />
             <svg fill="none" viewBox="0 0 24 24" className="checkbox-icon">
-              <path strokeLinejoin="round" strokeLinecap="round" strokeWidth={3} stroke="currentColor" d="M4 12L10 18L20 6" className="check-path" />
+              <path
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth={3}
+                stroke="currentColor"
+                d="M4 12L10 18L20 6"
+                className="check-path"
+              />
             </svg>
           </div>
         </label>
@@ -37,14 +58,21 @@ const Checkbox = () => {
           <div className="checkbox-wrapper">
             <div className="checkbox-bg" />
             <svg fill="none" viewBox="0 0 24 24" className="checkbox-icon">
-              <path strokeLinejoin="round" strokeLinecap="round" strokeWidth={3} stroke="currentColor" d="M4 12L10 18L20 6" className="check-path" />
+              <path
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth={3}
+                stroke="currentColor"
+                d="M4 12L10 18L20 6"
+                className="check-path"
+              />
             </svg>
           </div>
         </label>
       </div>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .checkbox-container {
@@ -176,6 +204,7 @@ const StyledWrapper = styled.div`
 
   .ios-checkbox input:checked + .checkbox-wrapper {
     animation: bounce 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }`;
+  }
+`;
 
 export default Checkbox;
