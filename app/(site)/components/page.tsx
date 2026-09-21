@@ -143,6 +143,23 @@ const groups: { name: string; items: Item[] }[] = [
       },
     ],
   },
+  {
+    name: "Visual Design",
+    items: [
+      {
+        name: "Mockup",
+        desc: "Interactive product frames for presenting interface states",
+        accent: "primary",
+        href: "/components/MockUp",
+      },
+      {
+        name: "Page Transition",
+        desc: "Smooth animated transitions between visual states",
+        accent: "tertiary",
+        href: "/components/PageTransition",
+      },
+    ],
+  },
 ];
 
 export default function ComponentsPage() {
