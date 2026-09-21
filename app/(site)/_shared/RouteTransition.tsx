@@ -20,7 +20,7 @@ export default function RouteTransition() {
 
     const timeout = window.setTimeout(() => {
       setIsVisible(false);
-    }, 760);
+    }, 900);
 
     return () => window.clearTimeout(timeout);
   }, [pathname]);
@@ -57,8 +57,10 @@ export default function RouteTransition() {
           background: var(--color-accent-primary, #a5ff75);
           transform: scaleY(1);
           transform-origin: bottom;
-          animation: aura-route-panel-out 680ms cubic-bezier(.76, 0, .24, 1)
-            calc(var(--panel-index) * 25ms) both;
+          will-change: transform;
+          backface-visibility: hidden;
+          animation: aura-route-panel-out 220ms cubic-bezier(.65, 0, .35, 1)
+            calc(var(--panel-index) * 82ms) both;
         }
 
         @keyframes aura-route-panel-out {
@@ -68,7 +70,7 @@ export default function RouteTransition() {
 
         @media (prefers-reduced-motion: reduce) {
           .aura-route-transition__panel {
-            animation-duration: 180ms;
+            animation-duration: 160ms;
             animation-delay: 0ms;
           }
         }
