@@ -5,6 +5,7 @@ const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
   transpilePackages: ["aura-ui"],
+  outputFileTracingRoot: process.cwd(),
 };
 
 export default withMDX(nextConfig);

@@ -16,7 +16,7 @@ import { auraEase } from "@/lib/motion";
 type Item = {
   id: string;
   label: string;
-  group: "NAVIGATE" | "COMPONENTS" | "THEME";
+  group: "NAVIGATE" | "COMPONENTS" | "DOCS" | "THEME";
   icon: React.ReactNode;
   hint?: string;
   href?: string;
@@ -128,6 +128,30 @@ export default function Spotlight({ open, onClose }: Props) {
         href: "/docs",
       },
       {
+        id: "docs-components",
+        label: "Component documentation",
+        group: "DOCS",
+        icon: <BookIcon />,
+        hint: "/DOCS/COMPONENTS",
+        href: "/docs/components",
+      },
+      {
+        id: "docs-installation",
+        label: "Installation guide",
+        group: "DOCS",
+        icon: <BookIcon />,
+        hint: "/DOCS/INSTALLATION",
+        href: "/docs/installation",
+      },
+      {
+        id: "docs-theming",
+        label: "Theming and tokens",
+        group: "DOCS",
+        icon: <BookIcon />,
+        hint: "/DOCS/THEMING",
+        href: "/docs/theming",
+      },
+      {
         id: "fonts",
         label: "Fonts",
         group: "NAVIGATE",
@@ -167,7 +191,9 @@ export default function Spotlight({ open, onClose }: Props) {
     if (!query.trim())
       return items.filter((item) => item.group !== "COMPONENTS");
     const q = query.toLowerCase();
-    return items.filter((i) => i.label.toLowerCase().includes(q));
+    return items.filter((i) =>
+      `${i.label} ${i.hint ?? ""} ${i.id}`.toLowerCase().includes(q),
+    );
   }, [items, query]);
 
   const grouped = useMemo(() => {

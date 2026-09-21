@@ -1,9 +1,69 @@
 ---
 title: Components
-description: Drop-in UI patterns for the Aura system, built with Tailwind and motion tokens.
+description: Complete reference for every Aura UI component gallery, installation command, and usage pattern.
 ---
 
-Aura UI ships with a small set of opinionated building blocks. The components live in the `components/` directory and are designed to be composed together with the global tokens from `app/globals.css`.
+Aura UI components are available as interactive galleries under `/components`. Each gallery contains the live preview, variants, source code, and installation command for that component.
+
+## Component catalog
+
+### Inputs
+
+| Component      | What it includes                                                    | Gallery                                          |
+| -------------- | ------------------------------------------------------------------- | ------------------------------------------------ |
+| Button         | Animated, glass, gradient, clay, and action button variants         | [Open Buttons](/components/Buttons)              |
+| Input          | Text, search, leading-icon, trailing-icon, and focused input states | [Open Inputs](/components/Input)                 |
+| Image Uploader | Upload, preview, crop, zoom, rotate, and confirm states             | [Open Image Uploader](/components/ImageUploader) |
+| Select         | Basic, searchable, grouped, and multi-value dropdowns               | [Open Select](/components/Select)                |
+| Checkbox       | Ten animated checkbox and selection patterns                        | [Open Checkboxes](/components/CheckBoxs)         |
+
+### Display
+
+| Component    | What it includes                                          | Gallery                                     |
+| ------------ | --------------------------------------------------------- | ------------------------------------------- |
+| Cards        | Interactive surface and content card layouts              | [Open Cards](/components/Cards)             |
+| Badges       | Status, notification, label, and animated badge variants  | [Open Badges](/components/Badges)           |
+| Loaders      | Ten loading indicators for async and branded states       | [Open Loaders](/components/Loaders)         |
+| Tables       | Dense, responsive, and interactive data table patterns    | [Open Tables](/components/Tables)           |
+| Avatar Stack | Photo, initials, grouped, and animated avatar stacks      | [Open AvatarStack](/components/AvatarStack) |
+| Progress     | Linear, circular, segmented, and animated progress states | [Open Progress](/components/Progress)       |
+
+### Navigation and overlays
+
+| Component | What it includes                                                     | Gallery                             |
+| --------- | -------------------------------------------------------------------- | ----------------------------------- |
+| Navbar    | Apple, macOS, iOS glass, dashboard, and mega-menu navigation         | [Open Navbar](/components/Navbar)   |
+| Toast     | Feedback, action, progress, mobile, and animated notification states | [Open Toast](/components/Toast)     |
+| Tooltip   | Basic, rich, delayed, and smart-positioned tooltips                  | [Open Tooltip](/components/Tooltip) |
+| Footer    | Marketing, product, legal, and multi-column footer patterns          | [Open Footer](/components/Footer)   |
+| Dock      | macOS dock and Windows taskbar patterns                              | [Open Dock](/components/Dock)       |
+| Window    | macOS and Windows window chrome with embedded content                | [Open Window](/components/Window)   |
+
+### Visual design
+
+| Component       | What it includes                                                       | Gallery                                            |
+| --------------- | ---------------------------------------------------------------------- | -------------------------------------------------- |
+| Mockup          | iOS, iPad, macOS laptop, and MacBook presentation frames               | [Open Mockup](/components/MockUp)                  |
+| Page Transition | Vertical, horizontal, split, diagonal, radial, and curtain transitions | [Open Page Transition](/components/PageTransition) |
+| Theme Toggle    | GIF-mask and view-transition theme switching patterns                  | [Open Theme Toggle](/components/ThemeToggle)       |
+
+## Installation
+
+Each gallery includes a copy-ready command. The general format is:
+
+```bash
+npx aura-ui add <component-name>
+```
+
+For example:
+
+```bash
+npx aura-ui add button
+npx aura-ui add input
+npx aura-ui add page-transition
+```
+
+The gallery source is intentionally visible so you can copy a single variant or customize its tokens. Check [Installation](/docs/installation) for the full Next.js and Tailwind setup.
 
 ## Start from the app shell
 
@@ -46,7 +106,7 @@ A floating glass nav with a search trigger and theme toggle. It also listens for
 ```tsx
 import Navbar from "@/components/Navbar";
 
-<Navbar />
+<Navbar />;
 ```
 
 ## Hero
@@ -72,7 +132,7 @@ The search palette is keyboard-first and pairs with the nav search trigger. It i
 ```tsx
 import Spotlight from "@/components/Spotlight";
 
-<Spotlight open={open} onClose={() => setOpen(false)} />
+<Spotlight open={open} onClose={() => setOpen(false)} />;
 ```
 
 ## Styling tips
