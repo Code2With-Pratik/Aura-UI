@@ -27,6 +27,7 @@ export const CATEGORIES: Category[] = [
   { slug: "Navbar", label: "Navbar" },
   { slug: "Toast", label: "Toast" },
   { slug: "PageTransition", label: "Page Transition" },
+  { slug: "Carousels", label: "Carousels" },
 ];
 
 export function getNeighbours(slug: string) {

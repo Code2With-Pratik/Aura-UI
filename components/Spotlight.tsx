@@ -111,6 +111,7 @@ export default function Spotlight({ open, onClose }: Props) {
         ["Window", "/components/Window"],
         ["Mockup", "/components/MockUp"],
         ["Page Transition", "/components/PageTransition"],
+        ["Carousels", "/components/Carousels"],
       ].map(([label, href]) => ({
         id: `component-${label}`,
         label,

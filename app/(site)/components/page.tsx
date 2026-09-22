@@ -158,6 +158,12 @@ const groups: { name: string; items: Item[] }[] = [
         accent: "tertiary",
         href: "/components/PageTransition",
       },
+      {
+        name: "Carousels",
+        desc: "Six grab-to-slide, stacked, coverflow, and expanding rails",
+        accent: "secondary",
+        href: "/components/Carousels",
+      },
     ],
   },
 ];
