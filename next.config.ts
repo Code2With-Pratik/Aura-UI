@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   transpilePackages: ["aura-ui"],
   outputFileTracingRoot: process.cwd(),
   async rewrites() {
-    return [{ source: "/fonts/:slug.css", destination: "/fonts/:slug" }];
+    return [{ source: "/fonts/:slug.css", destination: "/fonts/css/:slug" }];
   },
 };
 
