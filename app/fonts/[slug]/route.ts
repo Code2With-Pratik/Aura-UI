@@ -3,10 +3,9 @@ import { fontBySlug } from "@/lib/fonts/registry";
 
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ slug: string[] }> },
+  { params }: { params: Promise<{ slug: string }> },
 ) {
-  const segments = (await params).slug;
-  const slug = segments.join("/").replace(/\.css$/, "");
+  const slug = (await params).slug;
   const font = fontBySlug(slug);
 
   if (!font) {
