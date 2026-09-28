@@ -8,10 +8,10 @@ import React from "react";
  */
 export default function BackgroundBlobs() {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
       {/* Central glow */}
       <div 
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-20 blur-[120px] rounded-full"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[700px] opacity-[0.1] blur-[160px] rounded-full"
         style={{
           background: "radial-gradient(circle, var(--color-accent-primary) 0%, transparent 70%)"
         }}
@@ -19,7 +19,7 @@ export default function BackgroundBlobs() {
       
       {/* Secondary accent blob */}
       <div 
-        className="absolute left-[40%] top-[30%] w-[400px] h-[400px] opacity-10 blur-[100px] rounded-full animate-pulse"
+        className="absolute left-[36%] top-[24%] w-[600px] h-[520px] opacity-[0.045] blur-[150px] rounded-full animate-pulse"
         style={{
           background: "var(--color-accent-primary)",
           animationDuration: "8s"
@@ -28,7 +28,7 @@ export default function BackgroundBlobs() {
 
       {/* Tertiary accent blob */}
       <div 
-        className="absolute right-[35%] bottom-[20%] w-[500px] h-[500px] opacity-10 blur-[110px] rounded-full animate-pulse"
+        className="absolute right-[28%] bottom-[14%] w-[700px] h-[580px] opacity-[0.04] blur-[165px] rounded-full animate-pulse"
         style={{
           background: "var(--color-accent-primary)",
           animationDuration: "12s",

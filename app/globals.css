@@ -160,6 +160,24 @@
 
   body {
     background-color: var(--color-bg);
+    background-image:
+      radial-gradient(
+        52rem 30rem at 50% -8rem,
+        color-mix(in srgb, var(--color-accent-primary) 5%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        34rem 24rem at 8% 58%,
+        color-mix(in srgb, var(--color-accent-secondary) 2%, transparent),
+        transparent 76%
+      ),
+      radial-gradient(
+        32rem 22rem at 92% 78%,
+        color-mix(in srgb, var(--color-accent-tertiary) 2%, transparent),
+        transparent 76%
+      );
+    background-attachment: fixed;
+    background-size: 100% 100%;
     color: var(--color-fg);
     font-family: var(--font-sans);
     font-weight: 500;
@@ -233,6 +251,24 @@
     --explorer-card: rgba(0, 0, 0, 0.025);
     --explorer-hover: rgba(0, 0, 0, 0.06);
     background: rgba(255, 255, 255, 0.5);
+  }
+  .window-explorer-compact {
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--color-fg) 8%, transparent), transparent 34%),
+      color-mix(in srgb, var(--color-surface) 42%, transparent);
+    backdrop-filter: blur(24px) saturate(165%);
+    -webkit-backdrop-filter: blur(24px) saturate(165%);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--color-fg) 14%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--color-accent-primary) 8%, transparent);
+  }
+  .light .window-explorer-compact {
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.62), transparent 38%),
+      color-mix(in srgb, var(--color-surface) 52%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.86),
+      inset 0 0 0 1px color-mix(in srgb, var(--color-accent-primary) 14%, transparent);
   }
   .window-loader-preview {
     transform: scale(1.25);
