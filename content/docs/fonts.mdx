@@ -70,3 +70,69 @@ Use the CSS variables or Tailwind classes instead of hardcoded font stacks when 
 ```
 
 This keeps the visual identity aligned with the rest of the Aura system and makes swapping styles easier across the whole product.
+
+## Aura UI font CDN
+
+The deployed font gallery publishes a CSS endpoint for every discovered font family. Replace the domain below if you deploy Aura UI under a different origin.
+
+```html
+<link rel="stylesheet" href="https://aura-ui-os.vercel.app/fonts/arima.css" />
+```
+
+Then use the family name in your stylesheet:
+
+```css
+body {
+  font-family: "Arima", sans-serif;
+}
+```
+
+The same endpoint can be loaded with CSS `@import`:
+
+```css
+@import url("https://aura-ui-os.vercel.app/fonts/arima.css");
+
+.headline {
+  font-family: "Arima", sans-serif;
+  font-weight: 700;
+}
+```
+
+Use the lowercase family slug to access another font:
+
+```text
+https://aura-ui-os.vercel.app/fonts/poppins.css
+https://aura-ui-os.vercel.app/fonts/satoshi.css
+https://aura-ui-os.vercel.app/fonts/pramukhrounded.css
+```
+
+The detail page for each family is available at `/fonts/[slug]` and includes its available weights, styles, install snippets, and direct WOFF2 URLs. For example:
+
+```text
+https://aura-ui-os.vercel.app/fonts/arima
+```
+
+### Installing multiple families
+
+Use the checkbox on each font card to select multiple families. The cart icon beside the grid/list controls opens a combined installation workspace at `/fonts/collection`. That workspace includes the CDN URL, HTML link, CSS import, Next.js `localFont` example, and individual WOFF2 downloads for every selected family.
+
+### Next.js projects
+
+Add the HTML link in `app/layout.tsx`:
+
+```tsx
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://aura-ui-os.vercel.app/fonts/arima.css" />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+### Licensing
+
+Only use a font in production when its original license allows web embedding and redistribution. The Aura UI collection license covers Aura UI-authored registry metadata, documentation, and tooling; it does not replace the original license for third-party WOFF2 files.

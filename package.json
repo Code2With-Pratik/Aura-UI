@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "fumadocs-mdx",
-    "prebuild": "fumadocs-mdx",
+    "predev": "fumadocs-mdx && node scripts/generate-font-registry.mjs",
+    "prebuild": "fumadocs-mdx && node scripts/generate-font-registry.mjs",
+    "fonts:prepare": "node scripts/generate-font-registry.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

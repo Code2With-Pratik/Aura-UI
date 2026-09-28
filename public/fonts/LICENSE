@@ -1,0 +1,22 @@
+Aura UI Font Collection License
+Copyright © 2026 Code2WithPratik
+
+This license applies only to the Aura UI-authored collection materials in this
+directory: documentation, metadata, generated registry descriptions, build
+scripts, CSS generation logic, and original assets created by Code2WithPratik.
+
+Permission is granted to use, copy, and modify those Aura UI-authored
+collection materials for projects that credit Code2WithPratik and Aura UI.
+
+THE FONT FILES (.WOFF2) ARE NOT AUTOMATICALLY LICENSED BY THIS DOCUMENT.
+Each font file may be owned or licensed by its original type designer or
+distributor. The original font license, if any, controls use, embedding,
+modification, and redistribution of that file. Users must review and comply
+with the applicable upstream license before publishing or redistributing a
+font file or font package.
+
+Except for the permission above, the Aura UI-authored collection materials are
+provided "AS IS", without warranty of any kind. Code2WithPratik is not liable
+for claims arising from a user's unauthorized use or redistribution of a
+third-party font file.
+
