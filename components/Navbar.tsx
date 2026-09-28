@@ -80,7 +80,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-[var(--color-border-default)] bg-[var(--color-bg)]/70 backdrop-blur-xl">
+      <header className="aura-glass fixed inset-x-0 top-0 z-40 rounded-none border-x-0 border-t-0">
         <nav className="mx-auto flex h-[68px] w-full max-w-[1480px] items-center gap-4 px-5 md:px-8">
           {/* Brand */}
           <Link href="/" className="flex items-center gap-2.5">

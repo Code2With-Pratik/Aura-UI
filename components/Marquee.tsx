@@ -189,8 +189,11 @@ export default function Marquee() {
       currentDir = next;
       lastFlipAt = now;
       accumDelta = 0;
-      if (rowARef.current) rowARef.current.style.animationDirection = next;
-      if (rowBRef.current) rowBRef.current.style.animationDirection = next;
+      // Reverse the running CSS animations in place. This preserves the
+      // current timeline position instead of restarting at the other edge.
+      [rowARef.current, rowBRef.current].forEach((row) => {
+        row?.getAnimations().forEach((animation) => animation.reverse());
+      });
     };
     const onScroll = () => {
       if (ticking) return;

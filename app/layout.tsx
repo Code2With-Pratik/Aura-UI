@@ -3,7 +3,6 @@ import { Arima, Instrument_Serif, Geist_Mono } from "next/font/google";
 import { RootProvider } from "fumadocs-ui/provider";
 import ThemePicker from "@/components/ThemePicker";
 import SmoothScroll from "@/components/SmoothScroll";
-import BackgroundBlobs from "@/components/BackgroundBlobs";
 import RouteTransition from "@/app/(site)/_shared/RouteTransition";
 import "./globals.css";
 
@@ -91,7 +90,6 @@ export default function RootLayout({
             search dialog so the shortcut belongs exclusively to our
             custom Spotlight (mounted from Navbar.tsx). */}
         <RootProvider search={{ enabled: false }}>
-          <BackgroundBlobs />
           <SmoothScroll>{children}</SmoothScroll>
           <RouteTransition />
           <ThemePicker />

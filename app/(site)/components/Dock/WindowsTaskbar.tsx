@@ -300,7 +300,7 @@ export default function WindowsTaskbar({
   return (
     <div
       ref={rootRef}
-      className={`relative flex min-w-0 w-full flex-col items-center justify-end gap-3 px-3 py-8 pb-5 sm:px-6 sm:py-12 sm:pb-8 ${compact ? "h-[250px] min-h-0" : "h-full min-h-[360px] sm:min-h-[460px]"}`}
+      className={`relative flex min-w-0 w-full flex-col items-center gap-3 px-3 sm:px-6 ${compact ? "absolute inset-x-0 bottom-0 h-full min-h-0 justify-end pb-6 pt-4" : "justify-end py-8 pb-5 sm:py-12 sm:pb-8 h-full min-h-[360px] sm:min-h-[460px]"}`}
     >
       <AnimatePresence initial={false} mode="wait">
         {panel && (
@@ -388,8 +388,8 @@ export default function WindowsTaskbar({
           </motion.div>
         )}
       </AnimatePresence>
-      <div ref={railWrapperRef} className="relative isolate max-w-full overflow-visible">
-        <div ref={railRef} className="flex w-max min-w-0 max-w-full items-center gap-3 overflow-x-auto rounded-2xl border border-[color-mix(in_srgb,var(--color-fg)_14%,transparent)] bg-[color-mix(in_srgb,var(--color-bg)_70%,var(--color-fg)_10%)] px-2 py-2 text-fg shadow-[0_16px_45px_color-mix(in_srgb,var(--color-fg)_20%,transparent)] backdrop-blur-xl sm:gap-4 sm:px-3">
+      <div ref={railWrapperRef} className={`relative isolate max-w-full overflow-visible ${compact ? "scale-[0.88] origin-bottom" : ""}`}>
+        <div ref={railRef} className={`flex min-w-0 items-center gap-3 overflow-x-auto rounded-2xl border border-[color-mix(in_srgb,var(--color-fg)_14%,transparent)] bg-[color-mix(in_srgb,var(--color-bg)_70%,var(--color-fg)_10%)] px-2 py-2 text-fg shadow-[0_16px_45px_color-mix(in_srgb,var(--color-fg)_20%,transparent)] backdrop-blur-xl sm:gap-4 sm:px-3 ${compact ? "w-full max-w-full" : "w-max max-w-full"}`}>
           <button
             type="button"
             aria-label="Open launcher"

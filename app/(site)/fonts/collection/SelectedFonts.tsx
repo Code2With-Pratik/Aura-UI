@@ -36,5 +36,16 @@ function FontRow({ font, onRemove }: { font: (typeof fontRegistry)[number]; onRe
 
 function CodeBlock({ title, code }: { title: string; code: string }) {
   const [copied, setCopied] = useState(false);
-  return <div><div className="mb-2 flex items-center justify-between"><p className="text-xs uppercase tracking-widest text-fg/40">{title}</p><button aria-label={`Copy ${title} snippet`} onClick={async () => { try { await navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1400); } catch {} }} className="flex items-center gap-1 text-xs text-fg/40 hover:text-fg">{copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}{copied ? "Copied" : "Copy"}</button></div><pre className="min-h-24 overflow-auto rounded-lg bg-black/30 p-4 text-xs leading-relaxed text-fg/65">{code}</pre></div>;
+  return <div><div className="mb-2 flex items-center justify-between"><p className="text-xs uppercase tracking-widest text-fg/40">{title}</p><button aria-label={`Copy ${title} snippet`} onClick={async () => { try { await navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1400); } catch {} }} className="flex items-center gap-1 text-xs text-fg/40 hover:text-fg">{copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}{copied ? "Copied" : "Copy"}</button></div><pre className="min-h-24 overflow-auto rounded-lg bg-black/30 p-4 text-xs leading-relaxed text-fg/65"><code>{code.split("\n").map((line, index) => <span key={`${index}-${line}`} className="block">{highlightLine(line, title)}{index < code.split("\n").length - 1 ? "\n" : ""}</span>)}</code></pre></div>;
+}
+
+function highlightLine(line: string, title: string) {
+  const tokens = line.split(/("[^"]*"|<\/?[a-z]+>|\b(?:href|rel|stylesheet|font-family|body|url|import)\b|@[a-z-]+)/gi);
+  return tokens.map((token, index) => {
+    if (/^"/.test(token)) return <span key={index} className="text-[var(--color-accent-primary)]">{token}</span>;
+    if (/^<\/?[a-z]+>$/i.test(token)) return <span key={index} className="text-[#ff9f7a]">{token}</span>;
+    if (/^(href|rel|stylesheet)$/i.test(token)) return <span key={index} className="text-[#79c7ff]">{token}</span>;
+    if (/^(font-family|body|url|import)$/i.test(token) || (title === "CSS imports" && /^@/.test(token))) return <span key={index} className="text-[#d5a8ff]">{token}</span>;
+    return <span key={index}>{token}</span>;
+  });
 }

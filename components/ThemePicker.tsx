@@ -13,7 +13,7 @@ const PRESETS = [
   { name: "Sky", value: "#57c8ff" },
   { name: "Pink", value: "#ff57b8" },
   { name: "Violet", value: "#b88dff" },
-  { name: "Amber", value: "#ffb547" },
+  { name: "Mono", value: "var(--color-accent-contrast)" },
   { name: "Coral", value: "#ff7a57" },
   { name: "Mint", value: "#57ffb8" },
   { name: "Magenta", value: "#ff57e1" },
@@ -117,7 +117,7 @@ export default function ThemePicker() {
                         <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
                           <path
                             d="M2 5.8l2.4 2.2L9 3"
-                            stroke="#0a0a0a"
+                            stroke="var(--color-bg)"
                             strokeWidth="1.6"
                             strokeLinecap="round"
                             strokeLinejoin="round"

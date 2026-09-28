@@ -36,19 +36,19 @@ const styles = `
   .form-control input {
     background-color: transparent;
     border: 0;
-    border-bottom: 2px #fff solid;
+    border-bottom: 2px solid var(--color-fg);
     display: block;
     width: 100%;
     padding: 15px 0;
     font-size: 18px;
-    color: #fff;
+    color: var(--color-fg);
     font-family: inherit;
   }
 
   .form-control input:focus,
   .form-control input:valid {
     outline: 0;
-    border-bottom-color: lightblue;
+    border-bottom-color: var(--color-accent-primary);
   }
 
   .form-control label {
@@ -62,14 +62,14 @@ const styles = `
     display: inline-block;
     font-size: 18px;
     min-width: 5px;
-    color: #fff;
+    color: var(--color-fg);
     transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   /* When the input is focused or has valid data (not empty due to 'required' attribute) */
   .form-control input:focus + label span,
   .form-control input:valid + label span {
-    color: lightblue;
+    color: var(--color-accent-primary);
     transform: translateY(-30px);
   }
 `;

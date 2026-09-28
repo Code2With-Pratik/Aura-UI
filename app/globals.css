@@ -51,7 +51,7 @@
 --------------------------------------------------------------- */
 @theme {
   /* Surface palette */
-  --color-bg: #080808;
+  --color-bg: #000000;
   --color-surface: #0f0f0f;
   --color-surface-elevated: #141414;
 
@@ -63,6 +63,7 @@
   --color-accent-primary: #b8ff57;
   --color-accent-secondary: #57c8ff;
   --color-accent-tertiary: #ff57b8;
+  --color-accent-contrast: #ffffff;
 
   /* Borders (set as plain tokens — usable via bg-/border-[var(--...)]) */
   --color-border-default: rgba(255, 255, 255, 0.07);
@@ -70,6 +71,10 @@
 
   /* Glass surface — themed so it inverts in light mode */
   --color-glass: rgba(15, 15, 15, 0.55);
+  --glass-fill: rgba(255, 255, 255, 0.045);
+  --glass-fill-strong: rgba(255, 255, 255, 0.075);
+  --glass-edge: rgba(255, 255, 255, 0.16);
+  --glass-edge-soft: rgba(255, 255, 255, 0.08);
 
   /* Neumorphic shadow tokens — set per-theme below */
   --shadow-neu-dark: 6px 6px 18px rgba(0, 0, 0, 0.5);
@@ -103,6 +108,11 @@
   --color-border-default: rgba(120, 110, 40, 0.12);
   --color-border-hover: rgba(120, 110, 40, 0.22);
   --color-glass: rgba(255, 253, 208, 0.7);
+  --color-accent-contrast: #000000;
+  --glass-fill: rgba(255, 255, 255, 0.44);
+  --glass-fill-strong: rgba(255, 255, 255, 0.62);
+  --glass-edge: rgba(255, 255, 255, 0.72);
+  --glass-edge-soft: rgba(120, 110, 40, 0.16);
 
   /* Warm cream-toned neumorphic shadow stack */
   --shadow-neu-dark: 8px 8px 22px rgba(170, 155, 60, 0.22);
@@ -199,11 +209,57 @@
     border-color: var(--color-border-hover);
   }
 
+  .window-explorer-active {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  .window-explorer {
+    --explorer-fg: #ffffff;
+    --explorer-muted: rgba(255, 255, 255, 0.55);
+    --explorer-border: rgba(255, 255, 255, 0.14);
+    --explorer-sidebar: rgba(255, 255, 255, 0.025);
+    --explorer-card: rgba(255, 255, 255, 0.025);
+    --explorer-hover: rgba(255, 255, 255, 0.06);
+    background: #0b0b0b;
+    color: var(--explorer-fg);
+  }
+  .light .window-explorer {
+    --explorer-fg: #000000;
+    --explorer-muted: rgba(0, 0, 0, 0.58);
+    --explorer-border: rgba(0, 0, 0, 0.16);
+    --explorer-sidebar: rgba(0, 0, 0, 0.035);
+    --explorer-card: rgba(0, 0, 0, 0.025);
+    --explorer-hover: rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .window-loader-preview {
+    transform: scale(1.25);
+    transform-origin: center;
+  }
+  .window-card-preview {
+    transform: scale(0.68);
+    transform-origin: center;
+  }
+  .light .window-explorer-active {
+    background: #000000;
+    color: #ffffff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
   .aura-glass {
-    background: var(--color-glass);
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border: 1px solid var(--color-border-default);
+    background:
+      linear-gradient(135deg, var(--glass-fill-strong), transparent 38%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 55%),
+      var(--color-glass);
+    backdrop-filter: blur(28px) saturate(170%);
+    -webkit-backdrop-filter: blur(28px) saturate(170%);
+    border: 1px solid var(--glass-edge-soft);
+    box-shadow:
+      inset 0 1px 0 var(--glass-edge),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.16),
+      0 24px 80px -48px rgba(0, 0, 0, 0.9);
   }
   .light .aura-glass {
     box-shadow: var(--shadow-neu-dark), var(--shadow-neu-light);
@@ -211,19 +267,22 @@
 
   .aura-card {
     background:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.03) 0%,
-        rgba(255, 255, 255, 0) 60%
-      ),
-      var(--color-surface);
-    border: 1px solid var(--color-border-default);
+      linear-gradient(135deg, rgba(255, 255, 255, 0.09), transparent 34%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 58%),
+      var(--glass-fill);
+    backdrop-filter: blur(24px) saturate(155%);
+    -webkit-backdrop-filter: blur(24px) saturate(155%);
+    border: 1px solid var(--glass-edge-soft);
     border-radius: 20px;
     transition:
       transform 420ms var(--ease-aura),
       border-color 220ms var(--ease-aura),
       box-shadow 420ms var(--ease-aura);
     will-change: transform;
+    box-shadow:
+      inset 0 1px 0 var(--glass-edge),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+      0 24px 70px -48px rgba(0, 0, 0, 0.95);
   }
   .light .aura-card {
     background: var(--color-surface);
@@ -249,8 +308,13 @@
   /* Soft tile — used for the small cards inside the WindowMockup,
      replaces the muddy `bg-black/30` overlay that broke in light mode. */
   .aura-tile {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border-default);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.075), transparent 35%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 60%),
+      var(--glass-fill);
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid var(--glass-edge-soft);
     border-radius: 0.75rem;
     transition:
       box-shadow 320ms var(--ease-aura),
@@ -259,7 +323,14 @@
   }
   .dark .aura-tile,
   :root:not(.light) .aura-tile {
-    background: rgba(255, 255, 255, 0.02);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.075), transparent 35%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 60%),
+      rgba(255, 255, 255, 0.035);
+    box-shadow:
+      inset 0 1px 0 var(--glass-edge),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      0 22px 65px -48px rgba(0, 0, 0, 0.95);
   }
   .light .aura-tile {
     box-shadow:
@@ -276,8 +347,12 @@
 
   /* Inset input — pressed-in look for search fields and text inputs. */
   .aura-input {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border-default);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.07), transparent 42%),
+      rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid var(--glass-edge-soft);
     border-radius: 0.625rem;
     transition:
       box-shadow 220ms var(--ease-aura),
@@ -310,10 +385,13 @@
 
   /* Window mockup chrome — frosted-glass surface with deep shadow. */
   .aura-window {
-    background: color-mix(in srgb, var(--color-surface) 72%, transparent);
-    backdrop-filter: blur(24px) saturate(170%);
-    -webkit-backdrop-filter: blur(24px) saturate(170%);
-    border: 1px solid var(--color-border-default);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.11), transparent 32%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 58%),
+      color-mix(in srgb, var(--color-surface) 48%, transparent);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid var(--glass-edge-soft);
     border-radius: 1rem;
     box-shadow:
       0 60px 120px -40px rgba(0, 0, 0, 0.7),
