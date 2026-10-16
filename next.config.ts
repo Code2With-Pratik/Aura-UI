@@ -4,6 +4,7 @@ import { createMDX } from "fumadocs-mdx/next";
 const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   transpilePackages: ["aura-ui"],
   outputFileTracingRoot: process.cwd(),
   async rewrites() {
